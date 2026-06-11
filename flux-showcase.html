@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>flux.css — motion for chat UIs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════ FLUX.CSS — THE LIBRARY ════════════════════ */
+/*! flux.css v2.0 — a micro motion library for chat UIs
+ *  ~3.1 KB gzipped · zero JS · transform/opacity first (GPU-composited, smooth on Windows + macOS + iOS)
+ *
+ *  USAGE
+ *    Entrances/exits:  <div class="fx-up">          (add class to play once)
+ *    Speed:            fx-faster | fx-fast | fx-slow | fx-slower
+ *    Delay:            fx-d1 … fx-d5  (.1s … .5s)
+ *    Easing:           fx-spring | fx-linear
+ *    Repeat:           fx-loop
+ *    Lists:            <ul class="fx-stagger"> (children rise in sequence)
+ *    Rotating status:  <div class="fx-cycle-3"><span>…</span>×3</div>   (auto-rotates, zero JS)
+ *                      or swap pairs: fx-thought ⇄ fx-thought-out, fx-roll-up ⇄ fx-roll-up-out
+ *    In-flight:        fx-trace · fx-comet · fx-fill
+ *    Width morphing:   fx-width (transition) · fx-expand-w / fx-collapse-w (keyframed)
+ *    Tune globally:    :root { --fx-dur:.4s; --fx-dist:12px; --fx-stagger:50ms; --fx-cycle:6s }
+ *
+ *  Hover effects run on pointer devices; on touch they respond to :active (press).
+ *  Mirrored directions share one keyframe parameterized by a private var (--_x/--_y/--_s/--_r).
+ */
+
+:root {
+  interpolate-size: allow-keywords; /* lets .fx-width transition to/from width:auto in Chromium */
+  --fx-dur: .45s;
+  --fx-dist: 14px;
+  --fx-stagger: 55ms;
+  --fx-ease: cubic-bezier(.22, 1, .36, 1);        /* smooth decel  */
+  --fx-spring: cubic-bezier(.34, 1.56, .64, 1);   /* gentle overshoot */
+}
+
+[class^="fx-"], [class*=" fx-"] {
+  animation-duration: var(--fx-dur);
+  animation-timing-function: var(--fx-ease);
+  animation-fill-mode: both;
+  backface-visibility: hidden;
+}
+
+/* ───────────────────────── ENTRANCES (17) ───────────────────────── */
+.fx-fade       { animation-name: fxFade }
+.fx-up         { animation-name: fxY; --_y: var(--fx-dist) }
+.fx-down       { animation-name: fxY; --_y: calc(var(--fx-dist) * -1) }
+.fx-left       { animation-name: fxX; --_x: calc(var(--fx-dist) * -1) }   /* enters from the left  */
+.fx-right      { animation-name: fxX; --_x: var(--fx-dist) }              /* enters from the right */
+.fx-zoom       { animation-name: fxZoom }
+.fx-zoom-up    { animation-name: fxZoomUp }
+.fx-pop        { animation-name: fxPop; animation-timing-function: var(--fx-spring) }
+.fx-bounce-in  { animation-name: fxBounceIn; animation-duration: .6s }
+.fx-blur       { animation-name: fxBlur }
+.fx-rotate     { animation-name: fxRotate }
+.fx-flip-x     { animation-name: fxFlipX }
+.fx-flip-y     { animation-name: fxFlipY }
+.fx-wipe       { animation-name: fxWipe }
+.fx-grow-x     { animation-name: fxGrowX; transform-origin: left center }
+.fx-sheet-up   { animation-name: fxSheet; --_s: 110% }    /* bottom sheet / drawer */
+.fx-sheet-down { animation-name: fxSheet; --_s: -110% }   /* top drawer / banner   */
+
+@keyframes fxFade     { from { opacity: 0 } }
+@keyframes fxY        { from { opacity: 0; transform: translate3d(0, var(--_y), 0) } }
+@keyframes fxX        { from { opacity: 0; transform: translate3d(var(--_x), 0, 0) } }
+@keyframes fxZoom     { from { opacity: 0; transform: scale(.95) } }
+@keyframes fxZoomUp   { from { opacity: 0; transform: translate3d(0, var(--fx-dist), 0) scale(.97) } }
+@keyframes fxPop      { from { opacity: 0; transform: scale(.85) } }
+@keyframes fxBounceIn { 0% { opacity: 0; transform: scale(.8) } 60% { opacity: 1; transform: scale(1.05) } 80% { transform: scale(.98) } 100% { transform: scale(1) } }
+@keyframes fxBlur     { from { opacity: 0; filter: blur(6px) } to { opacity: 1; filter: blur(0) } }
+@keyframes fxRotate   { from { opacity: 0; transform: rotate(-5deg) scale(.96) } }
+@keyframes fxFlipX    { from { opacity: 0; transform: perspective(640px) rotateX(-14deg) } to { opacity: 1; transform: perspective(640px) rotateX(0) } }
+@keyframes fxFlipY    { from { opacity: 0; transform: perspective(640px) rotateY(14deg) }  to { opacity: 1; transform: perspective(640px) rotateY(0) } }
+@keyframes fxWipe     { from { opacity: 0; clip-path: inset(0 100% 0 0) } to { opacity: 1; clip-path: inset(0 0 0 0) } }
+@keyframes fxGrowX    { from { opacity: 0; transform: scale(.4, 1) } }
+@keyframes fxSheet    { from { transform: translate3d(0, var(--_s), 0) } }
+
+/* ───────────────────────── EXITS (9) ───────────────────────── */
+.fx-fade-out  { animation-name: fxFadeOut }
+.fx-up-out    { animation-name: fxYOut; --_y: calc(var(--fx-dist) * -1) }  /* leaves upward    */
+.fx-down-out  { animation-name: fxYOut; --_y: var(--fx-dist) }             /* leaves downward  */
+.fx-left-out  { animation-name: fxXOut; --_x: calc(var(--fx-dist) * -2) }  /* leaves to the left  */
+.fx-slide-out { animation-name: fxXOut; --_x: calc(var(--fx-dist) * 2) }   /* leaves to the right */
+.fx-zoom-out  { animation-name: fxZoomOut }
+.fx-pop-out   { animation-name: fxPopOut }
+.fx-blur-out  { animation-name: fxBlurOut }
+.fx-sheet-out { animation-name: fxSheetOut }                               /* sheet slides back down */
+
+@keyframes fxFadeOut  { to { opacity: 0 } }
+@keyframes fxYOut     { to { opacity: 0; transform: translate3d(0, var(--_y), 0) } }
+@keyframes fxXOut     { to { opacity: 0; transform: translate3d(var(--_x), 0, 0) } }
+@keyframes fxZoomOut  { to { opacity: 0; transform: scale(.95) } }
+@keyframes fxPopOut   { to { opacity: 0; transform: scale(.82) } }
+@keyframes fxBlurOut  { to { opacity: 0; filter: blur(6px) } }
+@keyframes fxSheetOut { to { transform: translate3d(0, 110%, 0) } }
+
+/* ─────────────── ATTENTION (12) · one-shot; add .fx-loop to repeat ─────────────── */
+.fx-pulse     { animation-name: fxPulse; animation-duration: .9s }
+.fx-bounce    { animation-name: fxBounce; animation-duration: .8s }
+.fx-shake     { animation-name: fxShake; animation-duration: .5s; animation-timing-function: linear }
+.fx-wiggle    { animation-name: fxWiggle; animation-duration: .7s }
+.fx-jello     { animation-name: fxJello; animation-duration: .9s }
+.fx-rubber    { animation-name: fxRubber; animation-duration: .9s }
+.fx-nudge     { animation-name: fxNudge; animation-duration: 1s }
+.fx-flash     { animation-name: fxFlash; animation-duration: .9s }
+.fx-heartbeat { animation-name: fxHeartbeat; animation-duration: 1.1s }
+.fx-glow      { animation-name: fxGlow; animation-duration: 1.4s }
+.fx-float     { animation-name: fxFloat; animation-duration: 3s; animation-iteration-count: infinite; animation-timing-function: ease-in-out }
+.fx-ring:focus-visible { animation: fxRing .55s var(--fx-ease) }
+
+@keyframes fxPulse     { 50% { transform: scale(1.05) } }
+@keyframes fxBounce    { 0%,100% { transform: translate3d(0,0,0) } 30% { transform: translate3d(0,-25%,0) } 55% { transform: translate3d(0,0,0) } 70% { transform: translate3d(0,-10%,0) } 85% { transform: translate3d(0,0,0) } }
+@keyframes fxShake     { 0%,100% { transform: translate3d(0,0,0) } 20%,60% { transform: translate3d(-5px,0,0) } 40%,80% { transform: translate3d(5px,0,0) } }
+@keyframes fxWiggle    { 0%,100% { transform: rotate(0) } 20% { transform: rotate(-4deg) } 40% { transform: rotate(4deg) } 60% { transform: rotate(-2deg) } 80% { transform: rotate(2deg) } }
+@keyframes fxJello     { 0%,100% { transform: skewX(0) } 30% { transform: skewX(-8deg) } 45% { transform: skewX(5deg) } 60% { transform: skewX(-3deg) } 75% { transform: skewX(2deg) } }
+@keyframes fxRubber    { 0%,100% { transform: scale(1) } 30% { transform: scale(1.15,.85) } 45% { transform: scale(.9,1.1) } 60% { transform: scale(1.05,.95) } 75% { transform: scale(.98,1.02) } }
+@keyframes fxNudge     { 0%,100% { transform: translate3d(0,0,0) } 25%,65% { transform: translate3d(6px,0,0) } 45%,85% { transform: translate3d(0,0,0) } }
+@keyframes fxFlash     { 25%,75% { opacity: .3 } 50%,100% { opacity: 1 } }
+@keyframes fxHeartbeat { 0%,40%,100% { transform: scale(1) } 14%,28% { transform: scale(1.12) } }
+@keyframes fxGlow      { 0%,100% { box-shadow: 0 0 0 0 transparent } 50% { box-shadow: 0 0 18px 2px var(--fx-glow, rgba(79,70,229,.45)) } }
+@keyframes fxFloat     { 50% { transform: translate3d(0,-6px,0) } }
+@keyframes fxRing      { 0% { box-shadow: 0 0 0 0 var(--fx-ring, rgba(79,70,229,.5)) } 100% { box-shadow: 0 0 0 9px transparent } }
+
+/* ─────────────── BUTTONS & HOVER (8) · transitions, not keyframes ───────────────
+   Hover styles apply on devices that hover; on touch, the same effect fires on press. */
+.fx-btn  { transition: transform .15s var(--fx-ease), box-shadow .15s var(--fx-ease) }
+.fx-btn:active  { transform: scale(.96) }
+.fx-push { transition: transform .12s var(--fx-ease) }
+.fx-push:active { transform: translateY(1.5px) scale(.985) }
+.fx-lift, .fx-grow { transition: transform .2s var(--fx-ease), box-shadow .2s var(--fx-ease) }
+.fx-tilt { transition: transform .25s var(--fx-ease) }
+.fx-brighten { transition: filter .2s var(--fx-ease) }
+.fx-shine { position: relative; overflow: hidden }
+.fx-shine::after { content: ""; position: absolute; inset: 0; transform: translateX(-110%) skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); transition: transform .55s var(--fx-ease) }
+.fx-underline { position: relative }
+.fx-underline::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+  background: currentColor; transform: scaleX(0); transform-origin: left center; transition: transform .25s var(--fx-ease) }
+
+@media (hover: hover) {
+  .fx-lift:hover  { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.12) }
+  .fx-lift:active { transform: translateY(0) }
+  .fx-grow:hover  { transform: scale(1.04) }
+  .fx-tilt:hover  { transform: perspective(640px) rotateX(3deg) rotateY(-3deg) translateY(-1px) }
+  .fx-brighten:hover { filter: brightness(1.12) }
+  .fx-shine:hover::after { transform: translateX(110%) skewX(-18deg) }
+  .fx-underline:hover::after { transform: scaleX(1) }
+}
+@media (hover: none) {  /* touch fallback: press to trigger */
+  .fx-lift:active  { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.12) }
+  .fx-grow:active  { transform: scale(1.04) }
+  .fx-tilt:active  { transform: perspective(640px) rotateX(3deg) rotateY(-3deg) translateY(-1px) }
+  .fx-brighten:active { filter: brightness(1.12) }
+  .fx-shine:active::after { transform: translateX(110%) skewX(-18deg) }
+  .fx-underline:active::after { transform: scaleX(1) }
+}
+
+/* ─────────────────────── LISTS / STAGGER (4) ─────────────────────── */
+.fx-stagger > * { animation: fxZoomUp var(--fx-dur) var(--fx-ease) both }
+.fx-stagger-fade > * { animation-name: fxFade }
+.fx-stagger-left > * { animation-name: fxX; --_x: calc(var(--fx-dist) * -1) }
+.fx-stagger-pop  > * { animation-name: fxPop; animation-timing-function: var(--fx-spring) }
+.fx-stagger > :nth-child(1)  { animation-delay: calc(var(--fx-stagger) * 1) }
+.fx-stagger > :nth-child(2)  { animation-delay: calc(var(--fx-stagger) * 2) }
+.fx-stagger > :nth-child(3)  { animation-delay: calc(var(--fx-stagger) * 3) }
+.fx-stagger > :nth-child(4)  { animation-delay: calc(var(--fx-stagger) * 4) }
+.fx-stagger > :nth-child(5)  { animation-delay: calc(var(--fx-stagger) * 5) }
+.fx-stagger > :nth-child(6)  { animation-delay: calc(var(--fx-stagger) * 6) }
+.fx-stagger > :nth-child(7)  { animation-delay: calc(var(--fx-stagger) * 7) }
+.fx-stagger > :nth-child(8)  { animation-delay: calc(var(--fx-stagger) * 8) }
+.fx-stagger > :nth-child(9)  { animation-delay: calc(var(--fx-stagger) * 9) }
+.fx-stagger > :nth-child(10) { animation-delay: calc(var(--fx-stagger) * 10) }
+.fx-stagger > :nth-child(11) { animation-delay: calc(var(--fx-stagger) * 11) }
+.fx-stagger > :nth-child(12) { animation-delay: calc(var(--fx-stagger) * 12) }
+.fx-stagger > :nth-child(n+13) { animation-delay: calc(var(--fx-stagger) * 13) }
+
+/* ─────────────── ROTATING UPDATES (10) · for cycling status / "thinking" text ───────────────
+   Swap pairs (JS swaps content): add the -out class to the old node, the in class to the new one.
+   fx-cycle-N (zero JS): stack 2–4 children in the container; each takes a turn automatically.
+   Roll classes travel the element's own height — wrap old+new in an .fx-clip parent. */
+.fx-thought       { animation-name: fxThought }                /* blur-rise in — thought surfaces      */
+.fx-thought-out   { animation-name: fxThoughtOut }             /* blur-rise away — thought dissolves   */
+.fx-roll-up       { animation-name: fxRoll;    --_r: 105% }    /* ticker: new line rolls up from below */
+.fx-roll-up-out   { animation-name: fxRollOut; --_r: -105% }
+.fx-roll-down     { animation-name: fxRoll;    --_r: -105% }   /* ticker: rolls down from above        */
+.fx-roll-down-out { animation-name: fxRollOut; --_r: 105% }
+.fx-clip          { overflow: hidden }                         /* clipping wrapper for roll tickers    */
+
+.fx-cycle-2, .fx-cycle-3, .fx-cycle-4 { display: grid; --fx-cycle: 6s }
+.fx-cycle-2 > *, .fx-cycle-3 > *, .fx-cycle-4 > * {
+  grid-area: 1 / 1; opacity: 0;
+  animation: fxCycle2 var(--fx-cycle) var(--fx-ease) infinite both }
+.fx-cycle-3 > * { animation-name: fxCycle3 }
+.fx-cycle-4 > * { animation-name: fxCycle4 }
+.fx-cycle-2 > :nth-child(2) { animation-delay: calc(var(--fx-cycle) / 2) }
+.fx-cycle-3 > :nth-child(2) { animation-delay: calc(var(--fx-cycle) / 3) }
+.fx-cycle-3 > :nth-child(3) { animation-delay: calc(var(--fx-cycle) / 3 * 2) }
+.fx-cycle-4 > :nth-child(2) { animation-delay: calc(var(--fx-cycle) / 4) }
+.fx-cycle-4 > :nth-child(3) { animation-delay: calc(var(--fx-cycle) / 2) }
+.fx-cycle-4 > :nth-child(4) { animation-delay: calc(var(--fx-cycle) / 4 * 3) }
+
+@keyframes fxThought    { from { opacity: 0; transform: translate3d(0, 7px, 0);  filter: blur(4px) } to { opacity: 1; transform: translate3d(0,0,0); filter: blur(0) } }
+@keyframes fxThoughtOut { to   { opacity: 0; transform: translate3d(0, -7px, 0); filter: blur(4px) } }
+@keyframes fxRoll       { from { transform: translate3d(0, var(--_r), 0) } }
+@keyframes fxRollOut    { to   { transform: translate3d(0, var(--_r), 0) } }
+@keyframes fxCycle2 { 0% { opacity: 0; transform: translate3d(0,8px,0) } 7%,43%  { opacity: 1; transform: translate3d(0,0,0) } 50%,100%   { opacity: 0; transform: translate3d(0,-8px,0) } }
+@keyframes fxCycle3 { 0% { opacity: 0; transform: translate3d(0,8px,0) } 5%,28%  { opacity: 1; transform: translate3d(0,0,0) } 33.3%,100% { opacity: 0; transform: translate3d(0,-8px,0) } }
+@keyframes fxCycle4 { 0% { opacity: 0; transform: translate3d(0,8px,0) } 4%,21%  { opacity: 1; transform: translate3d(0,0,0) } 25%,100%   { opacity: 0; transform: translate3d(0,-8px,0) } }
+
+/* ─────────────── IN-FLIGHT (3) · something is being worked on ─────────────── */
+.fx-trace { position: relative; overflow: hidden }           /* a line draws across, releases, redraws */
+.fx-trace::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: currentColor; transform: translateX(-101%);
+  animation: fxTrace 1.7s cubic-bezier(.65,0,.35,1) infinite }
+.fx-comet { position: relative; overflow: hidden }           /* a streak with a fading tail crosses a track */
+.fx-comet::after { content: ""; position: absolute; top: 0; bottom: 0; width: 36%; border-radius: inherit;
+  background: linear-gradient(90deg, transparent, currentColor); transform: translateX(-110%);
+  animation: fxComet 1.5s cubic-bezier(.45,0,.2,1) infinite }
+.fx-fill { position: relative; overflow: hidden }            /* tint sweeps the element, holds, dissolves */
+.fx-fill::before { content: ""; position: absolute; inset: 0;
+  background: var(--fx-fill, rgba(79,70,229,.14)); transform: translateX(-101%);
+  animation: fxFill 1.9s var(--fx-ease) infinite }
+
+@keyframes fxTrace { 0% { transform: translateX(-101%) } 45%, 55% { transform: translateX(0) } 100% { transform: translateX(101%) } }
+@keyframes fxComet { to { transform: translateX(390%) } }
+@keyframes fxFill  { 0% { transform: translateX(-101%); opacity: 1 } 60% { transform: translateX(0); opacity: 1 } 100% { transform: translateX(0); opacity: 0 } }
+
+/* ─────────────── WIDTH & SIZE (6) ───────────────
+   fx-width is a transition: toggle a class / inline width and it tweens — with
+   interpolate-size enabled it even tweens to width:auto in Chromium.
+   fx-expand-w / fx-collapse-w animate max-width (layout work — fine for occasional
+   UI moments, avoid in tight loops). The scale variants are pure GPU. */
+.fx-width { transition: width .35s var(--fx-ease), max-width .35s var(--fx-ease),
+            min-width .35s var(--fx-ease), flex-basis .35s var(--fx-ease) }
+.fx-expand-w   { animation-name: fxExpandW;   overflow: hidden; white-space: nowrap }
+.fx-collapse-w { animation-name: fxCollapseW; overflow: hidden; white-space: nowrap }
+.fx-shrink-x   { animation-name: fxShrinkX; transform-origin: left center }   /* GPU exit, pairs with fx-grow-x */
+.fx-grow-y     { animation-name: fxGrowY;   transform-origin: top center }    /* GPU expand (accordion feel)    */
+.fx-shrink-y   { animation-name: fxShrinkY; transform-origin: top center }
+
+@keyframes fxExpandW   { from { max-width: 0; opacity: 0 } to { max-width: var(--fx-w, 320px); opacity: 1 } }
+@keyframes fxCollapseW { from { max-width: var(--fx-w, 320px) } to { max-width: 0; opacity: 0 } }
+@keyframes fxShrinkX   { to   { opacity: 0; transform: scale(.4, 1) } }
+@keyframes fxGrowY     { from { opacity: 0; transform: scale(1, .6) } }
+@keyframes fxShrinkY   { to   { opacity: 0; transform: scale(1, .6) } }
+
+/* ─────────────────── CHAT & LOADING PRIMITIVES (9) ─────────────────── */
+.fx-msg      { animation-name: fxZoomUp }                                   /* assistant bubble  */
+.fx-msg-user { animation-name: fxMsgUser }                                  /* user bubble       */
+.fx-stream   { animation: fxFade .3s var(--fx-ease) both }                  /* streamed chunk    */
+.fx-cursor::after { content: ""; display: inline-block; width: 2px; height: 1em;
+  margin-left: 2px; vertical-align: -.12em; background: currentColor;
+  animation: fxBlink 1.1s steps(2, jump-none) infinite }
+.fx-dots { display: inline-flex; gap: 4px; align-items: center }
+.fx-dots i { width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+  animation: fxDot 1.2s ease-in-out infinite }
+.fx-dots i:nth-child(2) { animation-delay: .15s }
+.fx-dots i:nth-child(3) { animation-delay: .3s }
+.fx-shimmer { position: relative; overflow: hidden }
+.fx-shimmer::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent);
+  animation: fxShimmer 1.6s linear infinite }
+.fx-pulse-soft { animation: fxPulseSoft 1.5s ease-in-out infinite }          /* skeleton breathe  */
+.fx-spin { animation: fxSpin .8s linear infinite }
+.fx-progress { position: relative; overflow: hidden }                       /* indeterminate bar */
+.fx-progress::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 40%;
+  border-radius: inherit; background: currentColor; transform: translateX(-110%);
+  animation: fxProgress 1.2s ease-in-out infinite }
+
+@keyframes fxMsgUser  { from { opacity: 0; transform: translate3d(12px, 6px, 0) scale(.97) } }
+@keyframes fxBlink    { 50% { opacity: 0 } }
+@keyframes fxDot      { 0%,60%,100% { transform: translate3d(0,0,0); opacity: .35 } 30% { transform: translate3d(0,-4px,0); opacity: 1 } }
+@keyframes fxShimmer  { to { transform: translateX(100%) } }
+@keyframes fxPulseSoft{ 50% { opacity: .45 } }
+@keyframes fxSpin     { to { transform: rotate(1turn) } }
+@keyframes fxProgress { to { transform: translateX(350%) } }
+
+/* ───────────────────────── MODIFIERS (13) ───────────────────────── */
+.fx-faster { --fx-dur: .2s }
+.fx-fast   { --fx-dur: .3s }
+.fx-slow   { --fx-dur: .7s }
+.fx-slower { --fx-dur: 1.1s }
+.fx-d1 { animation-delay: .1s } .fx-d2 { animation-delay: .2s } .fx-d3 { animation-delay: .3s }
+.fx-d4 { animation-delay: .4s } .fx-d5 { animation-delay: .5s }
+.fx-spring { animation-timing-function: var(--fx-spring) }
+.fx-linear { animation-timing-function: linear }
+.fx-loop { animation-iteration-count: infinite }
+
+/* ─────────────────────── ACCESSIBILITY ─────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  [class^="fx-"], [class*=" fx-"], .fx-stagger > *,
+  .fx-shine::after, .fx-underline::after, .fx-cursor::after,
+  .fx-dots i, .fx-shimmer::after, .fx-progress::after,
+  .fx-trace::after, .fx-comet::after, .fx-fill::before {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition: none !important;
+  }
+  /* rotators: stop cycling, show the first item */
+  .fx-cycle-2 > *, .fx-cycle-3 > *, .fx-cycle-4 > * { animation: none !important; opacity: 0 }
+  .fx-cycle-2 > :first-child, .fx-cycle-3 > :first-child, .fx-cycle-4 > :first-child { opacity: 1 }
+}
+
+/* ════════════════════ END OF LIBRARY ════════════════════ */
+
+/* ———— demo page styles (not part of the library) ———— */
+:root{
+  --mist:#ECEFF4; --surface:#fff; --ink:#16213A; --ink-2:#5B6478;
+  --line:#DDE2EB; --indigo:#4F46E5; --indigo-soft:#EEF0FF; --coral:#FF6B4A;
+}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--mist);color:var(--ink);
+  line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+::selection{background:var(--indigo);color:#fff}
+button{font:inherit;cursor:pointer;touch-action:manipulation}
+:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
+section{scroll-margin-top:66px}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:10;background:rgba(236,239,244,.85);backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:14px;height:54px}
+.logo{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:18px;letter-spacing:-.02em}
+.logo i{font-style:normal;color:var(--indigo)}
+.bar .meta{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.tag{font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 9px;border-radius:99px;
+  background:var(--surface);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.tag b{color:var(--ink);font-weight:500}
+
+/* hero */
+.hero{padding:48px 0 6px;display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.hero h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,5vw,52px);
+  line-height:1.04;letter-spacing:-.025em}
+.hero h1 em{font-style:normal;color:var(--indigo)}
+.hero p{margin-top:16px;color:var(--ink-2);max-width:42ch}
+.hero .cta{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+.btn-primary{background:var(--ink);color:#fff;border:0;border-radius:10px;padding:12px 18px;font-weight:600;font-size:14px}
+.btn-ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px 18px;font-weight:600;font-size:14px}
+
+/* section nav */
+.nav{display:flex;gap:8px;overflow-x:auto;padding:22px 0 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.nav::-webkit-scrollbar{display:none}
+.nav a{flex:none;text-decoration:none;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);
+  border-radius:99px;padding:8px 15px;font-size:13px;font-weight:600}
+.nav a:hover{color:var(--indigo);border-color:var(--indigo)}
+
+/* live chat playground (signature) */
+.phone{background:var(--surface);border:1px solid var(--line);border-radius:20px;
+  box-shadow:0 22px 50px -24px rgba(22,33,58,.28);overflow:hidden}
+.phone-head{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.live{width:8px;height:8px;border-radius:50%;background:var(--coral)}
+.phone-head span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-2)}
+.phone-head button{margin-left:auto;border:1px solid var(--line);background:var(--mist);
+  border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--ink)}
+.chat{padding:18px 16px;height:320px;display:flex;flex-direction:column;gap:10px;overflow:hidden;justify-content:flex-end}
+.bub{max-width:84%;padding:9px 13px;border-radius:14px;font-size:13.5px;line-height:1.45}
+.bub.user{align-self:flex-end;background:var(--indigo);color:#fff;border-bottom-right-radius:5px}
+.bub.bot{align-self:flex-start;background:var(--mist);border-bottom-left-radius:5px}
+.bub.typing{padding:12px 14px;color:var(--ink-2)}
+
+/* sections */
+section{padding:32px 0 6px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.sec-head h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px;letter-spacing:-.015em}
+.sec-head span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+
+/* demo cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  transition:border-color .2s,box-shadow .2s;display:flex;flex-direction:column}
+.card:hover{border-color:#C7CEDD;box-shadow:0 10px 26px -18px rgba(22,33,58,.3)}
+.stage{height:116px;display:grid;place-items:center;overflow:hidden;padding:10px;
+  background:radial-gradient(circle at 50% 0%,var(--indigo-soft),transparent 75%)}
+.stage[role="button"]{cursor:pointer}
+.card-foot{display:flex;align-items:stretch;border-top:1px solid var(--line);margin-top:auto}
+.cls{flex:1;min-width:0;font-family:'JetBrains Mono',monospace;font-size:12px;padding:12px;color:var(--ink);
+  background:none;border:0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cls:hover{background:var(--indigo-soft);color:var(--indigo)}
+.rep{flex:none;width:46px;border:0;border-left:1px solid var(--line);background:var(--mist);
+  color:var(--ink);font-size:16px;line-height:1}
+.rep:hover{background:var(--indigo-soft);color:var(--indigo)}
+.hint{flex:none;display:grid;place-items:center;font-size:10px;color:var(--ink-2);
+  padding:0 12px;border-left:1px solid var(--line);background:var(--mist);white-space:nowrap}
+
+/* sample elements inside stages */
+.chip{background:var(--ink);color:#fff;font-size:13px;font-weight:500;padding:8px 16px;border-radius:11px}
+.chip.alt{background:var(--indigo)}
+.mini-bub{background:var(--mist);border:1px solid var(--line);font-size:12.5px;padding:8px 13px;border-radius:12px;border-bottom-left-radius:4px}
+.demo-btn{background:var(--indigo);color:#fff;border:0;border-radius:10px;padding:11px 20px;font-weight:600;font-size:13.5px}
+.demo-btn.dark{background:var(--ink)}
+.demo-link{font-size:14px;font-weight:600;color:var(--indigo);padding:4px 2px;cursor:pointer}
+.skel{width:140px;height:13px;border-radius:7px;background:#E2E6EE}
+.spinner{width:22px;height:22px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--indigo)}
+.track{width:150px;height:6px;border-radius:99px;background:#E2E6EE;color:var(--indigo)}
+.sheet{width:120px;padding:9px 0;text-align:center;background:var(--ink);color:#fff;font-size:12px;font-weight:600;border-radius:12px 12px 4px 4px}
+
+/* rotating updates + width demos */
+.think{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);
+  border-radius:14px;padding:16px 18px}
+.think-text{font-size:14px;font-weight:500;color:var(--ink);min-width:0}
+.think-text>span{white-space:nowrap}
+.think-cls{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-2);white-space:nowrap}
+.swap-clip{display:grid;place-items:center;height:30px}
+.swap-clip>*{grid-area:1/1;white-space:nowrap;line-height:30px}
+.status-line{font-size:13.5px;font-weight:500;color:var(--ink)}
+.tok{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--indigo)}
+.w-pill{height:40px;border-radius:99px;background:var(--indigo);color:#fff;font-size:13px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;width:104px}
+.w-pill.wide{width:184px}
+.w-bar{height:40px;border-radius:10px;background:var(--ink);color:#fff;font-size:12.5px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap}
+
+/* in-flight demos */
+.trace-track{width:130px;height:3px;border-radius:99px;background:#E2E6EE;color:var(--indigo)}
+.file-chip{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);
+  border-radius:10px;padding:9px 13px;font-size:12.5px;font-weight:600}
+.doc{width:150px;padding:11px 12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;
+  display:flex;flex-direction:column;gap:6px}
+.doc i{display:block;height:7px;border-radius:99px;background:#E2E6EE}
+.doc i:nth-child(2){width:80%}.doc i:nth-child(4){width:62%}
+
+/* hover/press simulation (for the demo replay button on touch) */
+.fx-btn.sim{transform:scale(.96)}
+.fx-push.sim{transform:translateY(1.5px) scale(.985)}
+.fx-lift.sim{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.12)}
+.fx-grow.sim{transform:scale(1.04)}
+.fx-tilt.sim{transform:perspective(640px) rotateX(3deg) rotateY(-3deg) translateY(-1px)}
+.fx-brighten.sim{filter:brightness(1.12)}
+.fx-shine.sim::after{transform:translateX(110%) skewX(-18deg)}
+.fx-underline.sim::after{transform:scaleX(1)}
+
+/* stagger demo */
+.list-demo{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.list-demo ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.list-demo li{background:var(--mist);border:1px solid var(--line);border-radius:10px;padding:11px 14px;font-size:13.5px;
+  display:flex;justify-content:space-between;gap:8px;color:var(--ink)}
+.list-demo li span{color:var(--ink-2);font-family:'JetBrains Mono',monospace;font-size:11px;white-space:nowrap}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill{border:1px solid var(--line);background:var(--mist);border-radius:99px;padding:9px 14px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.pill[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* usage */
+.usage{background:var(--ink);color:#DFE5F2;border-radius:16px;padding:22px 24px;margin:38px 0 10px;scroll-margin-top:66px}
+.usage h2{font-family:'Bricolage Grotesque',sans-serif;font-size:20px;color:#fff;margin-bottom:4px}
+.usage p{font-size:13.5px;color:#9AA4BD;margin-bottom:14px}
+.usage pre{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;overflow-x:auto;
+  background:rgba(255,255,255,.06);border-radius:10px;padding:14px 16px}
+.usage .c{color:#7C86A2}.usage .t{color:#9DB8FF}.usage .s{color:#FFC2A8}
+footer{padding:26px 0 44px;color:var(--ink-2);font-size:13px}
+footer b{color:var(--ink)}
+code{font-family:'JetBrains Mono',monospace;font-size:12px}
+
+/* toast */
+#toast{position:fixed;bottom:max(22px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+  background:var(--ink);color:#fff;font-size:13px;font-weight:600;padding:10px 18px;border-radius:99px;
+  opacity:0;pointer-events:none;z-index:50;max-width:88vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+@media (max-width:780px){
+  .hero{grid-template-columns:1fr;gap:28px;padding-top:32px}
+  .row2{grid-template-columns:1fr}
+  .bar .meta .tag:nth-child(n+3){display:none}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px}
+  .stage{height:100px}
+  .chat{height:300px}
+}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <div class="logo">flux<i>.css</i></div>
+  <div class="meta">
+    <span class="tag"><b>3.1 KB</b> gzipped</span>
+    <span class="tag"><b>90</b> classes</span>
+    <span class="tag"><b>0</b> JS</span>
+    <span class="tag">transform + opacity only</span>
+  </div>
+</div></div>
+
+<main class="wrap">
+
+<!-- ═══════════ HERO: LIVE PLAYGROUND ═══════════ -->
+<div class="hero">
+  <div>
+    <h1>Motion that makes a chat feel <em>alive.</em></h1>
+    <p>One tiny stylesheet of GPU-composited animations for LLM interfaces — message entrances, streaming text, typing dots, button physics, staggered lists. Drop a class on an element and ship it.</p>
+    <div class="cta">
+      <button class="btn-primary fx-btn fx-shine" onclick="document.getElementById('entrances').scrollIntoView()">Browse the catalog</button>
+      <button class="btn-ghost fx-btn fx-lift" onclick="copyText('<link rel=&quot;stylesheet&quot; href=&quot;flux.css&quot;>')">Copy &lt;link&gt; tag</button>
+    </div>
+  </div>
+  <div class="phone fx-zoom-up fx-slow">
+    <div class="phone-head">
+      <span class="live fx-pulse fx-loop"></span>
+      <span>live · fx-msg / fx-dots / fx-stream / fx-cursor</span>
+      <button class="fx-btn" onclick="restartChat()">↻ Replay</button>
+    </div>
+    <div class="chat" id="chat"></div>
+  </div>
+</div>
+
+<nav class="nav" aria-label="Sections">
+  <a href="#entrances">Entrances</a><a href="#exits">Exits</a><a href="#attention">Attention</a>
+  <a href="#buttons">Buttons</a><a href="#lists">Lists</a><a href="#updates">Updates</a><a href="#ai">In-flight</a><a href="#width">Width</a><a href="#chatprims">Chat &amp; loading</a><a href="#usage">Usage</a>
+</nav>
+
+<!-- ═══════════ ENTRANCES ═══════════ -->
+<section id="entrances">
+  <div class="sec-head"><h2>Entrances</h2><span id="hint-entrances">17 · tap ↻ (or the card) to replay · tap the class to copy</span></div>
+  <div class="grid" id="grid-entrances"></div>
+</section>
+
+<!-- ═══════════ EXITS ═══════════ -->
+<section id="exits">
+  <div class="sec-head"><h2>Exits</h2><span>9 · pairs with entrances for dismiss / delete / collapse</span></div>
+  <div class="grid" id="grid-exits"></div>
+</section>
+
+<!-- ═══════════ ATTENTION ═══════════ -->
+<section id="attention">
+  <div class="sec-head"><h2>Attention</h2><span>12 · errors, confirmations, nudges · add .fx-loop to repeat</span></div>
+  <div class="grid" id="grid-attention"></div>
+</section>
+
+<!-- ═══════════ BUTTONS & HOVER ═══════════ -->
+<section id="buttons">
+  <div class="sec-head"><h2>Buttons &amp; hover</h2><span id="hint-buttons">8 · pure transitions — on touch screens these fire on press</span></div>
+  <div class="grid" id="grid-buttons"></div>
+</section>
+
+<!-- ═══════════ LISTS & STAGGER ═══════════ -->
+<section id="lists">
+  <div class="sec-head"><h2>Lists &amp; stagger</h2><span>4 variants · children cascade automatically, no per-item classes</span></div>
+  <div class="row2">
+    <div class="list-demo">
+      <div class="controls">
+        <button class="pill fx-btn" aria-pressed="true" data-stag="">fx-stagger</button>
+        <button class="pill fx-btn" aria-pressed="false" data-stag="fx-stagger-fade">-fade</button>
+        <button class="pill fx-btn" aria-pressed="false" data-stag="fx-stagger-left">-left</button>
+        <button class="pill fx-btn" aria-pressed="false" data-stag="fx-stagger-pop">-pop</button>
+        <button class="pill fx-btn" onclick="replayList()" style="margin-left:auto">↻ Replay</button>
+      </div>
+      <ul id="stag" class="fx-stagger">
+        <li>Search the web <span>tool</span></li>
+        <li>Summarize this thread <span>suggestion</span></li>
+        <li>Generate an image <span>tool</span></li>
+        <li>Draft a reply <span>suggestion</span></li>
+        <li>Explain the error <span>suggestion</span></li>
+      </ul>
+    </div>
+    <div class="list-demo">
+      <div class="controls" style="justify-content:space-between">
+        <strong style="font-size:14px">Speed &amp; delay modifiers</strong>
+        <button class="pill fx-btn" onclick="replayMods()">↻ Replay</button>
+      </div>
+      <ul id="mods">
+        <li class="fx-up fx-faster">fx-up fx-faster <span>.2s</span></li>
+        <li class="fx-up">fx-up <span>.45s default</span></li>
+        <li class="fx-up fx-slow">fx-up fx-slow <span>.7s</span></li>
+        <li class="fx-up fx-spring">fx-up fx-spring <span>overshoot ease</span></li>
+        <li class="fx-up fx-d3">fx-up fx-d3 <span>+.3s delay</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ROTATING UPDATES ═══════════ -->
+<section id="updates">
+  <div class="sec-head"><h2>Rotating updates</h2><span>10 · cycling status text, the way thoughts surface and dissolve while a model works</span></div>
+  <div class="think fx-fade">
+    <div class="spinner fx-spin" style="width:16px;height:16px;border-width:2.5px"></div>
+    <div class="fx-cycle-4 think-text" style="--fx-cycle:7s">
+      <span>Thinking…</span>
+      <span>Searching the web…</span>
+      <span>Reading 12 sources…</span>
+      <span>Synthesizing the answer…</span>
+    </div>
+    <span class="think-cls">.fx-cycle-4 — pure CSS, zero JS</span>
+  </div>
+  <div class="grid" id="grid-updates" style="margin-top:12px"></div>
+</section>
+
+<!-- ═══════════ AI LOADING ═══════════ -->
+<section id="ai">
+  <div class="sec-head"><h2>In-flight</h2><span>3 · something is being worked on — a line draws, a streak travels, a fill sweeps</span></div>
+  <div class="grid" id="grid-ai"></div>
+</section>
+
+<!-- ═══════════ WIDTH & SIZE ═══════════ -->
+<section id="width">
+  <div class="sec-head"><h2>Width &amp; size</h2><span>6 · growing and collapsing panels, pills, inputs, sidebars</span></div>
+  <div class="grid" id="grid-width"></div>
+</section>
+
+<!-- ═══════════ CHAT & LOADING ═══════════ -->
+<section id="chatprims">
+  <div class="sec-head"><h2>Chat &amp; loading primitives</h2><span>9 · purpose-built for LLM interfaces</span></div>
+  <div class="grid" id="grid-chat"></div>
+</section>
+
+<!-- ═══════════ USAGE ═══════════ -->
+<div class="usage fx-fade" id="usage">
+  <h2>Usage</h2>
+  <p>Include the stylesheet once. Add a class when an element should move. Tune everything from :root.</p>
+  <pre><span class="c">&lt;!-- entrances run when the element (or class) is added to the DOM --&gt;</span>
+<span class="t">&lt;div</span> class=<span class="s">"fx-msg"</span><span class="t">&gt;</span>Assistant reply<span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;div</span> class=<span class="s">"fx-msg-user"</span><span class="t">&gt;</span>User message<span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;span</span> class=<span class="s">"fx-stream"</span><span class="t">&gt;</span>each streamed chunk<span class="t">&lt;/span&gt;</span>
+<span class="t">&lt;ul</span> class=<span class="s">"fx-stagger fx-stagger-left"</span><span class="t">&gt;</span>…<span class="t">&lt;/ul&gt;</span>
+<span class="t">&lt;button</span> class=<span class="s">"fx-btn fx-lift fx-ring"</span><span class="t">&gt;</span>Send<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;div</span> class=<span class="s">"fx-sheet-up"</span><span class="t">&gt;</span>Bottom sheet<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- rotating status — zero JS, each child takes a turn --&gt;</span>
+<span class="t">&lt;div</span> class=<span class="s">"fx-cycle-3"</span> style=<span class="s">"--fx-cycle:5s"</span><span class="t">&gt;</span>
+  <span class="t">&lt;span&gt;</span>Searching…<span class="t">&lt;/span&gt;&lt;span&gt;</span>Reading…<span class="t">&lt;/span&gt;&lt;span&gt;</span>Writing…<span class="t">&lt;/span&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- JS-driven swap: old thought out, new thought in --&gt;</span>
+old.classList.add(<span class="s">'fx-thought-out'</span>);
+fresh.classList.add(<span class="s">'fx-thought'</span>);  <span class="c">// then remove `old` on animationend</span>
+
+<span class="c">&lt;!-- width morphing: toggle any width and it tweens --&gt;</span>
+<span class="t">&lt;aside</span> class=<span class="s">"fx-width"</span> style=<span class="s">"width:64px"</span><span class="t">&gt;</span>…<span class="t">&lt;/aside&gt;</span>  <span class="c">// set width:240px to expand</span>
+
+<span class="c">/* global tuning — make the whole app snappier or softer */</span>
+<span class="t">:root</span> { <span class="s">--fx-dur</span>: .35s; <span class="s">--fx-dist</span>: 10px; <span class="s">--fx-stagger</span>: 45ms; }
+
+<span class="c">/* exits: add the class, remove the node on `animationend` */</span>
+el.classList.add(<span class="s">'fx-up-out'</span>);
+el.addEventListener(<span class="s">'animationend'</span>, () =&gt; el.remove(), { once: true });</pre>
+</div>
+
+<footer>
+  <b>Why it stays smooth:</b> every keyframe animates only <code>transform</code> and <code>opacity</code> (composited on the GPU on Windows, macOS, and iOS — no layout, no paint). <code>translate3d</code> promotes layers, easing uses a decelerating quint curve, hover effects gracefully become press effects on touch via <code>@media (hover)</code>, and <code>prefers-reduced-motion</code> disables everything for users who ask.
+</footer>
+
+</main>
+<div id="toast">Copied</div>
+
+<script>
+/* ——— helpers ——— */
+const canHover = matchMedia('(hover: hover)').matches;
+const bub = t => `<div class="mini-bub">${t}</div>`;
+const chip = (t,a) => `<span class="chip${a?' alt':''}">${t}</span>`;
+
+/* ——— catalog ———  [class, innerHTML, kind]
+   kind: 'anim' (replay keyframes) | 'sim' (simulate hover/press) | 'loop' (runs forever) | 'ring' (focus pulse) */
+const CATALOG = {
+  'grid-entrances': [
+    ['fx-fade',     bub('Plain crossfade'), 'anim'],
+    ['fx-up',       bub('Rises in — the workhorse'), 'anim'],
+    ['fx-down',     bub('Drops from above'), 'anim'],
+    ['fx-left',     bub('Slides in from left'), 'anim'],
+    ['fx-right',    bub('Slides in from right'), 'anim'],
+    ['fx-zoom',     bub('Scales up softly'), 'anim'],
+    ['fx-zoom-up',  bub('Rise + scale — chat default'), 'anim'],
+    ['fx-pop',      chip('Pop! with spring',1), 'anim'],
+    ['fx-bounce-in',chip('Boing — playful spring',1), 'anim'],
+    ['fx-blur',     bub('Focuses from a blur'), 'anim'],
+    ['fx-rotate',   bub('Tilts upright'), 'anim'],
+    ['fx-flip-x',   bub('Tips forward in 3D'), 'anim'],
+    ['fx-flip-y',   bub('Swings in from the side'), 'anim'],
+    ['fx-wipe',     bub('Wipes open left → right'), 'anim'],
+    ['fx-grow-x',   chip('Toolbar expands'), 'anim'],
+    ['fx-sheet-up', `<div class="sheet">Bottom sheet</div>`, 'anim'],
+    ['fx-sheet-down',`<div class="sheet" style="border-radius:4px 4px 12px 12px">Top banner</div>`, 'anim'],
+  ],
+  'grid-exits': [
+    ['fx-fade-out',  bub('Fades away'), 'anim'],
+    ['fx-up-out',    bub('Lifts off upward'), 'anim'],
+    ['fx-down-out',  bub('Sinks downward'), 'anim'],
+    ['fx-left-out',  bub('Swipes off to the left'), 'anim'],
+    ['fx-slide-out', bub('Swipes off to the right'), 'anim'],
+    ['fx-zoom-out',  bub('Shrinks away'), 'anim'],
+    ['fx-pop-out',   chip('Pops out',1), 'anim'],
+    ['fx-blur-out',  bub('Defocuses out'), 'anim'],
+    ['fx-sheet-out', `<div class="sheet">Sheet dismisses</div>`, 'anim'],
+  ],
+  'grid-attention': [
+    ['fx-pulse',    chip('1 new reply',1), 'anim'],
+    ['fx-bounce',   chip('Scroll to bottom ↓'), 'anim'],
+    ['fx-shake',    chip('Invalid input'), 'anim'],
+    ['fx-wiggle',   chip('Try me'), 'anim'],
+    ['fx-jello',    chip('Jello wobble',1), 'anim'],
+    ['fx-rubber',   chip('Rubber band',1), 'anim'],
+    ['fx-nudge',    chip('Swipe me →'), 'anim'],
+    ['fx-flash',    chip('Saved ✓',1), 'anim'],
+    ['fx-heartbeat',chip('♥ Liked'), 'anim'],
+    ['fx-glow',     `<button class="demo-btn fx-glow" style="--fx-glow:rgba(79,70,229,.5)">Glowing CTA</button>`, 'anim'],
+    ['fx-float',    chip('Floating hint…',1), 'loop'],
+    ['fx-ring',     `<button class="demo-btn fx-ring" style="--fx-ring:rgba(79,70,229,.5)">Focus pulse</button>`, 'ring'],
+  ],
+  'grid-buttons': [
+    ['fx-btn',      `<button class="demo-btn fx-btn">Press me</button>`, 'sim'],
+    ['fx-push',     `<button class="demo-btn dark fx-push">Push down</button>`, 'sim'],
+    ['fx-lift',     `<button class="demo-btn dark fx-lift">Lift</button>`, 'sim'],
+    ['fx-grow',     `<button class="demo-btn fx-grow">Grow</button>`, 'sim'],
+    ['fx-tilt',     `<button class="demo-btn dark fx-tilt">Tilt</button>`, 'sim'],
+    ['fx-shine',    `<button class="demo-btn fx-shine">Shine sweep</button>`, 'sim'],
+    ['fx-brighten', `<button class="demo-btn fx-brighten">Brighten</button>`, 'sim'],
+    ['fx-underline',`<span class="demo-link fx-underline">Animated link</span>`, 'sim'],
+  ],
+  'grid-updates': [
+    ['fx-thought',  `<div class="swap-clip"><span class="status-line">Thinking…</span></div>`, 'swap',
+      { label: '.fx-thought ⇄ -out', out: 'fx-thought-out',
+        items: ['Thinking…','Searching the web…','Reading 12 sources…','Synthesizing the answer…'] }],
+    ['fx-roll-up',  `<div class="swap-clip fx-clip"><span class="tok">1,024 tokens</span></div>`, 'swap',
+      { label: '.fx-roll-up ⇄ -out', out: 'fx-roll-up-out',
+        items: ['1,024 tokens','2,048 tokens','4,096 tokens','8,192 tokens'] }],
+    ['fx-roll-down',`<div class="swap-clip fx-clip"><span class="status-line">Step 1 · Plan</span></div>`, 'swap',
+      { label: '.fx-roll-down ⇄ -out', out: 'fx-roll-down-out',
+        items: ['Step 1 · Plan','Step 2 · Search','Step 3 · Draft','Step 4 · Review'] }],
+    ['fx-cycle-2',  `<div class="fx-cycle-2 status-line" style="--fx-cycle:4s;text-align:center"><span>Connecting…</span><span>Connected ✓</span></div>`, 'loop'],
+    ['fx-cycle-3',  `<div class="fx-cycle-3 status-line" style="--fx-cycle:5.4s;text-align:center"><span>Uploading file…</span><span>Scanning content…</span><span>Indexing 240 chunks…</span></div>`, 'loop'],
+    ['fx-cycle-4',  `<div class="fx-cycle-4 status-line" style="--fx-cycle:7s;text-align:center"><span>Thinking…</span><span>Searching…</span><span>Reading…</span><span>Writing…</span></div>`, 'loop'],
+  ],
+  'grid-ai': [
+    ['fx-trace', `<div class="trace-track fx-trace"></div>`, 'loop'],
+    ['fx-comet', `<div class="trace-track fx-comet"></div>`, 'loop'],
+    ['fx-fill',  `<div class="file-chip fx-fill">📄 photos.zip · uploading</div>`, 'loop'],
+  ],
+  'grid-width': [
+    ['fx-width',     `<div class="w-pill fx-width">▶ Run</div>`, 'toggle',
+      { label: '.fx-width (toggle)', wide: 'wide', texts: ['▶ Run', '▶ Run analysis'] }],
+    ['fx-expand-w',  `<div class="w-bar" style="padding:0 18px">Panel expands</div>`, 'anim', { style: '--fx-w:170px' }],
+    ['fx-collapse-w',`<div class="w-bar" style="padding:0 18px">Panel collapses</div>`, 'anim', { style: '--fx-w:170px' }],
+    ['fx-grow-x',    chip('GPU: scales open'), 'anim'],
+    ['fx-shrink-x',  chip('GPU: scales shut',1), 'anim'],
+    ['fx-grow-y',    bub('Accordion section<br>opens vertically'), 'anim'],
+    ['fx-shrink-y',  bub('Accordion section<br>closes vertically'), 'anim'],
+  ],
+  'grid-chat': [
+    ['fx-msg',      bub('Assistant bubble entrance'), 'anim'],
+    ['fx-msg-user', `<div class="mini-bub" style="background:var(--indigo);color:#fff;border:0;border-radius:12px;border-bottom-right-radius:4px">User bubble entrance</div>`, 'anim'],
+    ['fx-stream',   bub('Streamed <span class="fx-stream fx-d2">chunk</span> <span class="fx-stream fx-d4">by</span> <span class="fx-stream fx-d5">chunk</span>'), 'anim'],
+    ['fx-cursor',   `<div class="mini-bub fx-cursor">Streaming caret</div>`, 'loop'],
+    ['fx-dots',     `<div class="mini-bub" style="color:var(--ink-2)"><span class="fx-dots"><i></i><i></i><i></i></span></div>`, 'loop'],
+    ['fx-shimmer',  `<div style="display:flex;flex-direction:column;gap:7px"><div class="skel fx-shimmer"></div><div class="skel fx-shimmer" style="width:104px"></div></div>`, 'loop'],
+    ['fx-pulse-soft',`<div style="display:flex;flex-direction:column;gap:7px"><div class="skel fx-pulse-soft"></div><div class="skel fx-pulse-soft" style="width:104px"></div></div>`, 'loop'],
+    ['fx-spin',     `<div class="spinner fx-spin"></div>`, 'loop'],
+    ['fx-progress', `<div class="track fx-progress"></div>`, 'loop'],
+  ],
+};
+
+/* ——— build cards ——— */
+for (const [gridId, items] of Object.entries(CATALOG)) {
+  const grid = document.getElementById(gridId);
+  for (const [cls, inner, kind, opts = {}] of items) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const stageAttrs = kind === 'anim' ? ' role="button" tabindex="0" aria-label="Replay ' + cls + '"' : '';
+    const foot = kind === 'loop'
+      ? `<span class="hint">loops</span>`
+      : `<button class="rep" aria-label="Replay ${cls}" title="Replay">↻</button>`;
+    card.innerHTML = `
+      <div class="stage"${stageAttrs}>
+        <div class="subject ${kind === 'anim' ? cls : ''}">${inner}</div>
+      </div>
+      <div class="card-foot">
+        <button class="cls" title="Copy class name">${opts.label || '.' + cls}</button>
+        ${foot}
+      </div>`;
+
+    const stage = card.querySelector('.stage');
+    const subject = card.querySelector('.subject');
+    if (opts.style) subject.style.cssText += opts.style;
+    const repBtn = card.querySelector('.rep');
+    let go = null;
+
+    if (kind === 'anim') {
+      go = () => { subject.classList.remove(cls); void subject.offsetWidth; subject.classList.add(cls); };
+      stage.addEventListener('click', go);
+      stage.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+      if (cls.includes('-out') || cls.includes('collapse') || cls.includes('shrink'))
+        subject.addEventListener('animationend', () =>
+          setTimeout(() => subject.classList.remove(cls), 700));
+    } else if (kind === 'sim') {
+      const target = subject.firstElementChild;
+      go = () => { target.classList.remove('sim'); void target.offsetWidth;
+        target.classList.add('sim'); setTimeout(() => target.classList.remove('sim'), 800); };
+    } else if (kind === 'ring') {
+      const target = subject.firstElementChild;
+      go = () => { target.style.animation = 'none'; void target.offsetWidth;
+        target.style.animation = 'fxRing .55s cubic-bezier(.22,1,.36,1)'; };
+      target.addEventListener('click', go);
+    } else if (kind === 'swap') {
+      /* old element animates out with opts.out; replacement animates in with cls */
+      const clip = subject.firstElementChild;
+      let idx = 0, busy = false;
+      go = () => {
+        if (busy) return; busy = true;
+        const cur = clip.lastElementChild;
+        idx = (idx + 1) % opts.items.length;
+        const next = cur.cloneNode(false);
+        next.textContent = opts.items[idx];
+        next.classList.add(cls);
+        cur.classList.add(opts.out);
+        clip.appendChild(next);
+        cur.addEventListener('animationend', () => { cur.remove(); busy = false; }, { once: true });
+      };
+      stage.addEventListener('click', go);
+      stage.style.cursor = 'pointer';
+    } else if (kind === 'toggle') {
+      /* fx-width: toggle a width class and (optionally) the label */
+      const target = subject.firstElementChild;
+      go = () => {
+        const wide = target.classList.toggle(opts.wide);
+        if (opts.texts) target.textContent = opts.texts[wide ? 1 : 0];
+      };
+      stage.addEventListener('click', go);
+      stage.style.cursor = 'pointer';
+    }
+    if (repBtn && go) repBtn.addEventListener('click', go);
+    card.querySelector('.cls').addEventListener('click', () => copyText(cls));
+    grid.appendChild(card);
+  }
+}
+
+/* hint text per input type */
+if (!canHover) {
+  document.getElementById('hint-buttons').textContent = '8 · press a button, or tap ↻ to preview the hover effect';
+} else {
+  document.getElementById('hint-entrances').textContent = '17 · click ↻ (or the card) to replay · click the class to copy';
+}
+
+/* ——— copy with clipboard fallback + toast ——— */
+function copyText(t){
+  const done = () => showToast(t.length > 30 ? 'Copied' : 'Copied  ' + t);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(t).then(done, () => legacyCopy(t, done));
+  } else legacyCopy(t, done);
+}
+function legacyCopy(t, done){
+  const ta = document.createElement('textarea');
+  ta.value = t; ta.style.cssText = 'position:fixed;opacity:0';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  ta.remove(); done();
+}
+function showToast(msg){
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.remove('fx-zoom-up','fx-fade-out','fx-fast');
+  void toast.offsetWidth;
+  toast.style.opacity = 1;
+  toast.classList.add('fx-zoom-up','fx-fast');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => { toast.classList.remove('fx-zoom-up'); toast.classList.add('fx-fade-out'); }, 1300);
+}
+
+/* ——— stagger demo ——— */
+const stag = document.getElementById('stag');
+document.querySelectorAll('[data-stag]').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('[data-stag]').forEach(b => b.setAttribute('aria-pressed','false'));
+  btn.setAttribute('aria-pressed','true');
+  stag.className = ('fx-stagger ' + btn.dataset.stag).trim();
+  replayList();
+}));
+function replayList(){
+  const c = stag.className; stag.className = ''; void stag.offsetWidth; stag.className = c;
+}
+function replayMods(){
+  document.querySelectorAll('#mods li').forEach(li => {
+    const c = li.className; li.className = ''; void li.offsetWidth; li.className = c;
+  });
+}
+
+/* ——— live chat playground ——— */
+const SCRIPT = [
+  { user: 'Can you make our chat UI feel less… static?', bot: 'Absolutely. Watch this reply — every word streams in with fx-stream, the caret blinks with fx-cursor, and this bubble entered with fx-msg. One CSS file, zero JavaScript.' },
+  { user: 'Will it stay smooth on low-end laptops and phones?', bot: 'Yes — every animation only touches transform and opacity, so the GPU compositor does the work on Windows, macOS, and iOS alike. No layout thrash, no jank.' },
+  { user: 'And accessibility?', bot: 'Built in. If a user enables reduced motion at the OS level, every animation collapses to an instant state change automatically.' },
+];
+const chat = document.getElementById('chat');
+let chatTimers = [], chatGen = 0;
+
+function later(fn, ms){ chatTimers.push(setTimeout(fn, ms)); }
+
+function restartChat(){
+  chatGen++; chatTimers.forEach(clearTimeout); chatTimers = [];
+  chat.innerHTML = ''; playExchange(0, chatGen);
+}
+function playExchange(i, gen){
+  if (gen !== chatGen) return;
+  if (i >= SCRIPT.length) { later(() => restartChat(), 3500); return; }
+  const { user, bot } = SCRIPT[i];
+
+  const u = document.createElement('div');
+  u.className = 'bub user fx-msg-user'; u.textContent = user;
+  chat.appendChild(u); trim();
+
+  later(() => {
+    const t = document.createElement('div');
+    t.className = 'bub bot typing fx-msg';
+    t.innerHTML = '<span class="fx-dots"><i></i><i></i><i></i></span>';
+    chat.appendChild(t); trim();
+
+    later(() => {
+      t.classList.add('fx-fade-out','fx-faster');
+      later(() => {
+        if (gen !== chatGen) return;
+        t.remove();
+        const b = document.createElement('div');
+        b.className = 'bub bot fx-msg fx-cursor';
+        chat.appendChild(b); trim();
+        const words = bot.split(' ');
+        let w = 0;
+        const step = () => {
+          if (gen !== chatGen) return;
+          if (w < words.length) {
+            const s = document.createElement('span');
+            s.className = 'fx-stream';
+            s.textContent = (w ? ' ' : '') + words[w++];
+            b.appendChild(s);
+            later(step, 30 + Math.random()*55);
+          } else {
+            b.classList.remove('fx-cursor');
+            later(() => playExchange(i+1, gen), 1400);
+          }
+        };
+        step();
+      }, 220);
+    }, 1300);
+  }, 650);
+}
+function trim(){ while (chat.children.length > 6) chat.firstChild.remove(); }
+restartChat();
+</script>
+</body>
+</html>

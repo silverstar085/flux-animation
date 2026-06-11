@@ -1,0 +1,26 @@
+{
+  "name": "flux-animation",
+  "version": "2.0.0",
+  "description": "A micro motion CSS library for chat UIs — zero JS, GPU-composited animations",
+  "main": "flux.css",
+  "style": "flux.css",
+  "files": [
+    "flux.css",
+    "flux.min.css",
+    "flux-showcase.html"
+  ],
+  "keywords": [
+    "css",
+    "animation",
+    "motion",
+    "chat-ui",
+    "micro-interactions"
+  ],
+  "author": "Neil Shah",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neilshah2000/flux-animation.git"
+  },
+  "homepage": "https://neilshah2000.github.io/flux-animation/flux-showcase.html"
+}
