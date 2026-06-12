@@ -1,4 +1,4 @@
-# flux.css
+# flux-animation
 
 A micro motion CSS library for chat UIs — ~3.1 KB gzipped, zero JS, GPU-composited animations smooth on Windows, macOS, and iOS.
 
