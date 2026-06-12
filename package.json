@@ -1,13 +1,21 @@
 {
   "name": "flux-animation",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A micro motion CSS library for chat UIs — zero JS, GPU-composited animations",
-  "main": "flux.css",
-  "style": "flux.css",
+  "main": "flux.min.css",
+  "style": "flux.min.css",
+  "unpkg": "flux.min.css",
+  "jsdelivr": "flux.min.css",
+  "exports": {
+    ".": "./flux.min.css",
+    "./flux.css": "./flux.css",
+    "./flux.min.css": "./flux.min.css",
+    "./min": "./flux.min.css",
+    "./package.json": "./package.json"
+  },
   "files": [
     "flux.css",
-    "flux.min.css",
-    "flux-showcase.html"
+    "flux.min.css"
   ],
   "keywords": [
     "css",
@@ -20,7 +28,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/neilshah2000/flux-animation.git"
+    "url": "https://github.com/silverstar085/flux-animation.git"
   },
-  "homepage": "https://neilshah2000.github.io/flux-animation/flux-showcase.html"
+  "homepage": "https://silverstar085.github.io/flux-animation/flux-showcase.html"
 }

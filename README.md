@@ -2,14 +2,26 @@
 
 A micro motion CSS library for chat UIs — ~3.1 KB gzipped, zero JS, GPU-composited animations smooth on Windows, macOS, and iOS.
 
-## Usage
+## Install
+
+```sh
+npm install flux-animation
+```
+
+Then import it in your app (Vite, webpack, etc.):
+
+```js
+import 'flux-animation';                 // minified build (default)
+// or
+import 'flux-animation/flux.css';        // readable source
+```
+
+Or include it directly from a CDN — no install needed:
 
 ```html
-<!-- CDN (jsDelivr) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/neilshah2000/flux-animation@main/flux.min.css">
-
-<!-- or npm -->
-<link rel="stylesheet" href="node_modules/flux-animation/flux.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flux-animation@2/flux.min.css">
+<!-- or -->
+<link rel="stylesheet" href="https://unpkg.com/flux-animation@2/flux.min.css">
 ```
 
 ## Classes
@@ -41,7 +53,7 @@ A micro motion CSS library for chat UIs — ~3.1 KB gzipped, zero JS, GPU-compos
 
 ## Demo
 
-Open `flux-showcase.html` or visit the [live demo](https://neilshah2000.github.io/flux-animation/flux-showcase.html).
+Open `flux-showcase.html` or visit the [live demo](https://silverstar085.github.io/flux-animation/flux-showcase.html).
 
 ## License
 
