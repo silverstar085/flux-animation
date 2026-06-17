@@ -1,6 +1,6 @@
 # flux-animation
 
-A micro motion CSS library for chat UIs — ~3.1 KB gzipped, zero JS, GPU-composited animations smooth on Windows, macOS, and iOS.
+A micro motion CSS library for chat UIs — ~4.2 KB gzipped, zero JS, GPU-composited animations smooth on Windows, macOS, and iOS.
 
 ## Install
 
@@ -29,16 +29,21 @@ Or include it directly from a CDN — no install needed:
 | Class | Effect |
 |---|---|
 | `fx-up`, `fx-down`, `fx-left`, `fx-right` | Slide + fade in |
-| `fx-pop`, `fx-sink` | Scale up/down |
+| `fx-pop`, `fx-zoom`, `fx-zoom-down` | Scale entrances |
+| `fx-swing`, `fx-roll-in`, `fx-reveal` | 3D hinge, roll, and clip-reveal entrances |
+| `fx-tada`, `fx-bell`, `fx-buzz` | Attention cues (add `fx-loop` to repeat) |
 | `fx-faster`, `fx-fast`, `fx-slow`, `fx-slower` | Speed modifiers |
-| `fx-d1` … `fx-d5` | Delay .1s – .5s |
-| `fx-spring`, `fx-linear` | Easing modifiers |
-| `fx-loop` | Repeat forever |
-| `fx-stagger` (on parent `<ul>`) | Children animate in sequence |
-| `fx-cycle-3` | Auto-rotate 3 children (no JS) |
-| `fx-trace`, `fx-comet`, `fx-fill` | In-flight indicators |
+| `fx-d1` … `fx-d7` | Delay .1s – .7s |
+| `fx-spring`, `fx-linear`, `fx-reverse`, `fx-paused` | Easing & playback modifiers |
+| `fx-loop`, `fx-loop-2`, `fx-loop-3` | Repeat forever / N times |
+| `fx-stagger` (on parent `<ul>`) | Children animate in sequence (`-fade` `-left` `-right` `-pop` `-blur`) |
+| `fx-cycle-2` … `fx-cycle-5` | Auto-rotate 2–5 children (no JS) |
+| `fx-trace`, `fx-comet`, `fx-fill`, `fx-scan`, `fx-ripple` | In-flight indicators |
+| `fx-orbit`, `fx-bloom` | Calm single-element loaders |
+| `fx-dots-wave`, `-fade`, `-scale`, `-flow`, `-elastic`, `-spinner` | Multi-dot loaders (drop plain `<i>` children inside) |
+| `fx-bars`, `fx-ping`, `fx-dots`, `fx-spin` | Chat & loading primitives |
 | `fx-width` | Animated width transition |
-| `fx-expand-w`, `fx-collapse-w` | Keyframed width morphing |
+| `fx-expand-w`/`-h`, `fx-collapse-w`/`-h` | Keyframed width & height morphing |
 
 ## CSS Variables
 
