@@ -1,4 +1,4 @@
-/*! flux-animation v2.1.0 — a micro motion library for chat UIs
+/*! flux-animation v2.2.0 — a micro motion library for chat UIs
  *  ~4.2 KB gzipped · zero JS · transform/opacity first (GPU-composited, smooth on Windows + macOS + iOS)
  *
  *  USAGE
@@ -155,7 +155,6 @@
 
 @media (hover: hover) {
   .fx-lift:hover  { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.12) }
-  .fx-lift:active { transform: translateY(0) }
   .fx-grow:hover  { transform: scale(1.04) }
   .fx-tilt:hover  { transform: perspective(640px) rotateX(3deg) rotateY(-3deg) translateY(-1px) }
   .fx-brighten:hover { filter: brightness(1.12) }
@@ -296,7 +295,7 @@
 @keyframes fxDotsElastic{ 0%,50%,100% { transform: translateY(0) } 25% { transform: translateY(-9px) } }
 @keyframes fxDotsRing   { 0% { opacity: 1 } 100% { opacity: .15 } }
 
-/* ─────────────── WIDTH & SIZE (8) ───────────────
+/* ─────────────── WIDTH & SIZE (10) ───────────────
    fx-width is a transition: toggle a class / inline width and it tweens — with
    interpolate-size enabled it even tweens to width:auto in Chromium.
    fx-expand-w / fx-collapse-w animate max-width (layout work — fine for occasional
@@ -310,6 +309,8 @@
 .fx-shrink-y   { animation-name: fxShrinkY; transform-origin: top center }
 .fx-expand-h   { animation-name: fxExpandH;   overflow: hidden }              /* max-height accordion open      */
 .fx-collapse-h { animation-name: fxCollapseH; overflow: hidden }              /* max-height accordion close     */
+.fx-grow-x-to   { animation-name: fxScaleXTo; transform-origin: left center; --fx-x: 1.3 }  /* widens then HOLDS at --fx-x (1.3 = 130%) — content stays */
+.fx-shrink-x-to { animation-name: fxScaleXTo; transform-origin: left center; --fx-x: .6 }   /* narrows then HOLDS at --fx-x (.6 = 60%)  — content stays */
 
 @keyframes fxExpandW   { from { max-width: 0; opacity: 0 } to { max-width: var(--fx-w, 320px); opacity: 1 } }
 @keyframes fxCollapseW { from { max-width: var(--fx-w, 320px) } to { max-width: 0; opacity: 0 } }
@@ -318,6 +319,7 @@
 @keyframes fxShrinkY   { to   { opacity: 0; transform: scale(1, .6) } }
 @keyframes fxExpandH   { from { max-height: 0; opacity: 0 } to { max-height: var(--fx-h, 300px); opacity: 1 } }
 @keyframes fxCollapseH { from { max-height: var(--fx-h, 300px) } to { max-height: 0; opacity: 0 } }
+@keyframes fxScaleXTo  { from { transform: scaleX(1) } to { transform: scaleX(var(--fx-x, 1)) } }
 
 /* ─────────────────── CHAT & LOADING PRIMITIVES (11) ─────────────────── */
 .fx-msg      { animation-name: fxZoomUp }                                   /* assistant bubble  */

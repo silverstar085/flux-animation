@@ -44,6 +44,8 @@ Or include it directly from a CDN — no install needed:
 | `fx-bars`, `fx-ping`, `fx-dots`, `fx-spin` | Chat & loading primitives |
 | `fx-width` | Animated width transition |
 | `fx-expand-w`/`-h`, `fx-collapse-w`/`-h` | Keyframed width & height morphing |
+| `fx-grow-x`/`-y`, `fx-shrink-x`/`-y` | GPU scale grow & shrink (X / Y axis) |
+| `fx-grow-x-to`, `fx-shrink-x-to` | Scale to a custom width and hold it — content stays visible (set `--fx-x`) |
 
 ## CSS Variables
 
@@ -55,6 +57,8 @@ Or include it directly from a CDN — no install needed:
   --fx-cycle: 6s;
 }
 ```
+
+Per-element knobs: `--fx-w` / `--fx-h` set the target size for `fx-expand-w`/`-h`, and `--fx-x` sets the target horizontal scale that `fx-grow-x-to` / `fx-shrink-x-to` hold (e.g. `1.5` = 150%, `.6` = 60%).
 
 ## Demo
 
