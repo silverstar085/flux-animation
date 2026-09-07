@@ -228,16 +228,19 @@ for (const engine of engines) {
     await page.keyboard.press('Tab');
     // Safari follows the OS keyboard-navigation preference; focus in keyboard modality.
     await page.locator('#button').focus();
-    await page.waitForTimeout(250);
     assert.equal(await page.locator('#button').evaluate(e => e.matches(':focus-visible')), true);
-    assert.match(await page.locator('#button').evaluate(e => getComputedStyle(e).transform), /1\.04/);
+    await page.waitForFunction(() =>
+      Math.abs(new DOMMatrixReadOnly(getComputedStyle(document.querySelector('#button')).transform).a - 1.04) < 0.0001,
+    );
     const origin = await page.locator('#origin').evaluate(e => {
       const s = getComputedStyle(e);
       return [s.transformOrigin, s.animationIterationCount, s.animationDirection];
     });
     assert.deepEqual(origin, ['60px 40px', '1', 'alternate']);
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    assert.match(await page.locator('#button').evaluate(e => getComputedStyle(e).transform), /1\.04/);
+    await page.waitForFunction(() =>
+      Math.abs(new DOMMatrixReadOnly(getComputedStyle(document.querySelector('#button')).transform).a - 1.04) < 0.0001,
+    );
     const touch = await browser.newPage({ hasTouch: true, viewport: { width: 390, height: 844 } });
     await touch.setContent('<button class="fx-push" style="padding:20px">Press me</button>');
     await touch.addStyleTag({ path: new URL('flux.all.min.css', root).pathname });
