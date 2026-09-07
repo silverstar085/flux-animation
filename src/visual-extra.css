@@ -1,0 +1,72 @@
+/* Opt-in masks and filters: profile before using on large surfaces. */
+.fx-wipe-up {
+  animation-name: fxDirectionalWipe;
+  --_fx-inset: 0 0 100% 0;
+}
+.fx-wipe-down {
+  animation-name: fxDirectionalWipe;
+  --_fx-inset: 100% 0 0 0;
+}
+.fx-wipe-left {
+  animation-name: fxDirectionalWipe;
+  --_fx-inset: 0 100% 0 0;
+}
+.fx-wipe-right {
+  animation-name: fxDirectionalWipe;
+  --_fx-inset: 0 0 0 100%;
+}
+@keyframes fxDirectionalWipe {
+  from {
+    clip-path: inset(var(--_fx-inset));
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+.fx-iris-in {
+  animation-name: fxIrisIn;
+}
+.fx-iris-out {
+  animation-name: fxIrisOut;
+}
+@keyframes fxIrisIn {
+  from {
+    clip-path: circle(0% at var(--fx-iris-origin, 50% 50%));
+  }
+  to {
+    clip-path: circle(150% at var(--fx-iris-origin, 50% 50%));
+  }
+}
+@keyframes fxIrisOut {
+  from {
+    clip-path: circle(150% at var(--fx-iris-origin, 50% 50%));
+  }
+  to {
+    clip-path: circle(0% at var(--fx-iris-origin, 50% 50%));
+  }
+}
+.fx-blur-zoom-in {
+  animation-name: fxBlurZoomIn;
+}
+.fx-blur-zoom-out {
+  animation-name: fxBlurZoomOut;
+}
+@keyframes fxBlurZoomIn {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+@keyframes fxBlurZoomOut {
+  to {
+    opacity: 0;
+    filter: blur(6px);
+    transform: scale(1.08);
+  }
+}

@@ -1,0 +1,123 @@
+/* ─────────────── WIDTH & SIZE (10) ───────────────
+   fx-width is a transition: toggle a class / inline width and it tweens — with
+   interpolate-size enabled it even tweens to width:auto in Chromium.
+   fx-expand-w / fx-collapse-w animate max-width (layout work — fine for occasional
+   UI moments, avoid in tight loops). The scale variants are transform-based. */
+.fx-width {
+  transition:
+    width 0.35s var(--fx-ease),
+    max-width 0.35s var(--fx-ease),
+    min-width 0.35s var(--fx-ease),
+    flex-basis 0.35s var(--fx-ease);
+}
+.fx-expand-w {
+  animation-name: fxExpandW;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.fx-collapse-w {
+  animation-name: fxCollapseW;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.fx-shrink-x {
+  animation-name: fxShrinkX;
+  transform-origin: left center;
+} /* transform exit, pairs with fx-grow-x */
+.fx-grow-y {
+  animation-name: fxGrowY;
+  transform-origin: top center;
+} /* transform expand (accordion feel)    */
+.fx-shrink-y {
+  animation-name: fxShrinkY;
+  transform-origin: top center;
+}
+.fx-expand-h {
+  animation-name: fxExpandH;
+  overflow: hidden;
+} /* max-height accordion open      */
+.fx-collapse-h {
+  animation-name: fxCollapseH;
+  overflow: hidden;
+} /* max-height accordion close     */
+.fx-grow-x-to {
+  animation-name: fxScaleXTo;
+  transform-origin: left center;
+  --fx-x: 1.3;
+} /* widens then HOLDS at --fx-x (1.3 = 130%) — content stays */
+.fx-shrink-x-to {
+  animation-name: fxScaleXTo;
+  transform-origin: left center;
+  --fx-x: 0.6;
+} /* narrows then HOLDS at --fx-x (.6 = 60%)  — content stays */
+
+@keyframes fxExpandW {
+  from {
+    max-width: 0;
+    opacity: 0;
+  }
+  to {
+    max-width: var(--fx-w, 320px);
+    opacity: 1;
+  }
+}
+@keyframes fxCollapseW {
+  from {
+    max-width: var(--fx-w, 320px);
+  }
+  to {
+    max-width: 0;
+    opacity: 0;
+  }
+}
+@keyframes fxShrinkX {
+  to {
+    opacity: 0;
+    transform: scale(0.4, 1);
+  }
+}
+@keyframes fxGrowY {
+  from {
+    opacity: 0;
+    transform: scale(1, 0.6);
+  }
+}
+@keyframes fxShrinkY {
+  to {
+    opacity: 0;
+    transform: scale(1, 0.6);
+  }
+}
+@keyframes fxExpandH {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: var(--fx-h, 300px);
+    opacity: 1;
+  }
+}
+@keyframes fxCollapseH {
+  from {
+    max-height: var(--fx-h, 300px);
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+  }
+}
+@keyframes fxScaleXTo {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(var(--fx-x, 1));
+  }
+}
+
+@supports (interpolate-size: allow-keywords) {
+  .fx-width {
+    interpolate-size: allow-keywords;
+  }
+}

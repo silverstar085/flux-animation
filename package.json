@@ -1,7 +1,7 @@
 {
   "name": "flux-animation",
-  "version": "2.2.0",
-  "description": "A micro motion CSS library for chat UIs — zero JS, GPU-composited animations",
+  "version": "3.0.0",
+  "description": "Tiny class-based CSS animations \u2014 zero runtime JavaScript, optional motion packs",
   "main": "flux.min.css",
   "style": "flux.min.css",
   "unpkg": "flux.min.css",
@@ -11,11 +11,44 @@
     "./flux.css": "./flux.css",
     "./flux.min.css": "./flux.min.css",
     "./min": "./flux.min.css",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./core": "./flux.core.min.css",
+    "./flux.core.css": "./flux.core.css",
+    "./flux.core.min.css": "./flux.core.min.css",
+    "./motion": "./flux.motion.min.css",
+    "./flux.motion.css": "./flux.motion.css",
+    "./flux.motion.min.css": "./flux.motion.min.css",
+    "./interactions": "./flux.interactions.min.css",
+    "./flux.interactions.css": "./flux.interactions.css",
+    "./flux.interactions.min.css": "./flux.interactions.min.css",
+    "./loaders": "./flux.loaders.min.css",
+    "./flux.loaders.css": "./flux.loaders.css",
+    "./flux.loaders.min.css": "./flux.loaders.min.css",
+    "./visual": "./flux.visual.min.css",
+    "./flux.visual.css": "./flux.visual.css",
+    "./flux.visual.min.css": "./flux.visual.min.css",
+    "./all": "./flux.all.min.css",
+    "./flux.all.css": "./flux.all.css",
+    "./flux.all.min.css": "./flux.all.min.css"
   },
   "files": [
     "flux.css",
-    "flux.min.css"
+    "flux.min.css",
+    "flux.core.css",
+    "flux.core.min.css",
+    "flux.motion.css",
+    "flux.motion.min.css",
+    "flux.interactions.css",
+    "flux.interactions.min.css",
+    "flux.loaders.css",
+    "flux.loaders.min.css",
+    "flux.visual.css",
+    "flux.visual.min.css",
+    "flux.all.css",
+    "flux.all.min.css",
+    "CHANGELOG.md",
+    "docs/*.md",
+    "docs/*.json"
   ],
   "keywords": [
     "css",
@@ -30,5 +63,24 @@
     "type": "git",
     "url": "https://github.com/silverstar085/flux-animation.git"
   },
-  "homepage": "https://silverstar085.github.io/flux-animation/flux-showcase.html"
+  "homepage": "https://silverstar085.github.io/flux-animation/flux-showcase.html",
+  "devDependencies": {
+    "clean-css": "5.3.3",
+    "esbuild": "0.28.2",
+    "playwright": "1.63.0",
+    "postcss": "8.5.28"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/build.mjs --check --budgets",
+    "size": "node scripts/build.mjs --check --budgets",
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "node scripts/browser-check.mjs",
+    "preview": "node scripts/serve.mjs",
+    "prepack": "npm run check && npm test",
+    "benchmark": "node scripts/benchmark.mjs"
+  }
 }

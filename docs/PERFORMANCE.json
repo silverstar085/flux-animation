@@ -1,0 +1,162 @@
+{
+  "browser": "Chromium",
+  "note": "Local headless traces, 3 runs of 1.5 seconds after warmup. Rings and shadow halos are different visual designs, not a drop-in equivalence benchmark.",
+  "results": [
+    {
+      "name": "legacy entrances",
+      "run": 0,
+      "layout": {
+        "count": 0,
+        "ms": 0
+      },
+      "paint": {
+        "count": 0,
+        "ms": 0
+      },
+      "p95FrameMs": 16.80000000000001
+    },
+    {
+      "name": "current entrances",
+      "run": 0,
+      "layout": {
+        "count": 0,
+        "ms": 0
+      },
+      "paint": {
+        "count": 0,
+        "ms": 0
+      },
+      "p95FrameMs": 16.700000000000273
+    },
+    {
+      "name": "legacy shadow halos",
+      "run": 0,
+      "layout": {
+        "count": 0,
+        "ms": 0
+      },
+      "paint": {
+        "count": 1911,
+        "ms": 24.64400000000009
+      },
+      "p95FrameMs": 16.700000000000728
+    },
+    {
+      "name": "new transform rings",
+      "run": 0,
+      "layout": {
+        "count": 0,
+        "ms": 0
+      },
+      "paint": {
+        "count": 0,
+        "ms": 0
+      },
+      "p95FrameMs": 16.800000000000182
+    },
+    {
+      "name": "legacy entrances",
+      "run": 1,
+      "layout": {
+        "count": 0,
+        "ms": 0
+      },
+      "paint": {
+        "count": 0,
+        "ms": 0
+      },
+      "p95FrameMs": 16.799999999999272
+    },
+    {
+      "name": "current entrances",
+      "run": 1,
+      "layout": {
+        "count": 0,
+        "ms": 0
+      },
+      "paint": {
+        "count": 0,
+        "ms": 0
+      },
+      "p95FrameMs": 16.799999999999272
+    },
+    {
+      "name": "legacy shadow halos",
+      "run": 1,
+      "layout": {
+        "count": 0,
+        "ms": 0
+      },
+      "paint": {
+        "count": 1911,
+        "ms": 34.674000000000305
+      },
+      "p95FrameMs": 16.799999999999272
+    },
+    {
+      "name": "new transform rings",
+      "run": 1,
+      "layout": {
+        "count": 0,
+        "ms": 0
+      },
+      "paint": {
+        "count": 0,
+        "ms": 0
+      },
+      "p95FrameMs": 16.700000000000728
+    },
+    {
+      "name": "legacy entrances",
+      "run": 2,
+      "layout": {
+        "count": 0,
+        "ms": 0
+      },
+      "paint": {
+        "count": 0,
+        "ms": 0
+      },
+      "p95FrameMs": 16.700000000000728
+    },
+    {
+      "name": "current entrances",
+      "run": 2,
+      "layout": {
+        "count": 0,
+        "ms": 0
+      },
+      "paint": {
+        "count": 0,
+        "ms": 0
+      },
+      "p95FrameMs": 16.700000000000728
+    },
+    {
+      "name": "legacy shadow halos",
+      "run": 2,
+      "layout": {
+        "count": 0,
+        "ms": 0
+      },
+      "paint": {
+        "count": 1932,
+        "ms": 34.702000000000204
+      },
+      "p95FrameMs": 16.799999999999272
+    },
+    {
+      "name": "new transform rings",
+      "run": 2,
+      "layout": {
+        "count": 0,
+        "ms": 0
+      },
+      "paint": {
+        "count": 0,
+        "ms": 0
+      },
+      "p95FrameMs": 16.799999999999272
+    }
+  ]
+}

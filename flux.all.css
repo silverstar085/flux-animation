@@ -6,7 +6,7 @@
   --fx-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-:where([class*="fx-"], .fx-stagger > *, .fx-stagger-fade > *, .fx-stagger-left > *, .fx-stagger-right > *, .fx-stagger-pop > *, .fx-stagger-blur > *, .fx-cycle-2 > *, .fx-cycle-3 > *, .fx-cycle-4 > *, .fx-cycle-5 > *, .fx-dots-wave i, .fx-dots-fade i, .fx-dots-scale i, .fx-dots-flow i, .fx-dots-elastic i, .fx-dots-spinner i, .fx-dots i, .fx-bars i),
+:where([class*="fx-"], .fx-stagger > *, .fx-stagger-fade > *, .fx-stagger-left > *, .fx-stagger-right > *, .fx-stagger-pop > *, .fx-stagger-blur > *, .fx-cycle-2 > *, .fx-cycle-3 > *, .fx-cycle-4 > *, .fx-cycle-5 > *, .fx-dots-wave i, .fx-dots-fade i, .fx-dots-scale i, .fx-dots-flow i, .fx-dots-elastic i, .fx-dots-spinner i, .fx-dots i, .fx-bars i, .fx-stagger-down > *, .fx-stagger-zoom > *, .fx-stagger-rotate > *, .fx-stagger-roll-up > *, .fx-dots-zigzag > i, .fx-bars-wave > i, .fx-bars-travel > i),
 :where([class*="fx-"])::before,
 :where([class*="fx-"])::after {
   --_t: .45s;
@@ -1625,6 +1625,818 @@
     transform: scaleY(1);
   }
 }
+
+/* Additional motion presets. Private family variables are set on each preset. */
+.fx-up-left {
+  animation-name: fxDiagonal;
+  --_fx-x: -1;
+  --_fx-y: -1;
+}
+.fx-up-right {
+  animation-name: fxDiagonal;
+  --_fx-x: 1;
+  --_fx-y: -1;
+}
+.fx-down-left {
+  animation-name: fxDiagonal;
+  --_fx-x: -1;
+  --_fx-y: 1;
+}
+.fx-down-right {
+  animation-name: fxDiagonal;
+  --_fx-x: 1;
+  --_fx-y: 1;
+}
+@keyframes fxDiagonal {
+  from {
+    opacity: 0;
+    transform: translate(
+      calc(var(--fx-dist) * var(--_fx-x)),
+      calc(var(--fx-dist) * var(--_fx-y))
+    );
+  }
+}
+.fx-spring-up {
+  animation-name: fxSpringTravel;
+  --_fx-x: 0;
+  --_fx-y: 1;
+  --_t: 0.65s;
+}
+.fx-spring-down {
+  animation-name: fxSpringTravel;
+  --_fx-x: 0;
+  --_fx-y: -1;
+  --_t: 0.65s;
+}
+.fx-spring-left {
+  animation-name: fxSpringTravel;
+  --_fx-x: -1;
+  --_fx-y: 0;
+  --_t: 0.65s;
+}
+.fx-spring-right {
+  animation-name: fxSpringTravel;
+  --_fx-x: 1;
+  --_fx-y: 0;
+  --_t: 0.65s;
+}
+@keyframes fxSpringTravel {
+  0% {
+    opacity: 0;
+    transform: translate(
+      calc(var(--fx-dist) * var(--_fx-x) * 2),
+      calc(var(--fx-dist) * var(--_fx-y) * 2)
+    );
+  }
+  65% {
+    opacity: 1;
+    transform: translate(
+      calc(var(--fx-dist) * var(--_fx-x) * -0.2),
+      calc(var(--fx-dist) * var(--_fx-y) * -0.2)
+    );
+  }
+  85% {
+    transform: translate(
+      calc(var(--fx-dist) * var(--_fx-x) * 0.07),
+      calc(var(--fx-dist) * var(--_fx-y) * 0.07)
+    );
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.fx-zoom-left {
+  animation-name: fxZoomSide;
+  --_fx-x: -1;
+}
+.fx-zoom-right {
+  animation-name: fxZoomSide;
+  --_fx-x: 1;
+}
+@keyframes fxZoomSide {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--fx-dist) * var(--_fx-x))) scale(0.97);
+  }
+}
+.fx-zoom-up-out {
+  animation-name: fxZoomTravelOut;
+  --_fx-x: 0;
+  --_fx-y: -1;
+}
+.fx-zoom-down-out {
+  animation-name: fxZoomTravelOut;
+  --_fx-x: 0;
+  --_fx-y: 1;
+}
+.fx-zoom-left-out {
+  animation-name: fxZoomTravelOut;
+  --_fx-x: -1;
+  --_fx-y: 0;
+}
+.fx-zoom-right-out {
+  animation-name: fxZoomTravelOut;
+  --_fx-x: 1;
+  --_fx-y: 0;
+}
+@keyframes fxZoomTravelOut {
+  to {
+    opacity: 0;
+    transform: translate(
+        calc(var(--fx-dist) * var(--_fx-x)),
+        calc(var(--fx-dist) * var(--_fx-y))
+      )
+      scale(0.94);
+  }
+}
+.fx-sheet-left {
+  animation-name: fxDrawerIn;
+  --_fx-x: -110%;
+  --_fx-y: 0%;
+}
+.fx-sheet-right {
+  animation-name: fxDrawerIn;
+  --_fx-x: 110%;
+  --_fx-y: 0%;
+}
+@keyframes fxDrawerIn {
+  from {
+    transform: translate(var(--_fx-x), var(--_fx-y));
+  }
+}
+.fx-sheet-up-out {
+  animation-name: fxDrawerOut;
+  --_fx-x: 0%;
+  --_fx-y: -110%;
+}
+.fx-sheet-down-out {
+  animation-name: fxDrawerOut;
+  --_fx-x: 0%;
+  --_fx-y: 110%;
+}
+.fx-sheet-left-out {
+  animation-name: fxDrawerOut;
+  --_fx-x: -110%;
+  --_fx-y: 0%;
+}
+.fx-sheet-right-out {
+  animation-name: fxDrawerOut;
+  --_fx-x: 110%;
+  --_fx-y: 0%;
+}
+@keyframes fxDrawerOut {
+  to {
+    transform: translate(var(--_fx-x), var(--_fx-y));
+  }
+}
+.fx-flip-in-top {
+  animation-name: fxEdgeFlip;
+  --_fx-x: 1;
+  --_fx-y: 0;
+  --_fx-angle: -65deg;
+  transform-origin: top center;
+}
+.fx-flip-in-bottom {
+  animation-name: fxEdgeFlip;
+  --_fx-x: 1;
+  --_fx-y: 0;
+  --_fx-angle: 65deg;
+  transform-origin: bottom center;
+}
+.fx-flip-in-left {
+  animation-name: fxEdgeFlip;
+  --_fx-x: 0;
+  --_fx-y: 1;
+  --_fx-angle: 65deg;
+  transform-origin: left center;
+}
+.fx-flip-in-right {
+  animation-name: fxEdgeFlip;
+  --_fx-x: 0;
+  --_fx-y: 1;
+  --_fx-angle: -65deg;
+  transform-origin: right center;
+}
+@keyframes fxEdgeFlip {
+  from {
+    opacity: 0;
+    transform: perspective(640px)
+      rotate3d(var(--_fx-x), var(--_fx-y), 0, var(--_fx-angle));
+  }
+  to {
+    opacity: 1;
+    transform: perspective(640px) rotate3d(var(--_fx-x), var(--_fx-y), 0, 0deg);
+  }
+}
+.fx-right-out {
+  animation-name: fxExitRight;
+}
+@keyframes fxExitRight {
+  to {
+    opacity: 0;
+    transform: translateX(calc(var(--fx-dist) * 2));
+  }
+}
+.fx-flip-y-out {
+  animation-name: fxExitFlipY;
+}
+@keyframes fxExitFlipY {
+  to {
+    opacity: 0;
+    transform: perspective(640px) rotateY(-22deg);
+  }
+}
+.fx-roll-out {
+  animation-name: fxExitRoll;
+}
+@keyframes fxExitRoll {
+  to {
+    opacity: 0;
+    transform: translateX(var(--fx-dist)) rotate(8deg);
+  }
+}
+.fx-swing-out {
+  animation-name: fxExitSwing;
+  transform-origin: top center;
+}
+@keyframes fxExitSwing {
+  to {
+    opacity: 0;
+    transform: perspective(640px) rotateX(-22deg);
+  }
+}
+.fx-nod {
+  animation-name: fxNod;
+  --_t: 0.6s;
+}
+@keyframes fxNod {
+  20%,
+  60% {
+    transform: translateY(3px);
+  }
+  40%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+}
+.fx-shake-y {
+  animation-name: fxShakeY;
+  --_t: 0.5s;
+}
+@keyframes fxShakeY {
+  20%,
+  60% {
+    transform: translateY(-5px);
+  }
+  40%,
+  80% {
+    transform: translateY(5px);
+  }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+}
+.fx-hop {
+  animation-name: fxHop;
+  --_t: 0.65s;
+}
+@keyframes fxHop {
+  20% {
+    transform: scale(1.08, 0.92);
+  }
+  45% {
+    transform: translateY(-12px) scale(0.96, 1.04);
+  }
+  75% {
+    transform: scale(1.06, 0.94);
+  }
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+.fx-pendulum {
+  animation-name: fxPendulum;
+  --_t: 3s;
+  --_n: infinite;
+  --_e: ease-in-out;
+  transform-origin: top center;
+}
+@keyframes fxPendulum {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}
+.fx-breathe {
+  animation-name: fxBreathe;
+  --_t: 3s;
+  --_n: infinite;
+  --_e: ease-in-out;
+}
+@keyframes fxBreathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.97);
+    opacity: 0.7;
+  }
+}
+.fx-recoil {
+  animation-name: fxRecoil;
+  --_t: 0.55s;
+}
+@keyframes fxRecoil {
+  20% {
+    transform: translateX(-5px) scale(0.94);
+  }
+  55% {
+    transform: translateX(2px) scale(1.02);
+  }
+  0%,
+  100% {
+    transform: translateX(0) scale(1);
+  }
+}
+.fx-settle {
+  animation-name: fxSettle;
+  --_t: 0.8s;
+}
+@keyframes fxSettle {
+  0% {
+    transform: rotate(-5deg);
+  }
+  35% {
+    transform: rotate(3deg);
+  }
+  60% {
+    transform: rotate(-1.5deg);
+  }
+  80% {
+    transform: rotate(0.5deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+.fx-wobble {
+  animation-name: fxWobble;
+  --_t: 0.8s;
+}
+@keyframes fxWobble {
+  20% {
+    transform: translateX(-8px) rotate(-5deg);
+  }
+  40% {
+    transform: translateX(6px) rotate(4deg);
+  }
+  60% {
+    transform: translateX(-4px) rotate(-2deg);
+  }
+  80% {
+    transform: translateX(2px) rotate(1deg);
+  }
+  0%,
+  100% {
+    transform: translateX(0) rotate(0);
+  }
+}
+.fx-stagger-down > * {
+  animation-name: fxStaggerDown;
+}
+@keyframes fxStaggerDown {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--fx-dist) * -1));
+  }
+}
+.fx-stagger-zoom > * {
+  animation-name: fxStaggerZoom;
+}
+@keyframes fxStaggerZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+.fx-stagger-rotate > * {
+  animation-name: fxStaggerRotate;
+}
+@keyframes fxStaggerRotate {
+  from {
+    opacity: 0;
+    transform: rotate(-8deg) scale(0.94);
+  }
+}
+.fx-stagger-roll-up > * {
+  animation-name: fxStaggerRoll;
+}
+@keyframes fxStaggerRoll {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+.fx-underline-center,
+.fx-underline-right,
+.fx-underline-double,
+.fx-overline,
+.fx-fill-h-left,
+.fx-fill-h-right,
+.fx-fill-h-up,
+.fx-fill-h-down {
+  position: relative;
+  isolation: isolate;
+}
+.fx-underline-center::after,
+.fx-underline-right::after,
+.fx-underline-double::after,
+.fx-overline::after,
+.fx-fill-h-left::after,
+.fx-fill-h-right::after,
+.fx-fill-h-up::after,
+.fx-fill-h-down::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  background: currentColor;
+  transition: transform 0.25s var(--fx-ease);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+.fx-underline-center::after,
+.fx-underline-right::after,
+.fx-underline-double::after,
+.fx-overline::after {
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+}
+.fx-underline-center::after {
+  transform-origin: center;
+}
+.fx-underline-right::after {
+  transform-origin: right;
+}
+.fx-underline-double::after {
+  height: 4px;
+  background: none;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+.fx-overline::after {
+  bottom: auto;
+  top: -2px;
+}
+.fx-fill-h-left::after,
+.fx-fill-h-right::after,
+.fx-fill-h-up::after,
+.fx-fill-h-down::after {
+  inset: 0;
+  border-radius: inherit;
+  opacity: var(--fx-tint, 0.12);
+  z-index: -1;
+}
+.fx-fill-h-right::after {
+  transform-origin: right center;
+}
+.fx-fill-h-up::after {
+  transform: scaleY(0);
+  transform-origin: center top;
+}
+.fx-fill-h-down::after {
+  transform: scaleY(0);
+  transform-origin: center bottom;
+}
+@media (hover: hover) {
+  .fx-underline-center:hover::after,
+  .fx-underline-right:hover::after,
+  .fx-underline-double:hover::after,
+  .fx-overline:hover::after,
+  .fx-fill-h-left:hover::after,
+  .fx-fill-h-right:hover::after,
+  .fx-fill-h-up:hover::after,
+  .fx-fill-h-down:hover::after {
+    transform: scale(1);
+  }
+}
+@media (hover: none) {
+  .fx-underline-center:active::after,
+  .fx-underline-right:active::after,
+  .fx-underline-double:active::after,
+  .fx-overline:active::after,
+  .fx-fill-h-left:active::after,
+  .fx-fill-h-right:active::after,
+  .fx-fill-h-up:active::after,
+  .fx-fill-h-down:active::after {
+    transform: scale(1);
+  }
+}
+.fx-underline-center:focus-visible::after,
+.fx-underline-right:focus-visible::after,
+.fx-underline-double:focus-visible::after,
+.fx-overline:focus-visible::after,
+.fx-fill-h-left:focus-visible::after,
+.fx-fill-h-right:focus-visible::after,
+.fx-fill-h-up:focus-visible::after,
+.fx-fill-h-down:focus-visible::after {
+  transform: scale(1);
+}
+
+/* Dimensions have usable defaults. Icons follow currentColor. */
+.fx-dots-orbit {
+  position: relative;
+  display: inline-block;
+  width: var(--fx-size, 32px);
+  height: var(--fx-size, 32px);
+  animation-name: fxExtraSpin;
+  --_t: 1.8s;
+  --_e: linear;
+  --_n: infinite;
+}
+.fx-dots-orbit > i {
+  position: absolute;
+  width: var(--fx-dot, 6px);
+  height: var(--fx-dot, 6px);
+  background: currentColor;
+  border-radius: 50%;
+  top: 0;
+  left: calc(50% - var(--fx-dot, 6px) / 2);
+  transform-origin: center calc(var(--fx-size, 32px) / 2);
+}
+.fx-dots-orbit > i:nth-child(2) {
+  transform: rotate(120deg);
+}
+.fx-dots-orbit > i:nth-child(3) {
+  transform: rotate(240deg);
+}
+.fx-dots-zigzag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 24px;
+}
+.fx-dots-zigzag > i {
+  display: block;
+  width: var(--fx-dot, 6px);
+  height: var(--fx-dot, 6px);
+  background: currentColor;
+  border-radius: 50%;
+  animation-name: fxZigzag;
+  --_t: 1.2s;
+  --_e: ease-in-out;
+  --_n: infinite;
+}
+.fx-dots-zigzag > i:nth-child(2) {
+  --_fx-phase: calc(var(--fx-dur, 1.2s) / -3);
+}
+.fx-dots-zigzag > i:nth-child(3) {
+  --_fx-phase: calc(var(--fx-dur, 1.2s) / -1.5);
+}
+.fx-bars-wave,
+.fx-bars-travel {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: var(--fx-size, 24px);
+}
+.fx-bars-wave > i,
+.fx-bars-travel > i {
+  display: block;
+  width: 3px;
+  height: 100%;
+  border-radius: 2px;
+  background: currentColor;
+  animation-name: fxExtraBars;
+  --_t: 1.5s;
+  --_e: ease-in-out;
+  --_n: infinite;
+}
+.fx-bars-travel > i {
+  animation-name: fxBarsTravel;
+}
+.fx-bars-wave > i:nth-child(2),
+.fx-bars-travel > i:nth-child(2) {
+  --_fx-phase: calc(var(--fx-dur, 1.5s) * -.2);
+}
+.fx-bars-wave > i:nth-child(3),
+.fx-bars-travel > i:nth-child(3) {
+  --_fx-phase: calc(var(--fx-dur, 1.5s) * -.4);
+}
+.fx-bars-wave > i:nth-child(4),
+.fx-bars-travel > i:nth-child(4) {
+  --_fx-phase: calc(var(--fx-dur, 1.5s) * -.6);
+}
+.fx-bars-wave > i:nth-child(5),
+.fx-bars-travel > i:nth-child(5) {
+  --_fx-phase: calc(var(--fx-dur, 1.5s) * -.8);
+}
+.fx-dual-ring,
+.fx-ring-pulse,
+.fx-sonar {
+  position: relative;
+  display: inline-block;
+  width: var(--fx-size, 28px);
+  height: var(--fx-size, 28px);
+}
+.fx-dual-ring::before,
+.fx-dual-ring::after,
+.fx-ring-pulse::after,
+.fx-sonar::before,
+.fx-sonar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  pointer-events: none;
+  pointer-events: none;
+}
+.fx-dual-ring::before,
+.fx-dual-ring::after {
+  border-color: currentColor transparent transparent;
+  animation-name: fxExtraSpin;
+  --_t: 1.2s;
+  --_e: linear;
+  --_n: infinite;
+}
+.fx-dual-ring::after {
+  inset: 6px;
+  animation-name: fxCounterSpin;
+}
+.fx-ring-pulse::after,
+.fx-sonar::before,
+.fx-sonar::after {
+  animation-name: fxExtraRing;
+  --_t: 2s;
+  --_e: ease-out;
+  --_n: infinite;
+}
+.fx-sonar::after {
+  --_fx-phase: calc(var(--fx-dur, 2s) / -2);
+}
+.fx-skeleton-wave {
+  position: relative;
+  overflow: hidden;
+  background: var(--fx-skeleton, #e2e6ee);
+  border-radius: 4px;
+  min-height: 1em;
+}
+.fx-skeleton-wave::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgb(255 255 255 / 0.55) 50%,
+    transparent 80%
+  );
+  animation-name: fxSkeletonWave;
+  --_t: 1.8s;
+  --_e: ease-in-out;
+  --_n: infinite;
+  pointer-events: none;
+  pointer-events: none;
+}
+@keyframes fxExtraSpin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+@keyframes fxCounterSpin {
+  to {
+    transform: rotate(-1turn);
+  }
+}
+@keyframes fxZigzag {
+  0%,
+  100% {
+    transform: translate(-2px, -4px);
+  }
+  50% {
+    transform: translate(2px, 4px);
+  }
+}
+@keyframes fxExtraBars {
+  0%,
+  100% {
+    transform: scaleY(0.2);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+@keyframes fxBarsTravel {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  35% {
+    opacity: 1;
+  }
+}
+@keyframes fxExtraRing {
+  from {
+    transform: scale(0.35);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+@keyframes fxSkeletonWave {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Opt-in masks and filters: profile before using on large surfaces. */
+.fx-wipe-up {
+  animation-name: fxDirectionalWipe;
+  --_fx-inset: 0 0 100% 0;
+}
+.fx-wipe-down {
+  animation-name: fxDirectionalWipe;
+  --_fx-inset: 100% 0 0 0;
+}
+.fx-wipe-left {
+  animation-name: fxDirectionalWipe;
+  --_fx-inset: 0 100% 0 0;
+}
+.fx-wipe-right {
+  animation-name: fxDirectionalWipe;
+  --_fx-inset: 0 0 0 100%;
+}
+@keyframes fxDirectionalWipe {
+  from {
+    clip-path: inset(var(--_fx-inset));
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+.fx-iris-in {
+  animation-name: fxIrisIn;
+}
+.fx-iris-out {
+  animation-name: fxIrisOut;
+}
+@keyframes fxIrisIn {
+  from {
+    clip-path: circle(0% at var(--fx-iris-origin, 50% 50%));
+  }
+  to {
+    clip-path: circle(150% at var(--fx-iris-origin, 50% 50%));
+  }
+}
+@keyframes fxIrisOut {
+  from {
+    clip-path: circle(150% at var(--fx-iris-origin, 50% 50%));
+  }
+  to {
+    clip-path: circle(0% at var(--fx-iris-origin, 50% 50%));
+  }
+}
+.fx-blur-zoom-in {
+  animation-name: fxBlurZoomIn;
+}
+.fx-blur-zoom-out {
+  animation-name: fxBlurZoomOut;
+}
+@keyframes fxBlurZoomIn {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+@keyframes fxBlurZoomOut {
+  to {
+    opacity: 0;
+    filter: blur(6px);
+    transform: scale(1.08);
+  }
+}
   .fx-lift:focus-visible {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
@@ -1652,6 +2464,16 @@
   }
   .fx-underline:focus-visible::after {
     transform: scaleX(1);
+  }
+  .fx-underline-center:focus-visible::after,
+  .fx-underline-right:focus-visible::after,
+  .fx-underline-double:focus-visible::after,
+  .fx-overline:focus-visible::after,
+  .fx-fill-h-left:focus-visible::after,
+  .fx-fill-h-right:focus-visible::after,
+  .fx-fill-h-up:focus-visible::after,
+  .fx-fill-h-down:focus-visible::after {
+    transform: scale(1);
   }
 
 /* Controls work on hosts, child animations, and pseudo-elements. */
@@ -1710,9 +2532,36 @@
   --fx-play: paused;
 }
 
+.fx-alternate {
+  --fx-direction: alternate;
+}
+.fx-alternate-reverse {
+  --fx-direction: alternate-reverse;
+}
+.fx-once {
+  --fx-repeat: 1;
+}
+.fx-running {
+  --fx-play: running;
+}
+.fx-origin-top {
+  transform-origin: top center;
+}
+.fx-origin-bottom {
+  transform-origin: bottom center;
+}
+.fx-origin-left {
+  transform-origin: left center;
+}
+.fx-origin-right {
+  transform-origin: right center;
+}
+.fx-origin-center {
+  transform-origin: center;
+}
 
 @media (prefers-reduced-motion: reduce) {
-[class*="fx-"], [class*="fx-"]::before, [class*="fx-"]::after, .fx-stagger > *, .fx-stagger-fade > *, .fx-stagger-left > *, .fx-stagger-right > *, .fx-stagger-pop > *, .fx-stagger-blur > *, .fx-cycle-2 > *, .fx-cycle-3 > *, .fx-cycle-4 > *, .fx-cycle-5 > *, .fx-dots-wave i, .fx-dots-fade i, .fx-dots-scale i, .fx-dots-flow i, .fx-dots-elastic i, .fx-dots-spinner i, .fx-dots i, .fx-bars i { animation-duration: 0.00001s !important; animation-iteration-count: 1 !important; transition: none !important }
+[class*="fx-"], [class*="fx-"]::before, [class*="fx-"]::after, .fx-stagger > *, .fx-stagger-fade > *, .fx-stagger-left > *, .fx-stagger-right > *, .fx-stagger-pop > *, .fx-stagger-blur > *, .fx-cycle-2 > *, .fx-cycle-3 > *, .fx-cycle-4 > *, .fx-cycle-5 > *, .fx-dots-wave i, .fx-dots-fade i, .fx-dots-scale i, .fx-dots-flow i, .fx-dots-elastic i, .fx-dots-spinner i, .fx-dots i, .fx-bars i, .fx-stagger-down > *, .fx-stagger-zoom > *, .fx-stagger-rotate > *, .fx-stagger-roll-up > *, .fx-dots-zigzag > i, .fx-bars-wave > i, .fx-bars-travel > i { animation-duration: 0.00001s !important; animation-iteration-count: 1 !important; transition: none !important }
 .fx-cycle-2 > *, .fx-cycle-3 > *, .fx-cycle-4 > *, .fx-cycle-5 > * { animation: none !important; opacity: 0 }
 .fx-cycle-2 > :first-child, .fx-cycle-3 > :first-child, .fx-cycle-4 > :first-child, .fx-cycle-5 > :first-child { opacity: 1 }
 }

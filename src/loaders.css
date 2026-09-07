@@ -1,0 +1,270 @@
+/* ─────────────── IN-FLIGHT (13) · something is being worked on ─────────────── */
+.fx-trace {
+  position: relative;
+  overflow: hidden;
+} /* a line draws across, releases, redraws */
+.fx-trace::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  transform: translateX(-101%);
+  animation: fxTrace 1.7s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+.fx-comet {
+  position: relative;
+  overflow: hidden;
+} /* a streak with a fading tail crosses a track */
+.fx-comet::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 36%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, currentColor);
+  transform: translateX(-110%);
+  animation: fxComet 1.5s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+.fx-fill {
+  position: relative;
+  overflow: hidden;
+} /* tint sweeps the element, holds, dissolves */
+.fx-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--fx-fill, rgba(79, 70, 229, 0.14));
+  transform: translateX(-101%);
+  animation: fxFill 1.9s var(--fx-ease) infinite;
+}
+
+.fx-scan {
+  position: relative;
+  overflow: hidden;
+} /* a beam sweeps back and forth across a track */
+.fx-scan::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  transform: translateX(-120%);
+  animation: fxScan 1.5s var(--fx-ease) infinite alternate;
+}
+.fx-ripple {
+  animation: fxRipple 1.5s var(--fx-ease) infinite;
+} /* concentric halo — a node is processing */
+
+/* calm loaders · slow, low-amplitude, ease in/out — meant to soothe, not rush */
+.fx-orbit {
+  position: relative;
+  animation: fxSpin 1.8s linear infinite;
+} /* a dot circles its center */
+.fx-orbit::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.fx-bloom {
+  animation: fxBloom 2.6s ease-in-out infinite;
+} /* a halo breathes around the element  */
+
+/* dot loaders · a row (or ring) of dots animating in sequence — drop plain <i> children inside */
+[class^="fx-dots-"],
+[class*=" fx-dots-"] {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+}
+[class^="fx-dots-"] i,
+[class*=" fx-dots-"] i {
+  flex: none;
+  width: var(--fx-dot, 7px);
+  height: var(--fx-dot, 7px);
+  border-radius: 50%;
+  background: currentColor;
+}
+.fx-dots-wave i {
+  animation: fxDotsWave 1.3s ease-in-out infinite;
+} /* a gentle travelling sine        */
+.fx-dots-fade i {
+  animation: fxDotsFade 1.4s ease-in-out infinite;
+} /* brightness chases along the row */
+.fx-dots-scale i {
+  animation: fxDotsScale 1.4s ease-in-out infinite;
+} /* size swells along the row       */
+.fx-dots-flow i {
+  animation: fxDotsFlow 1.4s ease-in-out infinite;
+} /* a soft drifting stream          */
+.fx-dots-elastic i {
+  animation: fxDotsElastic 1.2s var(--fx-spring) infinite;
+} /* a springy hop            */
+.fx-dots-wave i:nth-child(2),
+.fx-dots-fade i:nth-child(2),
+.fx-dots-scale i:nth-child(2),
+.fx-dots-flow i:nth-child(2),
+.fx-dots-elastic i:nth-child(2) {
+  animation-delay: 0.14s;
+}
+.fx-dots-wave i:nth-child(3),
+.fx-dots-fade i:nth-child(3),
+.fx-dots-scale i:nth-child(3),
+.fx-dots-flow i:nth-child(3),
+.fx-dots-elastic i:nth-child(3) {
+  animation-delay: 0.28s;
+}
+.fx-dots-spinner {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+} /* ring of 3 dots */
+.fx-dots-spinner i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: calc(var(--fx-dot, 7px) / -2);
+  animation: fxDotsRing 1.2s linear infinite;
+}
+.fx-dots-spinner i:nth-child(1) {
+  transform: rotate(0deg) translateY(-12px);
+  animation-delay: -1.2s;
+}
+.fx-dots-spinner i:nth-child(2) {
+  transform: rotate(120deg) translateY(-12px);
+  animation-delay: -0.8s;
+}
+.fx-dots-spinner i:nth-child(3) {
+  transform: rotate(240deg) translateY(-12px);
+  animation-delay: -0.4s;
+}
+
+@keyframes fxTrace {
+  0% {
+    transform: translateX(-101%);
+  }
+  45%,
+  55% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(101%);
+  }
+}
+@keyframes fxComet {
+  to {
+    transform: translateX(390%);
+  }
+}
+@keyframes fxFill {
+  0% {
+    transform: translateX(-101%);
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+}
+@keyframes fxScan {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(380%);
+  }
+}
+@keyframes fxRipple {
+  0% {
+    box-shadow: 0 0 0 0 var(--fx-ring, rgba(79, 70, 229, 0.45));
+  }
+  100% {
+    box-shadow: 0 0 0 13px transparent;
+  }
+}
+@keyframes fxBloom {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: 0 0 15px 1px var(--fx-glow, rgba(79, 70, 229, 0.4));
+  }
+}
+@keyframes fxDotsWave {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes fxDotsFade {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+@keyframes fxDotsScale {
+  0%,
+  100% {
+    transform: scale(0.55);
+    opacity: 0.5;
+  }
+  35% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes fxDotsFlow {
+  0% {
+    transform: translateX(-5px);
+    opacity: 0;
+  }
+  35%,
+  65% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(5px);
+    opacity: 0;
+  }
+}
+@keyframes fxDotsElastic {
+  0%,
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-9px);
+  }
+}
+@keyframes fxDotsRing {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.15;
+  }
+}

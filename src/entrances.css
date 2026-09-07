@@ -1,0 +1,215 @@
+/* ───────────────────────── ENTRANCES (21) ───────────────────────── */
+.fx-fade {
+  animation-name: fxFade;
+}
+.fx-up {
+  animation-name: fxY;
+  --_y: var(--fx-dist);
+}
+.fx-down {
+  animation-name: fxY;
+  --_y: calc(var(--fx-dist) * -1);
+}
+.fx-left {
+  animation-name: fxX;
+  --_x: calc(var(--fx-dist) * -1);
+} /* enters from the left  */
+.fx-right {
+  animation-name: fxX;
+  --_x: var(--fx-dist);
+} /* enters from the right */
+.fx-zoom {
+  animation-name: fxZoom;
+}
+.fx-zoom-up {
+  animation-name: fxZoomUp;
+}
+.fx-pop {
+  animation-name: fxPop;
+  animation-timing-function: var(--fx-spring);
+}
+.fx-bounce-in {
+  animation-name: fxBounceIn;
+  animation-duration: 0.6s;
+}
+.fx-blur {
+  animation-name: fxBlur;
+}
+.fx-rotate {
+  animation-name: fxRotate;
+}
+.fx-flip-x {
+  animation-name: fxFlipX;
+}
+.fx-flip-y {
+  animation-name: fxFlipY;
+}
+.fx-wipe {
+  animation-name: fxWipe;
+}
+.fx-grow-x {
+  animation-name: fxGrowX;
+  transform-origin: left center;
+}
+.fx-sheet-up {
+  animation-name: fxSheet;
+  --_s: 110%;
+} /* bottom sheet / drawer */
+.fx-sheet-down {
+  animation-name: fxSheet;
+  --_s: -110%;
+} /* top drawer / banner   */
+.fx-zoom-down {
+  animation-name: fxZoomDown;
+} /* drop + scale         */
+.fx-swing {
+  animation-name: fxSwing;
+  transform-origin: top center;
+} /* hinges down from top */
+.fx-roll-in {
+  animation-name: fxRollIn;
+} /* rolls in from left   */
+.fx-reveal {
+  animation-name: fxReveal;
+} /* unmasks top → bottom */
+
+@keyframes fxFade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes fxY {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--_y), 0);
+  }
+}
+@keyframes fxX {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--_x), 0, 0);
+  }
+}
+@keyframes fxZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+@keyframes fxZoomUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--fx-dist), 0) scale(0.97);
+  }
+}
+@keyframes fxPop {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+@keyframes fxBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  80% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes fxBlur {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+@keyframes fxRotate {
+  from {
+    opacity: 0;
+    transform: rotate(-8deg) scale(0.94);
+  }
+}
+@keyframes fxFlipX {
+  from {
+    opacity: 0;
+    transform: perspective(640px) rotateX(-22deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(640px) rotateX(0);
+  }
+}
+@keyframes fxFlipY {
+  from {
+    opacity: 0;
+    transform: perspective(640px) rotateY(14deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(640px) rotateY(0);
+  }
+}
+@keyframes fxWipe {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes fxGrowX {
+  from {
+    opacity: 0;
+    transform: scale(0.4, 1);
+  }
+}
+@keyframes fxSheet {
+  from {
+    transform: translate3d(0, var(--_s), 0);
+  }
+}
+@keyframes fxZoomDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, calc(var(--fx-dist) * -1), 0) scale(0.97);
+  }
+}
+@keyframes fxSwing {
+  from {
+    opacity: 0;
+    transform: perspective(640px) rotateX(-22deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(640px) rotateX(0);
+  }
+}
+@keyframes fxRollIn {
+  from {
+    opacity: 0;
+    transform: translate3d(calc(var(--fx-dist) * -1), 0, 0) rotate(-8deg);
+  }
+}
+@keyframes fxReveal {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}

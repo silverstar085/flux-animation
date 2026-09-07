@@ -1,0 +1,61 @@
+/* ─────────────────────── LISTS / STAGGER (6) ─────────────────────── */
+.fx-stagger > * {
+  animation: fxZoomUp var(--fx-dur) var(--fx-ease) both;
+}
+.fx-stagger-fade > * {
+  animation-name: fxFade;
+}
+.fx-stagger-left > * {
+  animation-name: fxX;
+  --_x: calc(var(--fx-dist) * -1);
+}
+.fx-stagger-right > * {
+  animation-name: fxX;
+  --_x: var(--fx-dist);
+}
+.fx-stagger-pop > * {
+  animation-name: fxPop;
+  animation-timing-function: var(--fx-spring);
+}
+.fx-stagger-blur > * {
+  animation-name: fxBlur;
+}
+.fx-stagger > :nth-child(1) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 1));
+}
+.fx-stagger > :nth-child(2) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 2));
+}
+.fx-stagger > :nth-child(3) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 3));
+}
+.fx-stagger > :nth-child(4) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 4));
+}
+.fx-stagger > :nth-child(5) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 5));
+}
+.fx-stagger > :nth-child(6) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 6));
+}
+.fx-stagger > :nth-child(7) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 7));
+}
+.fx-stagger > :nth-child(8) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 8));
+}
+.fx-stagger > :nth-child(9) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 9));
+}
+.fx-stagger > :nth-child(10) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 10));
+}
+.fx-stagger > :nth-child(11) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 11));
+}
+.fx-stagger > :nth-child(12) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 12));
+}
+.fx-stagger > :nth-child(n + 13) {
+  animation-delay: calc(var(--fx-stagger) * var(--fx-index, 13));
+}

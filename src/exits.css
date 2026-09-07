@@ -1,0 +1,100 @@
+/* ───────────────────────── EXITS (12) ───────────────────────── */
+.fx-fade-out {
+  animation-name: fxFadeOut;
+}
+.fx-up-out {
+  animation-name: fxYOut;
+  --_y: calc(var(--fx-dist) * -1);
+} /* leaves upward    */
+.fx-down-out {
+  animation-name: fxYOut;
+  --_y: var(--fx-dist);
+} /* leaves downward  */
+.fx-left-out {
+  animation-name: fxXOut;
+  --_x: calc(var(--fx-dist) * -2);
+} /* leaves to the left  */
+.fx-slide-out {
+  animation-name: fxXOut;
+  --_x: calc(var(--fx-dist) * 2);
+} /* leaves to the right */
+.fx-zoom-out {
+  animation-name: fxZoomOut;
+}
+.fx-pop-out {
+  animation-name: fxPopOut;
+}
+.fx-blur-out {
+  animation-name: fxBlurOut;
+}
+.fx-sheet-out {
+  animation-name: fxSheetOut;
+} /* sheet slides back down */
+.fx-rotate-out {
+  animation-name: fxRotateOut;
+} /* tilts away as it fades */
+.fx-flip-x-out {
+  animation-name: fxFlipXOut;
+} /* tips back in 3D        */
+.fx-drop-out {
+  animation-name: fxDropOut;
+} /* falls away downward    */
+
+@keyframes fxFadeOut {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fxYOut {
+  to {
+    opacity: 0;
+    transform: translate3d(0, var(--_y), 0);
+  }
+}
+@keyframes fxXOut {
+  to {
+    opacity: 0;
+    transform: translate3d(var(--_x), 0, 0);
+  }
+}
+@keyframes fxZoomOut {
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+@keyframes fxPopOut {
+  to {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+}
+@keyframes fxBlurOut {
+  to {
+    opacity: 0;
+    filter: blur(6px);
+  }
+}
+@keyframes fxSheetOut {
+  to {
+    transform: translate3d(0, 110%, 0);
+  }
+}
+@keyframes fxRotateOut {
+  to {
+    opacity: 0;
+    transform: rotate(6deg) scale(0.94);
+  }
+}
+@keyframes fxFlipXOut {
+  to {
+    opacity: 0;
+    transform: perspective(640px) rotateX(14deg);
+  }
+}
+@keyframes fxDropOut {
+  to {
+    opacity: 0;
+    transform: translate3d(0, calc(var(--fx-dist) * 2), 0) rotate(6deg);
+  }
+}

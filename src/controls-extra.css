@@ -1,0 +1,27 @@
+.fx-alternate {
+  --fx-direction: alternate;
+}
+.fx-alternate-reverse {
+  --fx-direction: alternate-reverse;
+}
+.fx-once {
+  --fx-repeat: 1;
+}
+.fx-running {
+  --fx-play: running;
+}
+.fx-origin-top {
+  transform-origin: top center;
+}
+.fx-origin-bottom {
+  transform-origin: bottom center;
+}
+.fx-origin-left {
+  transform-origin: left center;
+}
+.fx-origin-right {
+  transform-origin: right center;
+}
+.fx-origin-center {
+  transform-origin: center;
+}

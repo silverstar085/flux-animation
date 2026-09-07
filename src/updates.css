@@ -1,0 +1,177 @@
+/* ─────────────── ROTATING UPDATES (11) · for cycling status / "thinking" text ───────────────
+   Swap pairs (JS swaps content): add the -out class to the old node, the in class to the new one.
+   fx-cycle-N (zero JS): stack 2–5 children in the container; each takes a turn automatically.
+   Roll classes travel the element's own height — wrap old+new in an .fx-clip parent. */
+.fx-thought {
+  animation-name: fxThought;
+} /* blur-rise in — thought surfaces      */
+.fx-thought-out {
+  animation-name: fxThoughtOut;
+} /* blur-rise away — thought dissolves   */
+.fx-roll-up {
+  animation-name: fxRoll;
+  --_r: 105%;
+} /* ticker: new line rolls up from below */
+.fx-roll-up-out {
+  animation-name: fxRollOut;
+  --_r: -105%;
+}
+.fx-roll-down {
+  animation-name: fxRoll;
+  --_r: -105%;
+} /* ticker: rolls down from above        */
+.fx-roll-down-out {
+  animation-name: fxRollOut;
+  --_r: 105%;
+}
+.fx-clip {
+  overflow: hidden;
+} /* clipping wrapper for roll tickers    */
+
+.fx-cycle-2,
+.fx-cycle-3,
+.fx-cycle-4,
+.fx-cycle-5 {
+  display: grid;
+}
+.fx-cycle-2 > *,
+.fx-cycle-3 > *,
+.fx-cycle-4 > *,
+.fx-cycle-5 > * {
+  grid-area: 1 / 1;
+  opacity: 0;
+  animation: fxCycle2 var(--fx-cycle, 6s) var(--fx-ease) infinite both;
+}
+.fx-cycle-3 > * {
+  animation-name: fxCycle3;
+}
+.fx-cycle-4 > * {
+  animation-name: fxCycle4;
+}
+.fx-cycle-5 > * {
+  animation-name: fxCycle5;
+}
+.fx-cycle-2 > :nth-child(2) {
+  animation-delay: calc(var(--fx-dur, var(--fx-cycle, 6s)) / 2);
+}
+.fx-cycle-3 > :nth-child(2) {
+  animation-delay: calc(var(--fx-dur, var(--fx-cycle, 6s)) / 3);
+}
+.fx-cycle-3 > :nth-child(3) {
+  animation-delay: calc(var(--fx-dur, var(--fx-cycle, 6s)) / 3 * 2);
+}
+.fx-cycle-4 > :nth-child(2) {
+  animation-delay: calc(var(--fx-dur, var(--fx-cycle, 6s)) / 4);
+}
+.fx-cycle-4 > :nth-child(3) {
+  animation-delay: calc(var(--fx-dur, var(--fx-cycle, 6s)) / 2);
+}
+.fx-cycle-4 > :nth-child(4) {
+  animation-delay: calc(var(--fx-dur, var(--fx-cycle, 6s)) / 4 * 3);
+}
+.fx-cycle-5 > :nth-child(2) {
+  animation-delay: calc(var(--fx-dur, var(--fx-cycle, 6s)) / 5);
+}
+.fx-cycle-5 > :nth-child(3) {
+  animation-delay: calc(var(--fx-dur, var(--fx-cycle, 6s)) / 5 * 2);
+}
+.fx-cycle-5 > :nth-child(4) {
+  animation-delay: calc(var(--fx-dur, var(--fx-cycle, 6s)) / 5 * 3);
+}
+.fx-cycle-5 > :nth-child(5) {
+  animation-delay: calc(var(--fx-dur, var(--fx-cycle, 6s)) / 5 * 4);
+}
+
+@keyframes fxThought {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 7px, 0);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+@keyframes fxThoughtOut {
+  to {
+    opacity: 0;
+    transform: translate3d(0, -7px, 0);
+    filter: blur(4px);
+  }
+}
+@keyframes fxRoll {
+  from {
+    transform: translate3d(0, var(--_r), 0);
+  }
+}
+@keyframes fxRollOut {
+  to {
+    transform: translate3d(0, var(--_r), 0);
+  }
+}
+@keyframes fxCycle2 {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  7%,
+  43% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  50%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -8px, 0);
+  }
+}
+@keyframes fxCycle3 {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  5%,
+  28% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  33.3%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -8px, 0);
+  }
+}
+@keyframes fxCycle4 {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  4%,
+  21% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  25%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -8px, 0);
+  }
+}
+@keyframes fxCycle5 {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  3%,
+  17% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  20%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -8px, 0);
+  }
+}

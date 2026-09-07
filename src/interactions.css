@@ -1,0 +1,131 @@
+/* ─────────────── BUTTONS & HOVER (11) · transitions, not keyframes ───────────────
+   Hover styles apply on devices that hover; on touch, the same effect fires on press. */
+.fx-btn {
+  transition:
+    transform 0.15s var(--fx-ease),
+    box-shadow 0.15s var(--fx-ease);
+}
+.fx-btn:active {
+  transform: scale(0.96);
+}
+.fx-push {
+  transition: transform 0.12s var(--fx-ease);
+}
+.fx-push:active {
+  transform: translateY(1.5px) scale(0.985);
+}
+.fx-lift,
+.fx-grow {
+  transition:
+    transform 0.2s var(--fx-ease),
+    box-shadow 0.2s var(--fx-ease);
+}
+.fx-tilt {
+  transition: transform 0.25s var(--fx-ease);
+}
+.fx-brighten {
+  transition: filter 0.2s var(--fx-ease);
+}
+.fx-glow-h {
+  transition: box-shadow 0.2s var(--fx-ease);
+}
+.fx-rotate-h {
+  transition: transform 0.2s var(--fx-ease);
+}
+.fx-skew-h {
+  transition: transform 0.2s var(--fx-ease);
+}
+.fx-shine {
+  position: relative;
+  overflow: hidden;
+}
+.fx-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-110%) skewX(-18deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  transition: transform 0.55s var(--fx-ease);
+}
+.fx-underline {
+  position: relative;
+}
+.fx-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.25s var(--fx-ease);
+}
+
+@media (hover: hover) {
+  .fx-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+  .fx-grow:hover {
+    transform: scale(1.04);
+  }
+  .fx-tilt:hover {
+    transform: perspective(640px) rotateX(3deg) rotateY(-3deg) translateY(-1px);
+  }
+  .fx-brighten:hover {
+    filter: brightness(1.12);
+  }
+  .fx-glow-h:hover {
+    box-shadow: 0 0 18px 2px var(--fx-glow, rgba(79, 70, 229, 0.45));
+  }
+  .fx-rotate-h:hover {
+    transform: rotate(3deg) scale(1.03);
+  }
+  .fx-skew-h:hover {
+    transform: skewX(-7deg);
+  }
+  .fx-shine:hover::after {
+    transform: translateX(110%) skewX(-18deg);
+  }
+  .fx-underline:hover::after {
+    transform: scaleX(1);
+  }
+}
+@media (hover: none) {
+  /* touch fallback: press to trigger */
+  .fx-lift:active {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+  .fx-grow:active {
+    transform: scale(1.04);
+  }
+  .fx-tilt:active {
+    transform: perspective(640px) rotateX(3deg) rotateY(-3deg) translateY(-1px);
+  }
+  .fx-brighten:active {
+    filter: brightness(1.12);
+  }
+  .fx-glow-h:active {
+    box-shadow: 0 0 18px 2px var(--fx-glow, rgba(79, 70, 229, 0.45));
+  }
+  .fx-rotate-h:active {
+    transform: rotate(3deg) scale(1.03);
+  }
+  .fx-skew-h:active {
+    transform: skewX(-7deg);
+  }
+  .fx-shine:active::after {
+    transform: translateX(110%) skewX(-18deg);
+  }
+  .fx-underline:active::after {
+    transform: scaleX(1);
+  }
+}

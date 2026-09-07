@@ -1,0 +1,137 @@
+/* Generated demo-only state previews. */
+
+.fx-ring.demo-hover {
+  animation-name: fxRing;
+  --_t: 0.55s;
+  --_e: var(--fx-ease);
+}
+.fx-btn.demo-hover {
+  transform: scale(0.96);
+}
+.fx-push.demo-hover {
+  transform: translateY(1.5px) scale(0.985);
+}
+  .fx-lift.demo-hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+  .fx-grow.demo-hover {
+    transform: scale(1.04);
+  }
+  .fx-tilt.demo-hover {
+    transform: perspective(640px) rotateX(3deg) rotateY(-3deg) translateY(-1px);
+  }
+  .fx-brighten.demo-hover {
+    filter: brightness(1.12);
+  }
+  .fx-glow-h.demo-hover {
+    box-shadow: 0 0 18px 2px var(--fx-glow, rgba(79, 70, 229, 0.45));
+  }
+  .fx-rotate-h.demo-hover {
+    transform: rotate(3deg) scale(1.03);
+  }
+  .fx-skew-h.demo-hover {
+    transform: skewX(-7deg);
+  }
+  .fx-shine.demo-hover::after {
+    transform: translateX(110%) skewX(-18deg);
+  }
+  .fx-underline.demo-hover::after {
+    transform: scaleX(1);
+  }
+  .fx-lift.demo-hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+  .fx-grow.demo-hover {
+    transform: scale(1.04);
+  }
+  .fx-tilt.demo-hover {
+    transform: perspective(640px) rotateX(3deg) rotateY(-3deg) translateY(-1px);
+  }
+  .fx-brighten.demo-hover {
+    filter: brightness(1.12);
+  }
+  .fx-glow-h.demo-hover {
+    box-shadow: 0 0 18px 2px var(--fx-glow, rgba(79, 70, 229, 0.45));
+  }
+  .fx-rotate-h.demo-hover {
+    transform: rotate(3deg) scale(1.03);
+  }
+  .fx-skew-h.demo-hover {
+    transform: skewX(-7deg);
+  }
+  .fx-shine.demo-hover::after {
+    transform: translateX(110%) skewX(-18deg);
+  }
+  .fx-underline.demo-hover::after {
+    transform: scaleX(1);
+  }
+  .fx-underline-center.demo-hover::after,
+  .fx-underline-right.demo-hover::after,
+  .fx-underline-double.demo-hover::after,
+  .fx-overline.demo-hover::after,
+  .fx-fill-h-left.demo-hover::after,
+  .fx-fill-h-right.demo-hover::after,
+  .fx-fill-h-up.demo-hover::after,
+  .fx-fill-h-down.demo-hover::after {
+    transform: scale(1);
+  }
+  .fx-underline-center.demo-hover::after,
+  .fx-underline-right.demo-hover::after,
+  .fx-underline-double.demo-hover::after,
+  .fx-overline.demo-hover::after,
+  .fx-fill-h-left.demo-hover::after,
+  .fx-fill-h-right.demo-hover::after,
+  .fx-fill-h-up.demo-hover::after,
+  .fx-fill-h-down.demo-hover::after {
+    transform: scale(1);
+  }
+.fx-underline-center.demo-hover::after,
+.fx-underline-right.demo-hover::after,
+.fx-underline-double.demo-hover::after,
+.fx-overline.demo-hover::after,
+.fx-fill-h-left.demo-hover::after,
+.fx-fill-h-right.demo-hover::after,
+.fx-fill-h-up.demo-hover::after,
+.fx-fill-h-down.demo-hover::after {
+  transform: scale(1);
+}
+  .fx-lift.demo-hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+  .fx-grow.demo-hover {
+    transform: scale(1.04);
+  }
+  .fx-tilt.demo-hover {
+    transform: perspective(640px) rotateX(3deg) rotateY(-3deg) translateY(-1px);
+  }
+  .fx-brighten.demo-hover {
+    filter: brightness(1.12);
+  }
+  .fx-glow-h.demo-hover {
+    box-shadow: 0 0 18px 2px var(--fx-glow, rgba(79, 70, 229, 0.45));
+  }
+  .fx-rotate-h.demo-hover {
+    transform: rotate(3deg) scale(1.03);
+  }
+  .fx-skew-h.demo-hover {
+    transform: skewX(-7deg);
+  }
+  .fx-shine.demo-hover::after {
+    transform: translateX(110%) skewX(-18deg);
+  }
+  .fx-underline.demo-hover::after {
+    transform: scaleX(1);
+  }
+  .fx-underline-center.demo-hover::after,
+  .fx-underline-right.demo-hover::after,
+  .fx-underline-double.demo-hover::after,
+  .fx-overline.demo-hover::after,
+  .fx-fill-h-left.demo-hover::after,
+  .fx-fill-h-right.demo-hover::after,
+  .fx-fill-h-up.demo-hover::after,
+  .fx-fill-h-down.demo-hover::after {
+    transform: scale(1);
+  }

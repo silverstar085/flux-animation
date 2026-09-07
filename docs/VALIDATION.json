@@ -1,0 +1,56 @@
+{
+  "reports": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "checks": [
+        "host speed modifiers retain per-effect defaults",
+        "pause, delay, easing and repeats reach child and pseudo animations",
+        "stagger index, inherited cycle and dot settings",
+        "class whitespace and nested family defaults are safe",
+        "every example has a valid animation and finite sampled styles",
+        "reduced-motion policy matches v2 without resetting delay, pause or direction",
+        "base plus packs retains animation defaults and shared controls",
+        "representative legacy keyframe poses match v2.2.0",
+        "cycle and new-loader phases scale with duration",
+        "keyboard focus, origin overrides and touch press feedback",
+        "demo search, code dialog, OS motion preference and responsive layout"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "checks": [
+        "host speed modifiers retain per-effect defaults",
+        "pause, delay, easing and repeats reach child and pseudo animations",
+        "stagger index, inherited cycle and dot settings",
+        "class whitespace and nested family defaults are safe",
+        "every example has a valid animation and finite sampled styles",
+        "reduced-motion policy matches v2 without resetting delay, pause or direction",
+        "base plus packs retains animation defaults and shared controls",
+        "representative legacy keyframe poses match v2.2.0",
+        "cycle and new-loader phases scale with duration",
+        "keyboard focus, origin overrides and touch press feedback",
+        "demo search, code dialog, OS motion preference and responsive layout"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.6",
+      "checks": [
+        "host speed modifiers retain per-effect defaults",
+        "pause, delay, easing and repeats reach child and pseudo animations",
+        "stagger index, inherited cycle and dot settings",
+        "class whitespace and nested family defaults are safe",
+        "every example has a valid animation and finite sampled styles",
+        "reduced-motion policy matches v2 without resetting delay, pause or direction",
+        "base plus packs retains animation defaults and shared controls",
+        "representative legacy keyframe poses match v2.2.0",
+        "cycle and new-loader phases scale with duration",
+        "keyboard focus, origin overrides and touch press feedback",
+        "demo search, code dialog, OS motion preference and responsive layout"
+      ]
+    }
+  ],
+  "failures": []
+}

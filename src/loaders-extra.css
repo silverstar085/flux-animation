@@ -1,0 +1,191 @@
+/* Dimensions have usable defaults. Icons follow currentColor. */
+.fx-dots-orbit {
+  position: relative;
+  display: inline-block;
+  width: var(--fx-size, 32px);
+  height: var(--fx-size, 32px);
+  animation: fxExtraSpin 1.8s linear infinite;
+}
+.fx-dots-orbit > i {
+  position: absolute;
+  width: var(--fx-dot, 6px);
+  height: var(--fx-dot, 6px);
+  background: currentColor;
+  border-radius: 50%;
+  top: 0;
+  left: calc(50% - var(--fx-dot, 6px) / 2);
+  transform-origin: center calc(var(--fx-size, 32px) / 2);
+}
+.fx-dots-orbit > i:nth-child(2) {
+  transform: rotate(120deg);
+}
+.fx-dots-orbit > i:nth-child(3) {
+  transform: rotate(240deg);
+}
+.fx-dots-zigzag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 24px;
+}
+.fx-dots-zigzag > i {
+  display: block;
+  width: var(--fx-dot, 6px);
+  height: var(--fx-dot, 6px);
+  background: currentColor;
+  border-radius: 50%;
+  animation: fxZigzag 1.2s ease-in-out infinite;
+}
+.fx-dots-zigzag > i:nth-child(2) {
+  animation-delay: calc(var(--fx-dur, 1.2s) / -3);
+}
+.fx-dots-zigzag > i:nth-child(3) {
+  animation-delay: calc(var(--fx-dur, 1.2s) / -1.5);
+}
+.fx-bars-wave,
+.fx-bars-travel {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: var(--fx-size, 24px);
+}
+.fx-bars-wave > i,
+.fx-bars-travel > i {
+  display: block;
+  width: 3px;
+  height: 100%;
+  border-radius: 2px;
+  background: currentColor;
+  animation: fxExtraBars 1.5s ease-in-out infinite;
+}
+.fx-bars-travel > i {
+  animation-name: fxBarsTravel;
+}
+.fx-bars-wave > i:nth-child(2),
+.fx-bars-travel > i:nth-child(2) {
+  animation-delay: calc(var(--fx-dur, 1.5s) * -.2);
+}
+.fx-bars-wave > i:nth-child(3),
+.fx-bars-travel > i:nth-child(3) {
+  animation-delay: calc(var(--fx-dur, 1.5s) * -.4);
+}
+.fx-bars-wave > i:nth-child(4),
+.fx-bars-travel > i:nth-child(4) {
+  animation-delay: calc(var(--fx-dur, 1.5s) * -.6);
+}
+.fx-bars-wave > i:nth-child(5),
+.fx-bars-travel > i:nth-child(5) {
+  animation-delay: calc(var(--fx-dur, 1.5s) * -.8);
+}
+.fx-dual-ring,
+.fx-ring-pulse,
+.fx-sonar {
+  position: relative;
+  display: inline-block;
+  width: var(--fx-size, 28px);
+  height: var(--fx-size, 28px);
+}
+.fx-dual-ring::before,
+.fx-dual-ring::after,
+.fx-ring-pulse::after,
+.fx-sonar::before,
+.fx-sonar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.fx-dual-ring::before,
+.fx-dual-ring::after {
+  border-color: currentColor transparent transparent;
+  animation: fxExtraSpin 1.2s linear infinite;
+}
+.fx-dual-ring::after {
+  inset: 6px;
+  animation-name: fxCounterSpin;
+}
+.fx-ring-pulse::after,
+.fx-sonar::before,
+.fx-sonar::after {
+  animation: fxExtraRing 2s ease-out infinite;
+}
+.fx-sonar::after {
+  animation-delay: calc(var(--fx-dur, 2s) / -2);
+}
+.fx-skeleton-wave {
+  position: relative;
+  overflow: hidden;
+  background: var(--fx-skeleton, #e2e6ee);
+  border-radius: 4px;
+  min-height: 1em;
+}
+.fx-skeleton-wave::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgb(255 255 255 / 0.55) 50%,
+    transparent 80%
+  );
+  animation: fxSkeletonWave 1.8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes fxExtraSpin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+@keyframes fxCounterSpin {
+  to {
+    transform: rotate(-1turn);
+  }
+}
+@keyframes fxZigzag {
+  0%,
+  100% {
+    transform: translate(-2px, -4px);
+  }
+  50% {
+    transform: translate(2px, 4px);
+  }
+}
+@keyframes fxExtraBars {
+  0%,
+  100% {
+    transform: scaleY(0.2);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+@keyframes fxBarsTravel {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  35% {
+    opacity: 1;
+  }
+}
+@keyframes fxExtraRing {
+  from {
+    transform: scale(0.35);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+@keyframes fxSkeletonWave {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
