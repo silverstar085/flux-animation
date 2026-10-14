@@ -1,6 +1,6 @@
 /* ─────────────────────── LISTS / STAGGER (6) ─────────────────────── */
 .fx-stagger > * {
-  animation: fxZoomUp var(--fx-dur) var(--fx-ease) both;
+  animation: fxZoomUp 0.45s var(--fx-ease) both;
 }
 .fx-stagger-fade > * {
   animation-name: fxFade;

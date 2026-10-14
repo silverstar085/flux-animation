@@ -435,7 +435,7 @@
 /* ─────────────────────── LISTS / STAGGER (6) ─────────────────────── */
 .fx-stagger > * {
   animation-name: fxZoomUp;
-  --_t: var(--fx-dur);
+  --_t: 0.45s;
   --_e: var(--fx-ease);
 }
 .fx-stagger-fade > * {

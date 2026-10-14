@@ -8,6 +8,7 @@ Bug fixes; no API changes.
 
 - **Loaders no longer disappear under reduced motion.** With `prefers-reduced-motion: reduce`, loaders previously froze on their last keyframe, which for many is invisible. `fx-progress`, `fx-trace`, `fx-comet`, `fx-scan`, `fx-fill`, `fx-sonar`, `fx-ring-pulse`, `fx-dots`, `fx-dots-fade`, `fx-dots-flow`, `fx-dots-spinner`, `fx-bars-wave` and `fx-bars-travel` now rest on a static, visible pose. The rest of the v2 policy is unchanged.
 - **The `fx-` namespace matches whole classes only.** Shared rules used `[class*="fx-"]`, which also matched unrelated classes such as `gfx-card`. Under reduced motion, that disabled those elements' own transitions. Rules now match classes that start with `fx-` (including after tabs and newlines).
+- **Stagger lists animate again.** In 3.0.0, every `fx-stagger` variant computed a 0s duration unless `--fx-dur` was set, so list items appeared without motion. They now default to .45s, as in 2.x.
 - README `dismiss()` example: declares the exit animation name before the listeners that read it.
 
 ### Changed
@@ -20,7 +21,7 @@ Bug fixes; no API changes.
 
 ### Size
 
-Gzip level 9: default **4,706 bytes** (+85), core **2,399** (+36), all **6,827** (+153). All within budget.
+Gzip level 9: default **4,703 bytes** (+82), core **2,395** (+32), all **6,824** (+150). All within budget.
 
 ## 3.0.0 — September 7, 2026
 

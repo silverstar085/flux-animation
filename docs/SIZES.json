@@ -1,10 +1,10 @@
 {
   "default": {
     "file": "flux.min.css",
-    "raw": 34982,
-    "minified": 24319,
-    "gzip": 4706,
-    "brotli": 4118,
+    "raw": 34974,
+    "minified": 24311,
+    "gzip": 4703,
+    "brotli": 4114,
     "classes": [
       "fx-bars",
       "fx-bell",
@@ -219,10 +219,10 @@
   },
   "core": {
     "file": "flux.core.min.css",
-    "raw": 17215,
-    "minified": 10367,
-    "gzip": 2399,
-    "brotli": 2092,
+    "raw": 17207,
+    "minified": 10359,
+    "gzip": 2395,
+    "brotli": 2090,
     "classes": [
       "fx-alternate",
       "fx-alternate-reverse",
@@ -500,10 +500,10 @@
   },
   "all": {
     "file": "flux.all.min.css",
-    "raw": 51492,
-    "minified": 37189,
-    "gzip": 6827,
-    "brotli": 5971,
+    "raw": 51484,
+    "minified": 37181,
+    "gzip": 6824,
+    "brotli": 5966,
     "classes": [
       "fx-alternate",
       "fx-alternate-reverse",

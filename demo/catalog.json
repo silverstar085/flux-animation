@@ -2,15 +2,15 @@
   "version": "3.0.1",
   "sizes": {
     "default": {
-      "gzip": 4706,
-      "minified": 24319,
-      "brotli": 4118,
+      "gzip": 4703,
+      "minified": 24311,
+      "brotli": 4114,
       "classes": 128
     },
     "core": {
-      "gzip": 2399,
-      "minified": 10367,
-      "brotli": 2092,
+      "gzip": 2395,
+      "minified": 10359,
+      "brotli": 2090,
       "classes": 83
     },
     "motion": {
@@ -38,9 +38,9 @@
       "classes": 8
     },
     "all": {
-      "gzip": 6827,
-      "minified": 37189,
-      "brotli": 5971,
+      "gzip": 6824,
+      "minified": 37181,
+      "brotli": 5966,
       "classes": 201
     }
   },

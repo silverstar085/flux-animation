@@ -129,7 +129,7 @@ for (const engine of engines) {
             for (const a of animations) {
               a.pause();
               const duration = a.effect.getComputedTiming().duration;
-              if (!Number.isFinite(duration))
+              if (!Number.isFinite(duration) || duration <= 0)
                 return [
                   e.class +
                     " invalid duration " +

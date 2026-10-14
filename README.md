@@ -31,7 +31,7 @@ Gzip level 9; decimal KB. These are stylesheet transfer sizes, not the size of t
 
 | Import | Minified | Gzip | Included |
 |---|---:|---:|---|
-| `flux-animation` | 24.32 KB | **4.71 KB** | All 128 legacy classes, with fixes |
+| `flux-animation` | 24.31 KB | **4.70 KB** | All 128 legacy classes, with fixes |
 | `flux-animation/core` | 10.37 KB | **2.40 KB** | 83 everyday classes and controls |
 | `flux-animation/all` | 37.19 KB | **6.83 KB** | All 201 classes |
 | `flux-animation/motion` | 7.01 KB | 1.55 KB | 40 motion/stagger additions + nine controls |
