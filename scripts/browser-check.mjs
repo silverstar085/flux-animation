@@ -168,7 +168,9 @@ for (const engine of engines) {
   await check("reduced-motion loaders rest on a visible pose", async () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     // Cycles show their first child by design; shimmer highlights are decoration over a visible block.
-    const skip = /^fx-(cycle-\d|shimmer|skeleton-wave)$/;
+    const skip = /^fx-(cycle-\d|shimmer|skeleton-wave|skeleton-msg)$/;
+    // Intentionally dim parts that sit under a visible indicator.
+    const dim = new Set(["fx-typing host::before"]);
     const loops = catalog.effects.filter((e) => e.kind === "loop" && !skip.test(e.class));
     await fixture(
       undefined,
@@ -188,7 +190,21 @@ for (const engine of engines) {
         });
       }),
     );
-    assert.deepEqual(hidden, []);
+    assert.deepEqual(hidden.filter((part) => !dim.has(part)), []);
+  });
+  await check("controls stay on their element and reach its child and pseudo targets", async () => {
+    await fixture(
+      undefined,
+      '<div id="bubble" class="fx-msg fx-slow fx-loop fx-d3"><span id="dots" class="fx-dots"><i></i><i></i><i></i></span><div id="inner" class="fx-fade">x</div></div><div style="--fx-dur:.9s"><div id="pub" class="fx-fade"></div></div><ul class="fx-stagger fx-slow"><li id="li">a</li></ul><span id="ring" class="fx-dual-ring fx-fast fx-loop-2"></span>',
+    );
+    const r = await page.evaluate(() => {
+      const s = (sel, pseudo) => {
+        const c = getComputedStyle(document.querySelector(sel), pseudo);
+        return [c.animationDuration, c.animationIterationCount, c.animationDelay].join(" ");
+      };
+      return [s("#bubble"), s("#dots i"), s("#inner"), s("#pub"), s("#li"), s("#ring", "::after")];
+    });
+    assert.deepEqual(r, ["0.7s infinite 0.3s", "1.2s infinite 0s", "0.45s 1 0s", "0.9s 1 0s", "0.7s 1 0.055s", "0.3s 2 0s"]);
   });
   await check("fx- namespace matches whole classes only", async () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
@@ -295,62 +311,47 @@ for (const engine of engines) {
     await touch.close();
   });
   await check(
-    "demo search, code dialog, OS motion preference and responsive layout",
+    "demo search, details, deep links, motion preference and responsive layout",
     async () => {
       const errors = [];
       page.on("pageerror", (e) => errors.push(e.message));
-      await page.goto(
-        process.env.FLUX_URL || "http://127.0.0.1:4173/",
-      );
+      const base = process.env.FLUX_URL || "http://127.0.0.1:4173/";
+      await page.goto(base);
       await page.waitForSelector(".effect");
-      assert.equal(await page.locator(".effect").count(), 64);
-      await page
-        .getByRole("searchbox", { name: "Search animation classes" })
-        .fill("dual-ring");
+      assert.equal(await page.locator(".effect").count(), catalog.effects.length);
+      await page.getByRole("searchbox", { name: "Search animation classes" }).fill("dual-ring");
       assert.equal(await page.locator(".effect").count(), 1);
-      await page
-        .getByRole("button", {
-          name: "Show code for fx-dual-ring",
-          exact: true,
-        })
-        .click();
-      assert.ok(await page.locator("#code-dialog").evaluate((e) => e.open));
-      assert.match(
-        await page.locator("#code-content").textContent(),
-        /role="status"/,
-      );
-      await page.getByRole("button", { name: "Close example" }).click();
-      assert.equal(await page.locator("#reduced").count(), 0);
+      await page.getByRole("button", { name: "Details and code for fx-dual-ring", exact: true }).click();
+      assert.ok(await page.locator("#detail").evaluate((e) => e.open));
+      assert.match(await page.locator("#code-content").textContent(), /role="status"/);
+      await page.getByRole("tab", { name: "npm import" }).click();
+      assert.match(await page.locator("#code-content").textContent(), /flux-animation\/all/);
+      await page.getByRole("button", { name: "Close details" }).click();
       await page.emulateMedia({ reducedMotion: "reduce" });
       assert.equal(
-        await page
-          .locator(".fx-dual-ring")
-          .evaluate((e) => parseFloat(getComputedStyle(e, "::after").animationDuration)),
+        await page.locator(".fx-dual-ring").first().evaluate((e) => parseFloat(getComputedStyle(e, "::after").animationDuration)),
         0.00001,
       );
       await page.emulateMedia({ reducedMotion: "no-preference" });
       await page.getByRole("searchbox").fill("");
+      await page.getByRole("button", { name: /^Chat\s*\d+$/ }).click();
+      const chat = catalog.effects.filter((e) => e.group === "Chat").length;
+      assert.equal(await page.locator(".effect").count(), chat);
+      assert.match(page.url(), /cat=Chat/);
+      await page.goto(base + "#fx-typing");
+      await page.waitForFunction(() => document.querySelector("#detail").open);
+      assert.equal(await page.locator("#detail-title").textContent(), "fx-typing");
+      await page.keyboard.press("Escape");
       await page.setViewportSize({ width: 390, height: 844 });
-      assert.ok(
-        await page.evaluate(
-          () => document.documentElement.scrollWidth <= innerWidth,
-        ),
-      );
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
       await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
-      await page.screenshot({
-        path: `output/playwright/demo-${engine}-mobile.png`,
-      });
+      await page.screenshot({ path: `output/playwright/demo-${engine}-mobile.png` });
       await page.setViewportSize({ width: 1440, height: 1000 });
       await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
-      await page.screenshot({
-        path: `output/playwright/demo-${engine}-desktop.png`,
-      });
+      await page.screenshot({ path: `output/playwright/demo-${engine}-desktop.png` });
       await page.goto(new URL("index.html", root).href);
-      await page.waitForSelector('.effect');
-      assert.equal(await page.locator('.effect').count(), 64);
-      await page.getByRole('searchbox').fill('dual-ring');
-      await page.emulateMedia({reducedMotion:'reduce'});
-      assert.equal(await page.locator('.fx-dual-ring').evaluate(e => parseFloat(getComputedStyle(e, '::after').animationDuration)), 0.00001);
+      await page.waitForSelector(".effect");
+      assert.equal(await page.locator(".effect").count(), catalog.effects.length);
       assert.deepEqual(errors, []);
     },
   );

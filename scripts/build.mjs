@@ -3,7 +3,7 @@ import path from "node:path";
 import { gzipSync, brotliCompressSync, constants } from "node:zlib";
 import postcss from "postcss";
 import CleanCSS from "clean-css";
-import { makeCatalog } from "./catalog.mjs";
+import { makeCatalog, classesFor } from "./catalog.mjs";
 
 const check = process.argv.includes("--check");
 const pkg = JSON.parse(fs.readFileSync("package.json"));
@@ -23,12 +23,15 @@ const extra = [
   "interactions-extra",
   "loaders-extra",
   "visual-extra",
+  "chat-extra",
 ];
-const coreClasses = new Set(
-  "fade up down left right zoom zoom-up pop bounce-in rotate grow-x sheet-up sheet-down zoom-down roll-in fade-out up-out down-out left-out slide-out zoom-out pop-out sheet-out rotate-out drop-out pulse bounce shake wiggle nudge flash float buzz btn push grow rotate-h skew-h stagger stagger-fade stagger-left stagger-right stagger-pop clip roll-up roll-up-out roll-down roll-down-out spin dots bars pulse-soft msg msg-user stream cursor"
-    .split(" ")
-    .map((x) => "fx-" + x),
-);
+// Control classes (fx-slow, fx-loop, fx-d2, ...) set these private variables.
+// They are registered as non-inheriting, so a control affects only its own
+// element; the shared rules hand them to child and pseudo-element targets.
+const CONTROLS = ["dur", "delay", "ease", "repeat", "dir"];
+const properties = CONTROLS.map(
+  (v) => `@property --_c-${v} {\n  syntax: "*";\n  inherits: false;\n}`,
+).join("\n");
 const read = (name) => fs.readFileSync(`src/${name}.css`, "utf8");
 const isKeyframe = (node) => {
   for (let p = node.parent; p; p = p.parent)
@@ -115,15 +118,27 @@ function normalize(source) {
   return root;
 }
 
-function pruneCore(root) {
+// Keep only rules whose classes all belong to a preset (core, chat).
+function prune(root, keep) {
   root.walkRules((rule) => {
     if (isKeyframe(rule)) return;
     const selectors = split(rule.selector).filter((s) =>
-      classNames(s).every((c) => coreClasses.has(c)),
+      classNames(s).every((c) => keep.has(c)),
     );
     if (!selectors.length) rule.remove();
     else rule.selector = selectors.join(", ");
   });
+  // Drop @media/@supports blocks left empty by pruning (innermost first).
+  const empty = [];
+  root.walkAtRules((r) => {
+    if (r.nodes && !r.nodes.length) empty.push(r);
+  });
+  for (let r of empty)
+    while (r && r.type === "atrule" && !r.nodes.length) {
+      const parent = r.parent;
+      r.remove();
+      r = parent;
+    }
   const used = new Set();
   root.walkDecls("animation-name", (d) => used.add(d.value));
   root.walkAtRules("keyframes", (r) => {
@@ -132,32 +147,58 @@ function pruneCore(root) {
   return root;
 }
 
-function commonRules() {
+// Child targets of an animated host. Stagger variants always sit on an
+// fx-stagger parent, so ".fx-stagger > *" already covers their children.
+function childTargets() {
+  const list = [...targets].filter((x) => !x.includes("::") && /[ >]/.test(x));
+  return targets.has(".fx-stagger > *")
+    ? list.filter((x) => !/^\.fx-stagger-[\w-]+ > \*$/.test(x))
+    : list;
+}
+// Accent-derived colors are resolved per element, so --fx-accent can be set on
+// any container. Only bundles that use them pay for them.
+const ACCENTS = { glow: ["fx-glow", 45], ring: ["fx-ring", 50] };
+function commonRules(css) {
   if (!targets.size) return "";
+  const accents = Object.entries(ACCENTS)
+    .filter(([name]) => css.includes(`var(--_${name})`))
+    .map(
+      ([name, [public_, percent]]) =>
+        `\n  --_${name}: var(--${public_}, color-mix(in srgb, var(--fx-accent, #4f46e5) ${percent}%, transparent));`,
+    )
+    .join("");
   // Pseudo-elements cannot be placed inside :where(); group them separately.
-  const regular = [
-    FX,
-    ...[...targets].filter((x) => !x.includes("::") && /[ >]/.test(x)),
-  ];
+  const children = childTargets();
   const pseudo = [...targets].some((x) => x.includes("::"))
     ? [`:where(${FX})::before`, `:where(${FX})::after`]
     : [];
-  const selectors = [`:where(${regular.join(", ")})`, ...pseudo].join(",\n");
-  if (!selectors) return "";
-  return `${selectors} {
+  const selectors = [`:where(${[FX, ...children].join(", ")})`, ...pseudo];
+  // Child and pseudo-element targets take their host's control classes.
+  const handoff = [
+    ...(children.length ? [`:where(${children.join(", ")})`] : []),
+    ...pseudo,
+  ];
+  // Precedence: control class on the element, then the public variable
+  // (inherited, so it can be set on :root or a container), then the default.
+  return `${selectors.join(",\n")} {
   --_t: .45s;
   --_e: var(--fx-ease);
   --_n: 1;
   --_a: normal;
-  --_fx-phase: 0s;
-  animation-duration: var(--fx-dur, var(--_t));
-  animation-timing-function: var(--fx-easing, var(--_e));
+  --_fx-phase: 0s;${accents}
+  animation-duration: var(--_c-dur, var(--fx-dur, var(--_t)));
+  animation-timing-function: var(--_c-ease, var(--fx-easing, var(--_e)));
   animation-fill-mode: both;
-  animation-delay: calc(var(--fx-delay, 0s) + var(--_fx-phase));
-  animation-iteration-count: var(--fx-repeat, var(--_n));
-  animation-direction: var(--fx-direction, var(--_a));
+  animation-delay: calc(var(--_c-delay, var(--fx-delay, 0s)) + var(--_fx-phase));
+  animation-iteration-count: var(--_c-repeat, var(--fx-repeat, var(--_n)));
+  animation-direction: var(--_c-dir, var(--fx-direction, var(--_a)));
   animation-play-state: var(--fx-play, running);
-}\n`;
+}
+${
+  handoff.length
+    ? `${handoff.join(",\n")} {\n${CONTROLS.map((v) => `  --_c-${v}: inherit;`).join("\n")}\n}\n`
+    : ""
+}`;
 }
 // Loaders whose final keyframe is invisible get a static, visible pose instead.
 // Kept outside normalize(): these are plain overrides inside the media query.
@@ -179,7 +220,7 @@ function reducedRules(root) {
     `:where(${FX})`,
     `:where(${FX})::before`,
     `:where(${FX})::after`,
-    ...[...targets].filter((x) => /[ >]/.test(x)),
+    ...childTargets(),
   ];
   // Transitions can live on elements with no keyframes, including pseudo-elements.
   root.walkRules((r) => {
@@ -203,29 +244,31 @@ function reducedRules(root) {
 
 const artifacts = {};
 const outputs = new Map();
-for (const [name, sources] of Object.entries({
-  default: legacy,
-  core: legacy,
-  motion: ["motion-extra"],
-  interactions: ["interactions-extra"],
-  loaders: ["loaders-extra"],
-  visual: ["visual-extra"],
-  all: [...legacy, ...extra],
-})) {
+const bundles = {
+  default: { sources: legacy, base: true },
+  core: { sources: legacy, base: true, keep: classesFor("core") },
+  chat: { sources: [...legacy, ...extra], base: true, keep: classesFor("chat") },
+  motion: { sources: ["motion-extra"] },
+  interactions: { sources: ["interactions-extra"] },
+  loaders: { sources: ["loaders-extra", "chat-extra"] },
+  visual: { sources: ["visual-extra"] },
+  all: { sources: [...legacy, ...extra], base: true },
+};
+for (const [name, { sources, base: isBase, keep }] of Object.entries(bundles)) {
   targets.clear();
-  const isBase = ["default", "core", "all"].includes(name);
-  let root = postcss.parse(sources.map(read).join("\n"));
-  if (name === "core") root = pruneCore(normalize(root.toString()));
-  // Normalize exactly once. Core pruning occurs before collecting its final targets.
-  if (name === "core") {
+  // Normalize exactly once. Presets are pruned before collecting their final targets.
+  let root = normalize(sources.map(read).join("\n"));
+  if (keep) {
+    root = prune(root, keep);
     targets.clear();
     root.walkRules((r) => {
       if (!isKeyframe(r) && r.nodes.some((d) => d.prop === "animation-name"))
         split(r.selector).forEach((x) => targets.add(x));
     });
-  } else root = normalize(root.toString());
+  }
   const accessibility = reducedRules(root);
-  const source = `/*! flux-animation v${pkg.version} | MIT | Generated by npm run build; edit src/ */\n${isBase ? read("base") : ""}\n${commonRules()}\n${root.toString()}\n${isBase ? read("modifiers") : ""}\n${name !== "default" && (isBase || name === "motion") ? read("controls-extra") : ""}\n${accessibility}`;
+  const hasControls = isBase || name === "motion";
+  const source = `/*! flux-animation v${pkg.version} | MIT | Generated by npm run build; edit src/ */\n${hasControls ? properties + "\n" : ""}${isBase ? read("base") : ""}\n${commonRules(root.toString())}\n${root.toString()}\n${isBase ? read("modifiers") : ""}\n${name !== "default" && (isBase || name === "motion") ? read("controls-extra") : ""}\n${accessibility}`;
   const result = new CleanCSS({
     level: {
       1: { specialComments: "all" },
@@ -272,13 +315,47 @@ outputs.set(
   `/* Generated; edit scripts/catalog.mjs */\nwindow.FLUX_CATALOG = ${JSON.stringify(catalog)};\n`,
 );
 outputs.set("docs/SIZES.json", JSON.stringify(artifacts, null, 2) + "\n");
+const DEMO = "https://silverstar085.github.io/flux-animation/";
+const imports = (e) =>
+  [
+    e.pack === "default" ? "flux-animation" : `flux-animation/${e.pack}`,
+    e.core && "flux-animation/core",
+    e.chat && "flux-animation/chat",
+    "flux-animation/all",
+  ]
+    .filter(Boolean)
+    .map((x) => "`" + x + "`")
+    .join(", ");
+const anchor = (g) => g.toLowerCase().replaceAll(" ", "-");
 outputs.set(
   "docs/ANIMATIONS.md",
-  `# Animation reference\n\nGenerated from the effect catalog. All examples assume the appropriate stylesheet is loaded. ${catalog.effects.length} effect/helper recipes; ${artifacts.all.classes.length} public classes including controls.\n\n` +
-    catalog.effects
+  `# Animation reference
+
+Generated from \`src/effects.json\`; edit that file, not this one. ${catalog.effects.length} effects and helpers; ${artifacts.all.classes.length} public classes including controls. Every entry links to a live preview in the [demo](${DEMO}).
+
+**Reduced motion.** With \`prefers-reduced-motion: reduce\`, every effect finishes immediately (.01ms, one iteration) and transitions are disabled. Delay, pause, direction and end states are kept. Exceptions are noted on the entry: loaders whose last frame would be invisible rest on a static, visible pose, and \`fx-cycle-*\` shows only its first child.
+
+${catalog.groups
+  .map((g) => `- [${g}](#${anchor(g)}) (${catalog.effects.filter((e) => e.group === g).length})`)
+  .join("\n")}
+
+` +
+    catalog.groups
       .map(
-        (e) =>
-          `## ${e.class}\n\n${e.description}\n\n- Pack: ${e.pack}${e.isNew ? " (new)" : ""}\n- Behavior: ${e.kind}; target: ${e.target}\n- Rendering: ${e.cost}\n- Reduced motion: ${e.reduced}\n\n\`\`\`html\n${e.html}\n\`\`\`\n`,
+        (g) =>
+          `## ${g}\n\n` +
+          catalog.effects
+            .filter((e) => e.group === g)
+            .map(
+              (e) =>
+                `### ${e.class}\n\n${e.description}\n\n` +
+                `- Import: ${imports(e)}${e.since === "2.x" ? "" : ` · new in ${e.since}`}\n` +
+                `- Behavior: ${e.kind}; animates the ${e.target}; rendering: ${e.cost}\n` +
+                (e.reduced.startsWith("Duration becomes") ? "" : `- Reduced motion: ${e.reduced}\n`) +
+                `- [Live preview](${DEMO}#${e.class})\n\n` +
+                "```html\n" + e.html + "\n```\n",
+            )
+            .join("\n"),
       )
       .join("\n"),
 );
@@ -295,11 +372,10 @@ for (const [name, a] of Object.entries(artifacts))
   console.log(
     `${name.padEnd(13)} ${String(a.minified).padStart(6)} min | ${String(a.gzip).padStart(5)} gzip | ${String(a.brotli).padStart(5)} br | ${a.classes.length} classes`,
   );
-if (process.argv.includes("--budgets")) {
-  if (artifacts.default.gzip > 4800)
-    throw new Error("Default gzip budget exceeded (4800 bytes)");
-  if (artifacts.all.gzip > 7500)
-    throw new Error("Expanded gzip budget exceeded (7500 bytes)");
-  if (artifacts.core.gzip > 2500)
-    throw new Error("Core gzip budget exceeded (2500 bytes)");
-}
+// Gzip budgets in bytes (level 9), shared with the tests.
+if (process.argv.includes("--budgets"))
+  for (const [name, cap] of Object.entries(
+    JSON.parse(fs.readFileSync("scripts/budgets.json")),
+  ))
+    if (artifacts[name].gzip > cap)
+      throw new Error(`${name} gzip budget exceeded: ${artifacts[name].gzip} > ${cap} bytes`);

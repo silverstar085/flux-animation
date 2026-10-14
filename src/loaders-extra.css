@@ -37,10 +37,10 @@
   animation: fxZigzag 1.2s ease-in-out infinite;
 }
 .fx-dots-zigzag > i:nth-child(2) {
-  animation-delay: calc(var(--fx-dur, 1.2s) / -3);
+  animation-delay: calc(var(--_c-dur, var(--fx-dur, 1.2s)) / -3);
 }
 .fx-dots-zigzag > i:nth-child(3) {
-  animation-delay: calc(var(--fx-dur, 1.2s) / -1.5);
+  animation-delay: calc(var(--_c-dur, var(--fx-dur, 1.2s)) / -1.5);
 }
 .fx-bars-wave,
 .fx-bars-travel {
@@ -63,19 +63,19 @@
 }
 .fx-bars-wave > i:nth-child(2),
 .fx-bars-travel > i:nth-child(2) {
-  animation-delay: calc(var(--fx-dur, 1.5s) * -.2);
+  animation-delay: calc(var(--_c-dur, var(--fx-dur, 1.5s)) * -.2);
 }
 .fx-bars-wave > i:nth-child(3),
 .fx-bars-travel > i:nth-child(3) {
-  animation-delay: calc(var(--fx-dur, 1.5s) * -.4);
+  animation-delay: calc(var(--_c-dur, var(--fx-dur, 1.5s)) * -.4);
 }
 .fx-bars-wave > i:nth-child(4),
 .fx-bars-travel > i:nth-child(4) {
-  animation-delay: calc(var(--fx-dur, 1.5s) * -.6);
+  animation-delay: calc(var(--_c-dur, var(--fx-dur, 1.5s)) * -.6);
 }
 .fx-bars-wave > i:nth-child(5),
 .fx-bars-travel > i:nth-child(5) {
-  animation-delay: calc(var(--fx-dur, 1.5s) * -.8);
+  animation-delay: calc(var(--_c-dur, var(--fx-dur, 1.5s)) * -.8);
 }
 .fx-dual-ring,
 .fx-ring-pulse,
@@ -112,12 +112,12 @@
   animation: fxExtraRing 2s ease-out infinite;
 }
 .fx-sonar::after {
-  animation-delay: calc(var(--fx-dur, 2s) / -2);
+  animation-delay: calc(var(--_c-dur, var(--fx-dur, 2s)) / -2);
 }
 .fx-skeleton-wave {
   position: relative;
   overflow: hidden;
-  background: var(--fx-skeleton, #e2e6ee);
+  background: var(--fx-skeleton, color-mix(in srgb, currentColor 12%, transparent));
   border-radius: 4px;
   min-height: 1em;
 }
@@ -128,7 +128,7 @@
   background: linear-gradient(
     110deg,
     transparent 20%,
-    rgb(255 255 255 / 0.55) 50%,
+    var(--fx-highlight, color-mix(in srgb, currentColor 12%, transparent)) 50%,
     transparent 80%
   );
   animation: fxSkeletonWave 1.8s ease-in-out infinite;
@@ -187,5 +187,10 @@
   }
   to {
     transform: translateX(100%);
+  }
+}
+@supports not (color: color-mix(in srgb, red, red)) {
+  .fx-skeleton-wave {
+    background: var(--fx-skeleton, #e2e6ee);
   }
 }

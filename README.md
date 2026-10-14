@@ -1,10 +1,10 @@
 # flux-animation
 
-[![npm](https://img.shields.io/npm/v/flux-animation)](https://www.npmjs.com/package/flux-animation) [![gzip size](https://img.shields.io/badge/gzip-4.7%20KB-brightgreen)](docs/SIZES.json) [![license: MIT](https://img.shields.io/npm/l/flux-animation)](LICENSE)
+[![npm](https://img.shields.io/npm/v/flux-animation)](https://www.npmjs.com/package/flux-animation) [![gzip size](https://img.shields.io/badge/gzip-4.8%20KB-brightgreen)](docs/SIZES.json) [![license: MIT](https://img.shields.io/npm/l/flux-animation)](LICENSE)
 
-Small, class-based CSS animations. **Zero runtime JavaScript. Zero runtime dependencies.**
+Small, class-based CSS animations for chat interfaces and beyond: typing indicators, thinking states, streaming text, loaders, entrances and hover effects. **Zero runtime JavaScript. Zero runtime dependencies.**
 
-**[Live demo and catalog →](https://silverstar085.github.io/flux-animation/)** · [Animation reference](docs/ANIMATIONS.md) · [Changelog](CHANGELOG.md)
+**[Live demo and catalog →](https://silverstar085.github.io/flux-animation/)** · [Animation reference](docs/ANIMATIONS.md) · [Changelog](CHANGELOG.md) · [Report a bug or request an animation](https://github.com/silverstar085/flux-animation/issues)
 
 ## Quick start
 
@@ -20,183 +20,90 @@ Or from a CDN:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flux-animation@3/flux.all.min.css">
-<div class="fx-spring-up">Hello, motion.</div>
 ```
 
-The default import keeps the original 128 classes; the expanded build has **201 classes**. To run the catalog locally, use `npm ci && npm run preview` and open <http://127.0.0.1:4173/>. You can also open `index.html` directly from a checkout, with its `demo/` folder beside it.
-
-## Choose your download
-
-Gzip level 9; decimal KB. These are stylesheet transfer sizes, not the size of the whole npm archive. See [exact artifact measurements](docs/SIZES.json).
-
-| Import | Minified | Gzip | Included |
-|---|---:|---:|---|
-| `flux-animation` | 24.31 KB | **4.70 KB** | All 128 legacy classes, with fixes |
-| `flux-animation/core` | 10.37 KB | **2.40 KB** | 83 everyday classes and controls |
-| `flux-animation/all` | 37.19 KB | **6.83 KB** | All 201 classes |
-| `flux-animation/motion` | 7.01 KB | 1.55 KB | 40 motion/stagger additions + nine controls |
-| `flux-animation/interactions` | 2.69 KB | 0.70 KB | Eight interaction effects |
-| `flux-animation/loaders` | 4.89 KB | 1.29 KB | Eight loaders/skeletons |
-| `flux-animation/visual` | 2.00 KB | 0.65 KB | Eight mask/filter effects |
-
-The four add-on packs require the default **or** core base. Import the base first. The default and core are alternative bases; `all` is a complete, flattened stylesheet. Do not import `all` alongside a base or packs. CSS selectors are not automatically tree-shaken per class.
-
-```js
-// Existing tiny entry point: unchanged.
-import 'flux-animation';
-
-// Or get everything in one stylesheet.
-import 'flux-animation/all';
-
-// Or choose a smaller combination instead.
-import 'flux-animation/core';
-import 'flux-animation/motion';
-import 'flux-animation/loaders';
-```
-
-Choose one of those configurations. The example alternatives above are not meant to be imported together.
-
-For a version-pinned CDN URL, include the exact version: `https://cdn.jsdelivr.net/npm/flux-animation@3.0.1/flux.all.min.css`.
-
-Readable exports such as `flux-animation/flux.css` and `flux-animation/flux.all.css` remain available, as do the existing `/min` and `/flux.min.css` paths.
-
-## What's new
-
-| Family | Classes |
-|---|---|
-| Diagonal entrances | `fx-up-left`, `fx-up-right`, `fx-down-left`, `fx-down-right` |
-| Spring entrances | `fx-spring-up`, `fx-spring-down`, `fx-spring-left`, `fx-spring-right` |
-| Side zoom / drawers | `fx-zoom-left`, `fx-zoom-right`, `fx-sheet-left`, `fx-sheet-right` |
-| Edge flips | `fx-flip-in-top`, `fx-flip-in-bottom`, `fx-flip-in-left`, `fx-flip-in-right` |
-| Directional zoom exits | `fx-zoom-up-out`, `fx-zoom-down-out`, `fx-zoom-left-out`, `fx-zoom-right-out` |
-| Drawer exits | `fx-sheet-up-out`, `fx-sheet-down-out`, `fx-sheet-left-out`, `fx-sheet-right-out` |
-| More exits | `fx-right-out`, `fx-flip-y-out`, `fx-roll-out`, `fx-swing-out` |
-| Attention / ambient | `fx-nod`, `fx-shake-y`, `fx-hop`, `fx-pendulum`, `fx-breathe`, `fx-recoil`, `fx-settle`, `fx-wobble` |
-| Interaction strokes | `fx-underline-center`, `fx-underline-right`, `fx-underline-double`, `fx-overline` |
-| Interaction fills | `fx-fill-h-left`, `fx-fill-h-right`, `fx-fill-h-up`, `fx-fill-h-down` |
-| Dots / bars | `fx-dots-orbit`, `fx-dots-zigzag`, `fx-bars-wave`, `fx-bars-travel` |
-| Rings / skeletons | `fx-dual-ring`, `fx-ring-pulse`, `fx-sonar`, `fx-skeleton-wave` |
-| Optional visual effects | `fx-wipe-up`, `fx-wipe-down`, `fx-wipe-left`, `fx-wipe-right`, `fx-iris-in`, `fx-iris-out`, `fx-blur-zoom-in`, `fx-blur-zoom-out` |
-| Stagger variants | `fx-stagger-down`, `fx-stagger-zoom`, `fx-stagger-rotate`, `fx-stagger-roll-up` |
-
-`fx-right-out` is a visual alias of `fx-slide-out`; `fx-sheet-down-out` aliases `fx-sheet-out`. The 64 count includes those two aliases and four stagger variants. Directions are presets within shared families, not 64 different keyframe algorithms. The original fade/slide/pop, hover, chat, dot, cycle, and size effects remain available.
-
-See the [complete reference with markup and reduced-motion behavior](docs/ANIMATIONS.md).
-
-## Controls and customization
-
-Use **one main effect plus modifiers per element**. Class order in HTML does not determine which of two conflicting effects wins. Use separate wrappers for two transform effects, such as an entrance around an interactive button:
+Then add a class:
 
 ```html
-<div class="fx-spring-up">
-  <button class="fx-grow">Send message</button>
+<div class="fx-spring-up">Hello, motion.</div>
+<span class="fx-typing" aria-hidden="true"></span>
+```
+
+Pin an exact version in production, for example `flux-animation@3.1.0`.
+
+## Chat recipes
+
+Every recipe below works with `flux-animation/chat` or `flux-animation/all`. Each preview link opens the effect in the demo.
+
+### New messages
+
+```html
+<div class="message assistant fx-msg">Hi! How can I help?</div>
+<div class="message user fx-msg-user">Summarize this thread</div>
+```
+
+[Preview `fx-msg`](https://silverstar085.github.io/flux-animation/#fx-msg). For a list that appears at once, put `fx-stagger` on the parent.
+
+### Waiting for a reply
+
+```html
+<div role="status">
+  <span class="fx-typing" aria-hidden="true"></span>
+  <span class="sr-only">Assistant is typing…</span>
 </div>
 ```
 
-Existing controls, available in the default, core, and expanded builds:
+`fx-typing` is a complete bubble with no child markup. It follows `currentColor` and the font size; set `--fx-bubble` for its background and `--fx-dot` for the dot size. Prefer the classic dots? Use `<span class="fx-dots" aria-hidden="true"><i></i><i></i><i></i></span>`. [Preview](https://silverstar085.github.io/flux-animation/#fx-typing)
 
-| Classes | Behavior |
-|---|---|
-| `fx-faster`, `fx-fast`, `fx-slow`, `fx-slower` | 200 / 300 / 700 / 1,100 ms; now also work on attention effects and loaders |
-| `fx-d1` … `fx-d7` | Add 100–700 ms to the effect's child/pseudo-element phase delay |
-| `fx-spring`, `fx-linear` | Override animation easing |
-| `fx-loop`, `fx-loop-2`, `fx-loop-3` | Infinite / two / three iterations |
-| `fx-reverse` | Reverse playback |
-| `fx-paused` | Pause the host, documented child animations, and decorative pseudo-elements |
-
-New controls in **core, motion, and all**: `fx-alternate`, `fx-alternate-reverse`, `fx-once`, `fx-running`, and `fx-origin-top`, `fx-origin-bottom`, `fx-origin-left`, `fx-origin-right`, `fx-origin-center`. The small legacy default does not add these nine utilities; import `motion` if you need them with the default base.
-
-```css
-:root {
-  --fx-dist: 14px;
-  --fx-stagger: 55ms;
-  --fx-cycle: 6s;
-  /* Optional: setting this globally now intentionally retimes all FX animations. */
-  /* --fx-dur: .45s; */
-}
-
-.my-animation {
-  --fx-dur: .6s;
-  --fx-delay: .15s;
-}
-```
-
-| Variable | Use |
-|---|---|
-| `--fx-dur` | Duration override; when unset, each effect retains its own default |
-| `--fx-delay` | Extra delay; adds to loader/cycle/stagger phase offsets |
-| `--fx-dist` | Travel distance where the effect uses distance; sheets use their own dimensions |
-| `--fx-ease`, `--fx-spring` | Existing standard easing curves |
-| `--fx-easing` | Explicit easing override, including effects with their own default curve |
-| `--fx-repeat`, `--fx-direction`, `--fx-play` | Iteration, direction, and playback overrides; prefer the corresponding classes |
-| `--fx-stagger`, `--fx-index` | Stagger interval and optional explicit child index |
-| `--fx-cycle` | Full status-rotator period; now inherits correctly |
-| `--fx-dot` | Dot size; now inherits correctly |
-| `--fx-size` | Size of new orbit, bar, and ring loaders |
-| `--fx-w`, `--fx-h`, `--fx-x` | Existing maximum dimensions / held horizontal scale |
-| `--fx-glow`, `--fx-ring`, `--fx-fill` | Existing shadow/tint colors |
-| `--fx-tint` | New hover-fill opacity, default `.12` |
-| `--fx-skeleton` | New skeleton background |
-| `--fx-iris-origin` | Circle-mask origin, default `50% 50%` |
-
-Local variable settings beat inherited settings. A modifier sets its variable on that element; ordinary CSS specificity decides between conflicting local declarations. Inline variables override class rules. Effect defaults use private variables (`--_…`); leave those to the library. Controls inherit into nested FX elements; use a local override such as `fx-running` or `--fx-repeat: 1` to opt a nested effect out.
-
-Finite repeats count **each animated target's iterations**. Phase-shifted children can finish at different times, especially with negative loader offsets. Cycle and new-loader phase offsets scale with duration to preserve their rhythm. Legacy dot/bar and stagger offsets remain fixed for compatibility; use defaults or tune their duration and delays together. Pausing resumes from the current point; it does not restart.
-
-### Staggered lists
+### Thinking
 
 ```html
-<ul class="fx-stagger fx-stagger-zoom">
-  <li>First</li>
-  <li>Second</li>
-  <li style="--fx-index:20">Explicit later position</li>
+<p role="status"><span class="fx-shimmer-text">Thinking…</span></p>
+<p role="status"><span class="fx-ellipsis">Thinking</span></p>
+```
+
+`fx-shimmer-text` sweeps a highlight through the text itself. `fx-ellipsis` appends dots that count up to three. To rotate between status labels with no JavaScript, use `fx-cycle-2` … `fx-cycle-5` ([preview](https://silverstar085.github.io/flux-animation/#fx-cycle-3)).
+
+### Tool and agent steps
+
+```html
+<ul aria-live="polite">
+  <li class="fx-step">Searching the web</li>
 </ul>
 ```
 
-Every variant requires the `fx-stagger` parent class. The first item waits one interval; children 13 onward share interval 13 unless they set `--fx-index`. Roll effects may need an `fx-clip` wrapper. Existing stagger defaults are preserved.
+When the step finishes, swap the class: `step.className = 'fx-step-done'` (a checkmark pops in) or `'fx-step-error'` (a cross). Color them with `--fx-success` and `--fx-danger`. [Preview](https://silverstar085.github.io/flux-animation/#fx-step)
 
-### Accessible loaders
+### Streaming an answer
 
 ```html
-<span role="status">
-  <span class="fx-dual-ring" aria-hidden="true"></span>
-  <span class="sr-only">Loading…</span>
-</span>
+<p class="answer fx-caret-dot"></p>
 ```
 
-`sr-only` is an application accessibility utility, not a Flux class. A minimal version:
-
-```css
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+```js
+function appendToken(answer, text) {
+  const word = document.createElement('span');
+  word.className = 'fx-stream-word';
+  word.textContent = text;
+  answer.append(word, ' ');
 }
+// When the stream ends:
+answer.classList.remove('fx-caret-dot');
 ```
 
-Dot loaders require three plain decorative `<i>` children; new bar loaders require five. For rotating decorative labels, hide the rotator from assistive technology and provide one stable accessible status. Actual progress, status changes, and announcements belong to the application.
+`fx-caret-dot` shows a pulsing dot after the text while it streams; `fx-cursor` is a blinking caret instead. [Preview](https://silverstar085.github.io/flux-animation/#fx-stream-word)
 
-## Reduced motion, interaction, and rendering
+### Loading history
 
-The v2 reduced-motion policy is retained: `prefers-reduced-motion: reduce` shortens animations to **.01ms**, limits them to one iteration, and disables transitions. Delays, paused state, direction, hover transforms, and effect endpoints are not reset. Cycles stop and show the first child using opacity, without hiding the other children from interaction. Since 3.0.1, loaders whose last frame would be invisible (progress, trace, comet, scan, fill, sonar, ring-pulse, and the dot/bar loaders that fade out) rest on a static, visible pose instead, so reduced-motion users still see that something is loading.
+```html
+<div class="fx-skeleton-msg" aria-hidden="true"></div>
+```
 
-**3.0 is a major release.** Global duration controls, propagation into child/pseudo-element animations, inherited variables, and global styling can affect existing integrations. Read the [v2 → v3 migration notes](docs/MIGRATION.md) before upgrading.
+Three lines of varied width with a travelling highlight. Skeleton colors follow the text color, so they work in light and dark themes. Override with `--fx-skeleton` and `--fx-highlight`. [Preview](https://silverstar085.github.io/flux-animation/#fx-skeleton-msg)
 
-An exit class does not remove an element, change `aria-expanded`, or manage focus. An opacity-zero element may still be focusable. Applications must handle those lifecycle changes. Likewise, scale-based size effects stretch the pixels and leave layout space intact; max-width/max-height helpers change layout and can clip content. `fx-width` opts into intrinsic-size interpolation only on that helper where supported, with ordinary explicit widths as the fallback.
+### Removing a message
 
-Most effects animate transforms and opacity. Shadows may repaint; filters and masks have browser-dependent rendering costs; dimension helpers trigger layout. New ring effects use static borders with transform/opacity motion. Legacy shadows remain for visual compatibility. There are no blanket `will-change` or forced backface-hiding rules. See [web.dev's animation guidance](https://web.dev/articles/animations-guide).
-
-Pseudo-element effects reserve `::before` and/or `::after`. Do not put two effects requiring the same pseudo-element on one node; use wrappers. Decorations ignore pointer events. Physical left/right directions are not automatically reversed in RTL layouts. Shared initialization applies to any class that *starts with* `fx-` (since 3.0.1, classes that merely contain it, such as `gfx-card`, are left alone); reserve the `fx-` prefix for Flux. Legacy dot selectors still support descendant `<i>` markup; new loaders use direct children.
-
-### Replay and exit cleanup
-
-Adding a class already present does not replay it. Applications can replace the node or remove/re-add the effect class across a rendering boundary. The demo uses the Web Animations API and isolated preview replacement for its controls; this is optional application code.
-
-For removal, handle the reduced-motion path directly and filter normal animation events. This example handles a finite exit on the element itself:
+An exit class animates the element but does not remove it. Remove it when the animation ends:
 
 ```js
 function dismiss(element, exitClass = 'fx-fade-out') {
@@ -223,26 +130,128 @@ function dismiss(element, exitClass = 'fx-fade-out') {
 }
 ```
 
-For framework-controlled nodes, update framework state instead of calling `remove()`. If the application disables, pauses, or replaces an exit mid-flight, its transition lifecycle should complete cleanup explicitly. Removing a class is not a substitute for managing DOM state.
+For framework-controlled nodes, update framework state instead of calling `remove()`.
 
-## Development
+## Choosing a bundle
 
-```sh
-npm ci
-npm run build       # src/ → checked-in readable/minified CSS + catalog/reference
-npm run check       # reproducibility + approved byte budgets
-npm test            # CSS contracts, package exports, and bundler smoke tests
-npx playwright install chromium firefox webkit
-npm run preview     # keep this running in another terminal
-npm run test:browser
-npm pack --dry-run  # inspect exactly what will ship; does not publish
+**Use `flux-animation/all` unless you are counting bytes.** It is one stylesheet with every class. If you are building a chat UI and want it smaller, use `flux-animation/chat`.
+
+| Import | Gzip | Classes | What it is |
+|---|---:|---:|---|
+| `flux-animation/all` | 7.80 KB | 210 | Everything |
+| `flux-animation/chat` | **3.49 KB** | 70 | Complete chat preset: messages, typing, thinking, steps, streaming, skeletons, status rotators, basic entrances |
+| `flux-animation` | 4.82 KB | 128 | The original 2.x class set, with fixes |
+| `flux-animation/core` | 2.46 KB | 83 | Everyday entrances, exits, attention, hover and basic loaders |
+| `+ flux-animation/motion` | 1.64 KB | 49 | Add-on: extra entrances/exits/stagger + nine controls |
+| `+ flux-animation/interactions` | 0.70 KB | 8 | Add-on: underline and fill hover effects |
+| `+ flux-animation/loaders` | 2.33 KB | 17 | Add-on: extra loaders and the 3.1 chat loaders |
+| `+ flux-animation/visual` | 0.66 KB | 8 | Add-on: mask and filter effects |
+
+`all`, `chat`, `flux-animation` and `core` are complete stylesheets: pick one. The four add-ons (`+`) extend `flux-animation` or `core`; import the base first. Sizes are gzip level 9 in decimal KB ([exact measurements](docs/SIZES.json)). Readable versions are available too, for example `flux-animation/flux.all.css`.
+
+## Controls and customization
+
+Use **one main effect plus controls per element**. If you need two transform effects, use a wrapper:
+
+```html
+<div class="fx-spring-up">
+  <button class="fx-grow">Send message</button>
+</div>
 ```
 
-Author effects in `src/`; update metadata in `scripts/catalog.mjs`. The build parses animation declarations, shares control defaults, and generates reduced-motion coverage from actual targets. Do not edit generated `flux*.css`, catalog files, `docs/ANIMATIONS.md`, or `docs/SIZES.json` directly.
+| Control classes | Behavior |
+|---|---|
+| `fx-faster`, `fx-fast`, `fx-slow`, `fx-slower` | 200 / 300 / 700 / 1,100 ms |
+| `fx-d1` … `fx-d7` | Add 100–700 ms of delay |
+| `fx-spring`, `fx-linear` | Override easing |
+| `fx-loop`, `fx-loop-2`, `fx-loop-3` | Infinite / two / three iterations |
+| `fx-reverse`, `fx-alternate`, `fx-alternate-reverse` | Direction |
+| `fx-once` | One iteration, even for a loop |
+| `fx-paused`, `fx-running` | Pause this element and everything inside it / opt back in |
+| `fx-origin-top`, `-bottom`, `-left`, `-right`, `-center` | Transform origin |
 
-Gzip budgets: **4,800 bytes default**, **2,500 core**, **7,500 expanded**. `npm run check` fails the build if a bundle exceeds its budget. Development tools, browser binaries, screenshots, and the demo are excluded from the runtime package. To run the browser checks against a preinstalled browser binary, set `FLUX_EXECUTABLE` (with `FLUX_BROWSER=chromium`).
+`fx-alternate`, `fx-alternate-reverse`, `fx-once`, `fx-running` and the origin classes ship in `core`, `chat`, `motion` and `all`.
 
-[Release notes](CHANGELOG.md) · [Complete animation reference](docs/ANIMATIONS.md) · [Design history](docs/history/) · [Report a bug or request an animation](https://github.com/silverstar085/flux-animation/issues)
+**Controls apply to the element they are on**, including its loader dots and pseudo-elements, but not to other Flux elements nested inside it (since 3.1). So `fx-loop` on a message bubble does not make a typing indicator inside it loop differently. `fx-paused` is the exception: it pauses everything inside.
+
+Variables are the other way to customize. Unlike control classes, **variables inherit**, so you can set them on `:root` or on any container:
+
+```css
+:root {
+  --fx-accent: #7c3aed; /* glow, ring and fill colors */
+  --fx-dist: 14px;
+  --fx-stagger: 55ms;
+}
+.chat-panel {
+  --fx-dur: .6s; /* retimes every effect inside */
+}
+```
+
+| Variable | Use |
+|---|---|
+| `--fx-dur`, `--fx-delay`, `--fx-easing` | Duration, extra delay and easing for every effect inside. A control class on the element wins over these. |
+| `--fx-repeat`, `--fx-direction`, `--fx-play` | Iterations, direction, play state |
+| `--fx-accent` | One color for glows, rings and tints (default `#4f46e5`) |
+| `--fx-glow`, `--fx-ring`, `--fx-fill` | Override an individual accent-derived color |
+| `--fx-skeleton`, `--fx-highlight` | Skeleton background and its travelling highlight (default: derived from the text color) |
+| `--fx-bubble` | `fx-typing` bubble background |
+| `--fx-success`, `--fx-danger` | `fx-step-done` and `fx-step-error` icon colors |
+| `--fx-dist` | Travel distance for directional effects |
+| `--fx-ease`, `--fx-spring` | The library's standard easing curves |
+| `--fx-stagger`, `--fx-index` | Stagger interval; explicit position of one child |
+| `--fx-cycle` | Full period of `fx-cycle-*` status rotators |
+| `--fx-dot`, `--fx-size` | Dot size; size of ring, orbit and bar loaders |
+| `--fx-w`, `--fx-h`, `--fx-x` | Maximum width/height for expand/collapse; held scale for `fx-grow-x-to` |
+| `--fx-tint` | Hover-fill opacity (default `.12`) |
+| `--fx-iris-origin` | Circle-mask origin (default `50% 50%`) |
+
+### Staggered lists
+
+```html
+<ul class="fx-stagger fx-stagger-zoom">
+  <li>First</li>
+  <li>Second</li>
+  <li style="--fx-index:20">Explicit later position</li>
+</ul>
+```
+
+Every variant needs the `fx-stagger` parent class. Children 13 onward share the 13th delay unless they set `--fx-index`. Roll variants may need an `fx-clip` wrapper.
+
+## Accessibility and reduced motion
+
+Loaders are decorative: hide them with `aria-hidden="true"` and put one readable status next to them, as in the recipes above. `sr-only` is your app's visually-hidden utility, not a Flux class:
+
+```css
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+```
+
+With `prefers-reduced-motion: reduce`, every animation finishes immediately (.01ms, one iteration) and transitions are disabled. Delay, pause, direction and end states are kept. Loaders whose last frame would be invisible (progress, sonar, fading dots and others) rest on a static, visible pose instead, so people still see that something is loading. Status rotators show only their first label.
+
+An exit class does not remove an element, change `aria-expanded`, or move focus; your app does that. Adding a class that is already present does not replay it: replace the node, or remove and re-add the class across a frame.
+
+## Rendering notes
+
+- Most effects animate `transform` and `opacity`. Glows repaint; filters and masks cost more on large areas; `fx-expand-*` and `fx-collapse-*` change layout. The demo labels each effect's rendering cost.
+- Effects that draw decorations reserve `::before` and/or `::after`. Do not combine two such effects on one element; use a wrapper.
+- Directions are physical (left/right) and are not mirrored in right-to-left layouts.
+- Shared rules apply to classes that start with `fx-`. Reserve that prefix for Flux.
+- Control isolation uses `@property`, and accent and skeleton colors use `color-mix()`; both work in all current browsers. In older browsers, controls inherit as they did in 3.0, skeletons fall back to a fixed gray, and accent-derived glows are skipped unless you set `--fx-glow` and `--fx-ring` to plain colors.
+
+## Upgrading
+
+- From 3.0: controls no longer leak into nested Flux elements. See [3.0 → 3.1](docs/MIGRATION.md#30--31).
+- From 2.x: read the [v2 → v3 migration notes](docs/MIGRATION.md).
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the build, tests and how to add an animation. Design notes from earlier releases are in [docs/history](docs/history/).
 
 ## License
 

@@ -1,0 +1,1781 @@
+{
+  "fx-bars": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "An equalizer of four scaled bars.",
+    "html": "<span class=\"fx-bars\" aria-hidden=\"true\"><i></i><i></i><i></i><i></i></span>",
+    "core": true,
+    "chat": true
+  },
+  "fx-caret-dot": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "3.1",
+    "description": "A pulsing dot at the end of a streaming answer.",
+    "html": "<p class=\"fx-caret-dot\">Here is what I found</p>",
+    "chat": true
+  },
+  "fx-cursor": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "2.x",
+    "description": "Blink a decorative text caret.",
+    "html": "<p class=\"fx-cursor\">Writing a reply</p>",
+    "core": true,
+    "chat": true
+  },
+  "fx-dots": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "Three softly bouncing typing dots.",
+    "html": "<span class=\"fx-dots\" aria-hidden=\"true\"><i></i><i></i><i></i></span>",
+    "core": true,
+    "chat": true
+  },
+  "fx-ellipsis": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "mask",
+    "target": "pseudo-element",
+    "since": "3.1",
+    "description": "Appends dots that count up to three: “Thinking...”.",
+    "html": "<span class=\"fx-ellipsis\">Thinking</span>",
+    "chat": true
+  },
+  "fx-msg": {
+    "group": "Chat",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A small rise and scale for a message.",
+    "html": "<div class=\"fx-msg\">Hi! How can I help today?</div>",
+    "core": true,
+    "chat": true
+  },
+  "fx-msg-user": {
+    "group": "Chat",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A diagonal scale entrance for a user message.",
+    "html": "<div class=\"fx-msg-user\">Summarize this thread</div>",
+    "core": true,
+    "chat": true
+  },
+  "fx-ping": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "paint",
+    "target": "pseudo-element",
+    "since": "2.x",
+    "description": "An expanding presence halo.",
+    "html": "<span class=\"fx-ping\" style=\"display:inline-block;width:12px;height:12px;border-radius:50%;background:currentColor\" aria-hidden=\"true\"></span>",
+    "chat": true
+  },
+  "fx-progress": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "2.x",
+    "description": "An indeterminate moving progress segment.",
+    "html": "<div class=\"fx-progress\" style=\"width:140px;height:5px;background:#e2e6ee\" aria-hidden=\"true\"></div>",
+    "chat": true
+  },
+  "fx-pulse-soft": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "pulse soft entrance.",
+    "html": "<div class=\"fx-pulse-soft\" style=\"width:140px;height:14px;background:#e2e6ee;border-radius:7px\" aria-hidden=\"true\"></div>",
+    "core": true,
+    "chat": true
+  },
+  "fx-shimmer": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "2.x",
+    "description": "Sweep a highlight across a skeleton.",
+    "html": "<div class=\"fx-shimmer\" style=\"width:140px;height:14px;background:#e2e6ee;border-radius:7px\" aria-hidden=\"true\"></div>",
+    "chat": true
+  },
+  "fx-shimmer-text": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "paint",
+    "target": "element",
+    "since": "3.1",
+    "description": "A highlight sweeps through the text itself, for “Thinking…” labels.",
+    "html": "<span class=\"fx-shimmer-text\">Thinking…</span>",
+    "chat": true
+  },
+  "fx-skeleton-msg": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "3.1",
+    "description": "A skeleton message with three lines of varied width and a travelling highlight.",
+    "html": "<div class=\"fx-skeleton-msg\" style=\"width:220px\" aria-hidden=\"true\"></div>",
+    "chat": true
+  },
+  "fx-spin": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Rotate continuously.",
+    "html": "<span class=\"fx-spin\" style=\"display:inline-block;width:24px;height:24px;border:3px solid #e2e6ee;border-top-color:currentColor;border-radius:50%\" aria-hidden=\"true\"></span>",
+    "core": true,
+    "chat": true
+  },
+  "fx-step": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "3.1",
+    "description": "A tool or agent step in progress: spinner icon before the label. Swap for fx-step-done or fx-step-error.",
+    "html": "<span class=\"fx-step\">Searching the web</span>",
+    "chat": true
+  },
+  "fx-step-done": {
+    "group": "Chat",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "3.1",
+    "description": "A finished step: a checkmark pops in before the label. Set --fx-success to color it.",
+    "html": "<span class=\"fx-step-done\">Searched 3 sites</span>",
+    "chat": true
+  },
+  "fx-step-error": {
+    "group": "Chat",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "3.1",
+    "description": "A failed step: a cross pops in before the label. Set --fx-danger to color it.",
+    "html": "<span class=\"fx-step-error\">Couldn’t reach the site</span>",
+    "chat": true
+  },
+  "fx-stream": {
+    "group": "Chat",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Fade in a streamed chunk.",
+    "html": "<p>Here is <span class=\"fx-stream\">the next chunk</span></p>",
+    "core": true,
+    "chat": true
+  },
+  "fx-stream-word": {
+    "group": "Chat",
+    "kind": "one-shot",
+    "cost": "filter",
+    "target": "element",
+    "since": "3.1",
+    "description": "A streamed word or token fades and comes into focus. Apply to each appended span.",
+    "html": "<p><span class=\"fx-stream-word\">Streaming</span> <span class=\"fx-stream-word\" style=\"--fx-delay:0.15s\">one</span> <span class=\"fx-stream-word\" style=\"--fx-delay:0.30s\">word</span> <span class=\"fx-stream-word\" style=\"--fx-delay:0.45s\">at</span> <span class=\"fx-stream-word\" style=\"--fx-delay:0.60s\">a</span> <span class=\"fx-stream-word\" style=\"--fx-delay:0.75s\">time</span></p>",
+    "chat": true
+  },
+  "fx-typing": {
+    "group": "Chat",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-elements",
+    "since": "3.1",
+    "description": "A complete typing bubble: a bright dot hops across three dim dots. No child markup.",
+    "html": "<span class=\"fx-typing\" aria-hidden=\"true\"></span>",
+    "chat": true
+  },
+  "fx-bars-travel": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "3.0",
+    "description": "An opacity highlight travels through five bars.",
+    "html": "<span class=\"fx-bars-travel\" aria-hidden=\"true\"><i></i><i></i><i></i><i></i><i></i></span>"
+  },
+  "fx-bars-wave": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "3.0",
+    "description": "Five bars rise and fall with offset phases.",
+    "html": "<span class=\"fx-bars-wave\" aria-hidden=\"true\"><i></i><i></i><i></i><i></i><i></i></span>"
+  },
+  "fx-bloom": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "paint",
+    "target": "element",
+    "since": "2.x",
+    "description": "Breathe a soft shadow halo.",
+    "html": "<span class=\"fx-bloom\" style=\"display:inline-block;width:12px;height:12px;border-radius:50%;background:currentColor\" aria-hidden=\"true\"></span>"
+  },
+  "fx-comet": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "2.x",
+    "description": "Send a fading streak across its track.",
+    "html": "<div class=\"fx-comet\" style=\"width:140px;height:5px;background:#e2e6ee\" aria-hidden=\"true\"></div>"
+  },
+  "fx-dots-elastic": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "A three-dot elastic loading indicator.",
+    "html": "<span class=\"fx-dots-elastic\" aria-hidden=\"true\"><i></i><i></i><i></i></span>"
+  },
+  "fx-dots-fade": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "A three-dot fade loading indicator.",
+    "html": "<span class=\"fx-dots-fade\" aria-hidden=\"true\"><i></i><i></i><i></i></span>"
+  },
+  "fx-dots-flow": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "A three-dot flow loading indicator.",
+    "html": "<span class=\"fx-dots-flow\" aria-hidden=\"true\"><i></i><i></i><i></i></span>"
+  },
+  "fx-dots-orbit": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Three dots physically orbit their center.",
+    "html": "<span class=\"fx-dots-orbit\" aria-hidden=\"true\"><i></i><i></i><i></i></span>"
+  },
+  "fx-dots-scale": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "A three-dot scale loading indicator.",
+    "html": "<span class=\"fx-dots-scale\" aria-hidden=\"true\"><i></i><i></i><i></i></span>"
+  },
+  "fx-dots-spinner": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "A three-dot spinner loading indicator.",
+    "html": "<span class=\"fx-dots-spinner\" aria-hidden=\"true\"><i></i><i></i><i></i></span>"
+  },
+  "fx-dots-wave": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "A three-dot wave loading indicator.",
+    "html": "<span class=\"fx-dots-wave\" aria-hidden=\"true\"><i></i><i></i><i></i></span>",
+    "chat": true
+  },
+  "fx-dots-zigzag": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "3.0",
+    "description": "Dots alternate between diagonal positions.",
+    "html": "<span class=\"fx-dots-zigzag\" aria-hidden=\"true\"><i></i><i></i><i></i></span>"
+  },
+  "fx-dual-ring": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-elements",
+    "since": "3.0",
+    "description": "Two concentric arcs rotate in opposite directions.",
+    "html": "<span class=\"fx-dual-ring\" aria-hidden=\"true\"></span>"
+  },
+  "fx-fill": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "2.x",
+    "description": "Sweep, hold, and fade a tint.",
+    "html": "<div class=\"fx-fill\">Motion, made simple.</div>"
+  },
+  "fx-orbit": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Rotate a single orbiting dot.",
+    "html": "<span class=\"fx-orbit\" style=\"display:inline-block;width:28px;height:28px\" aria-hidden=\"true\"></span>"
+  },
+  "fx-ring-pulse": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-elements",
+    "since": "3.0",
+    "description": "An outlined ring expands and fades.",
+    "html": "<span class=\"fx-ring-pulse\" aria-hidden=\"true\"></span>"
+  },
+  "fx-ripple": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "paint",
+    "target": "element",
+    "since": "2.x",
+    "description": "Expand a shadow halo.",
+    "html": "<span class=\"fx-ripple\" style=\"display:inline-block;width:12px;height:12px;border-radius:50%;background:currentColor\" aria-hidden=\"true\"></span>"
+  },
+  "fx-scan": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "2.x",
+    "description": "Sweep a narrow beam back and forth.",
+    "html": "<div class=\"fx-scan\" style=\"width:140px;height:5px;background:#e2e6ee\" aria-hidden=\"true\"></div>"
+  },
+  "fx-skeleton-wave": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "3.0",
+    "description": "An angled highlight travels across a skeleton block.",
+    "html": "<div class=\"fx-skeleton-wave\" style=\"width:140px;height:14px;background:#e2e6ee;border-radius:7px\" aria-hidden=\"true\"></div>",
+    "chat": true
+  },
+  "fx-sonar": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-elements",
+    "since": "3.0",
+    "description": "Two expanding rings ripple with offset phases.",
+    "html": "<span class=\"fx-sonar\" aria-hidden=\"true\"></span>"
+  },
+  "fx-trace": {
+    "group": "Loaders",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "pseudo-element",
+    "since": "2.x",
+    "description": "Draw a line across its track.",
+    "html": "<div class=\"fx-trace\" style=\"width:140px;height:5px;background:#e2e6ee\" aria-hidden=\"true\"></div>"
+  },
+  "fx-clip": {
+    "group": "Updates",
+    "kind": "helper",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Clip overflowing roll or drawer effects.",
+    "html": "<div class=\"fx-clip\"><div class=\"fx-roll-up\">Rolling text</div></div>",
+    "core": true,
+    "chat": true
+  },
+  "fx-cycle-2": {
+    "group": "Updates",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "Rotate 2 decorative status labels in a shared grid.",
+    "html": "<div class=\"fx-cycle-2\" aria-hidden=\"true\"><span>Step 1</span><span>Step 2</span></div>\n<span class=\"sr-only\">Working…</span>",
+    "chat": true
+  },
+  "fx-cycle-3": {
+    "group": "Updates",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "Rotate 3 decorative status labels in a shared grid.",
+    "html": "<div class=\"fx-cycle-3\" aria-hidden=\"true\"><span>Step 1</span><span>Step 2</span><span>Step 3</span></div>\n<span class=\"sr-only\">Working…</span>",
+    "chat": true
+  },
+  "fx-cycle-4": {
+    "group": "Updates",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "Rotate 4 decorative status labels in a shared grid.",
+    "html": "<div class=\"fx-cycle-4\" aria-hidden=\"true\"><span>Step 1</span><span>Step 2</span><span>Step 3</span><span>Step 4</span></div>\n<span class=\"sr-only\">Working…</span>",
+    "chat": true
+  },
+  "fx-cycle-5": {
+    "group": "Updates",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "Rotate 5 decorative status labels in a shared grid.",
+    "html": "<div class=\"fx-cycle-5\" aria-hidden=\"true\"><span>Step 1</span><span>Step 2</span><span>Step 3</span><span>Step 4</span><span>Step 5</span></div>\n<span class=\"sr-only\">Working…</span>",
+    "chat": true
+  },
+  "fx-roll-down": {
+    "group": "Updates",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "roll down entrance.",
+    "html": "<div class=\"fx-roll-down\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-roll-down-out": {
+    "group": "Updates",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "roll down dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-roll-down-out\">Motion, made simple.</div>",
+    "core": true,
+    "exit": true
+  },
+  "fx-roll-up": {
+    "group": "Updates",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "roll up entrance.",
+    "html": "<div class=\"fx-roll-up\">Motion, made simple.</div>",
+    "core": true,
+    "chat": true
+  },
+  "fx-roll-up-out": {
+    "group": "Updates",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "roll up dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-roll-up-out\">Motion, made simple.</div>",
+    "core": true,
+    "exit": true,
+    "chat": true
+  },
+  "fx-thought": {
+    "group": "Updates",
+    "kind": "one-shot",
+    "cost": "filter",
+    "target": "element",
+    "since": "2.x",
+    "description": "Rise through a soft blur.",
+    "html": "<div class=\"fx-thought\">Motion, made simple.</div>",
+    "chat": true
+  },
+  "fx-thought-out": {
+    "group": "Updates",
+    "kind": "one-shot",
+    "cost": "filter",
+    "target": "element",
+    "since": "2.x",
+    "description": "Dissolve upward through a blur.",
+    "html": "<div class=\"fx-thought-out\">Motion, made simple.</div>",
+    "exit": true,
+    "chat": true
+  },
+  "fx-blur": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "filter",
+    "target": "element",
+    "since": "2.x",
+    "description": "Focus in from a blur.",
+    "html": "<div class=\"fx-blur\">Motion, made simple.</div>"
+  },
+  "fx-bounce-in": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Bounce into view.",
+    "html": "<div class=\"fx-bounce-in\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-down": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Drop and fade in.",
+    "html": "<div class=\"fx-down\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-down-left": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Fade in from the lower-left corner.",
+    "html": "<div class=\"fx-down-left\">Motion, made simple.</div>"
+  },
+  "fx-down-right": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Fade in from the lower-right corner.",
+    "html": "<div class=\"fx-down-right\">Motion, made simple.</div>"
+  },
+  "fx-fade": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Fade in gently.",
+    "html": "<div class=\"fx-fade\">Motion, made simple.</div>",
+    "core": true,
+    "chat": true
+  },
+  "fx-flip-in-bottom": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Unfold from the bottom edge.",
+    "html": "<div class=\"fx-flip-in-bottom\">Motion, made simple.</div>"
+  },
+  "fx-flip-in-left": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Unfold from the left edge.",
+    "html": "<div class=\"fx-flip-in-left\">Motion, made simple.</div>"
+  },
+  "fx-flip-in-right": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Unfold from the right edge.",
+    "html": "<div class=\"fx-flip-in-right\">Motion, made simple.</div>"
+  },
+  "fx-flip-in-top": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Unfold from the top edge.",
+    "html": "<div class=\"fx-flip-in-top\">Motion, made simple.</div>"
+  },
+  "fx-flip-x": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Tip forward in 3D.",
+    "html": "<div class=\"fx-flip-x\">Motion, made simple.</div>"
+  },
+  "fx-flip-y": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Turn in from the side.",
+    "html": "<div class=\"fx-flip-y\">Motion, made simple.</div>"
+  },
+  "fx-grow-x": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Grow visually on the horizontal axis; surrounding layout does not move.",
+    "html": "<div class=\"fx-grow-x\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-left": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Enter from the left.",
+    "html": "<div class=\"fx-left\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-pop": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Scale in with a spring easing.",
+    "html": "<div class=\"fx-pop\">Motion, made simple.</div>",
+    "core": true,
+    "chat": true
+  },
+  "fx-reveal": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "mask",
+    "target": "element",
+    "since": "2.x",
+    "description": "Unmask from the top and fade in.",
+    "html": "<div class=\"fx-reveal\">Motion, made simple.</div>"
+  },
+  "fx-right": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Enter from the right.",
+    "html": "<div class=\"fx-right\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-roll-in": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Roll in from the left.",
+    "html": "<div class=\"fx-roll-in\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-rotate": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Tilt upright.",
+    "html": "<div class=\"fx-rotate\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-sheet-down": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "sheet down entrance.",
+    "html": "<div class=\"fx-sheet-down\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-sheet-left": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Slide a drawer in from the left.",
+    "html": "<div class=\"fx-sheet-left\">Motion, made simple.</div>"
+  },
+  "fx-sheet-right": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Slide a drawer in from the right.",
+    "html": "<div class=\"fx-sheet-right\">Motion, made simple.</div>"
+  },
+  "fx-sheet-up": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "sheet up entrance.",
+    "html": "<div class=\"fx-sheet-up\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-spring-down": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Drop with a small overshoot and settle.",
+    "html": "<div class=\"fx-spring-down\">Motion, made simple.</div>"
+  },
+  "fx-spring-left": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Spring in from the left.",
+    "html": "<div class=\"fx-spring-left\">Motion, made simple.</div>"
+  },
+  "fx-spring-right": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Spring in from the right.",
+    "html": "<div class=\"fx-spring-right\">Motion, made simple.</div>"
+  },
+  "fx-spring-up": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Rise with a small overshoot and settle.",
+    "html": "<div class=\"fx-spring-up\">Motion, made simple.</div>"
+  },
+  "fx-swing": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Hinge in from the top.",
+    "html": "<div class=\"fx-swing\">Motion, made simple.</div>"
+  },
+  "fx-up": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Rise and fade in.",
+    "html": "<div class=\"fx-up\">Motion, made simple.</div>",
+    "core": true,
+    "chat": true
+  },
+  "fx-up-left": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Fade in from the upper-left corner.",
+    "html": "<div class=\"fx-up-left\">Motion, made simple.</div>"
+  },
+  "fx-up-right": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Fade in from the upper-right corner.",
+    "html": "<div class=\"fx-up-right\">Motion, made simple.</div>"
+  },
+  "fx-wipe": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "mask",
+    "target": "element",
+    "since": "2.x",
+    "description": "Unmask from the left and fade in.",
+    "html": "<div class=\"fx-wipe\">Motion, made simple.</div>"
+  },
+  "fx-zoom": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Scale in gently.",
+    "html": "<div class=\"fx-zoom\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-zoom-down": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "zoom down entrance.",
+    "html": "<div class=\"fx-zoom-down\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-zoom-left": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Scale in with a short move from the left.",
+    "html": "<div class=\"fx-zoom-left\">Motion, made simple.</div>"
+  },
+  "fx-zoom-right": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Scale in with a short move from the right.",
+    "html": "<div class=\"fx-zoom-right\">Motion, made simple.</div>"
+  },
+  "fx-zoom-up": {
+    "group": "Entrances",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Rise and scale in.",
+    "html": "<div class=\"fx-zoom-up\">Motion, made simple.</div>",
+    "core": true,
+    "chat": true
+  },
+  "fx-blur-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "filter",
+    "target": "element",
+    "since": "2.x",
+    "description": "blur dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-blur-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-down-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "down dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-down-out\">Motion, made simple.</div>",
+    "core": true,
+    "exit": true
+  },
+  "fx-drop-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "drop dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-drop-out\">Motion, made simple.</div>",
+    "core": true,
+    "exit": true
+  },
+  "fx-fade-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "fade dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-fade-out\">Motion, made simple.</div>",
+    "core": true,
+    "exit": true,
+    "chat": true
+  },
+  "fx-flip-x-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "flip x dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-flip-x-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-flip-y-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Tip away sideways in 3D.",
+    "html": "<div class=\"fx-flip-y-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-left-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "left dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-left-out\">Motion, made simple.</div>",
+    "core": true,
+    "exit": true
+  },
+  "fx-pop-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "pop dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-pop-out\">Motion, made simple.</div>",
+    "core": true,
+    "exit": true,
+    "chat": true
+  },
+  "fx-right-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Dismiss to the right; alias of fx-slide-out.",
+    "html": "<div class=\"fx-right-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-roll-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Roll away to the right with a fade.",
+    "html": "<div class=\"fx-roll-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-rotate-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "rotate dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-rotate-out\">Motion, made simple.</div>",
+    "core": true,
+    "exit": true
+  },
+  "fx-sheet-down-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Dismiss downward; alias of fx-sheet-out.",
+    "html": "<div class=\"fx-sheet-down-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-sheet-left-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Dismiss a drawer to the left.",
+    "html": "<div class=\"fx-sheet-left-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-sheet-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "sheet dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-sheet-out\">Motion, made simple.</div>",
+    "core": true,
+    "exit": true
+  },
+  "fx-sheet-right-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Dismiss a drawer to the right.",
+    "html": "<div class=\"fx-sheet-right-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-sheet-up-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Dismiss a drawer through its top edge.",
+    "html": "<div class=\"fx-sheet-up-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-slide-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "slide dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-slide-out\">Motion, made simple.</div>",
+    "core": true,
+    "exit": true
+  },
+  "fx-swing-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Hinge away from the top edge.",
+    "html": "<div class=\"fx-swing-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-up-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "up dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-up-out\">Motion, made simple.</div>",
+    "core": true,
+    "exit": true
+  },
+  "fx-zoom-down-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Shrink away downward.",
+    "html": "<div class=\"fx-zoom-down-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-zoom-left-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Shrink away to the left.",
+    "html": "<div class=\"fx-zoom-left-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-zoom-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "zoom dismissal; the application owns DOM removal.",
+    "html": "<div class=\"fx-zoom-out\">Motion, made simple.</div>",
+    "core": true,
+    "exit": true,
+    "chat": true
+  },
+  "fx-zoom-right-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Shrink away to the right.",
+    "html": "<div class=\"fx-zoom-right-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-zoom-up-out": {
+    "group": "Exits",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Shrink away upward.",
+    "html": "<div class=\"fx-zoom-up-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-bell": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A diminishing top-anchored ring.",
+    "html": "<div class=\"fx-bell\">Motion, made simple.</div>"
+  },
+  "fx-bounce": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Two diminishing bounces.",
+    "html": "<div class=\"fx-bounce\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-breathe": {
+    "group": "Attention",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "A subtle scale-and-opacity breathing loop.",
+    "html": "<div class=\"fx-breathe\">Motion, made simple.</div>"
+  },
+  "fx-buzz": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A tiny horizontal vibration.",
+    "html": "<div class=\"fx-buzz\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-flash": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A quick opacity cue.",
+    "html": "<div class=\"fx-flash\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-float": {
+    "group": "Attention",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A gentle vertical floating loop.",
+    "html": "<div class=\"fx-float\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-glow": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "paint",
+    "target": "element",
+    "since": "2.x",
+    "description": "A soft animated shadow glow.",
+    "html": "<div class=\"fx-glow\">Motion, made simple.</div>"
+  },
+  "fx-heartbeat": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A double scale heartbeat.",
+    "html": "<div class=\"fx-heartbeat\">Motion, made simple.</div>"
+  },
+  "fx-hop": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Lift with a squash-and-stretch landing.",
+    "html": "<div class=\"fx-hop\">Motion, made simple.</div>"
+  },
+  "fx-jello": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A diminishing skew wobble.",
+    "html": "<div class=\"fx-jello\">Motion, made simple.</div>"
+  },
+  "fx-nod": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Two small vertical movements for acknowledgment.",
+    "html": "<div class=\"fx-nod\">Motion, made simple.</div>"
+  },
+  "fx-nudge": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Two small rightward nudges.",
+    "html": "<div class=\"fx-nudge\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-pendulum": {
+    "group": "Attention",
+    "kind": "loop",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "A calm, top-anchored swinging loop.",
+    "html": "<div class=\"fx-pendulum\">Motion, made simple.</div>"
+  },
+  "fx-pulse": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A small scale pulse.",
+    "html": "<div class=\"fx-pulse\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-recoil": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Compress backward, then recover with an overshoot.",
+    "html": "<div class=\"fx-recoil\">Motion, made simple.</div>"
+  },
+  "fx-ring": {
+    "group": "Attention",
+    "kind": "interaction",
+    "cost": "paint",
+    "target": "element",
+    "since": "2.x",
+    "description": "A focus-triggered shadow ring.",
+    "html": "<button class=\"fx-ring\">Try this effect</button>"
+  },
+  "fx-rubber": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A squash-and-stretch pulse.",
+    "html": "<div class=\"fx-rubber\">Motion, made simple.</div>"
+  },
+  "fx-settle": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "A damped rotational settle.",
+    "html": "<div class=\"fx-settle\">Motion, made simple.</div>"
+  },
+  "fx-shake": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A horizontal error shake.",
+    "html": "<div class=\"fx-shake\">Motion, made simple.</div>",
+    "core": true,
+    "chat": true
+  },
+  "fx-shake-y": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "A vertical error shake.",
+    "html": "<div class=\"fx-shake-y\">Motion, made simple.</div>"
+  },
+  "fx-tada": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A playful scale-and-rotation celebration.",
+    "html": "<div class=\"fx-tada\">Motion, made simple.</div>"
+  },
+  "fx-wiggle": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "A small rotational wiggle.",
+    "html": "<div class=\"fx-wiggle\">Motion, made simple.</div>",
+    "core": true
+  },
+  "fx-wobble": {
+    "group": "Attention",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Sideways travel coupled with a diminishing rotation.",
+    "html": "<div class=\"fx-wobble\">Motion, made simple.</div>"
+  },
+  "fx-stagger": {
+    "group": "Stagger",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "Stagger child entrances; use fx-stagger on the parent.",
+    "html": "<ul class=\"fx-stagger\">\n  <li>First item</li>\n  <li>Second item</li>\n  <li>Third item</li>\n</ul>",
+    "core": true,
+    "chat": true
+  },
+  "fx-stagger-blur": {
+    "group": "Stagger",
+    "kind": "one-shot",
+    "cost": "filter",
+    "target": "children",
+    "since": "2.x",
+    "description": "Stagger child entrances with the blur variant; use fx-stagger on the parent.",
+    "html": "<ul class=\"fx-stagger fx-stagger-blur\">\n  <li>First item</li>\n  <li>Second item</li>\n  <li>Third item</li>\n</ul>"
+  },
+  "fx-stagger-down": {
+    "group": "Stagger",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "3.0",
+    "description": "Children enter from above in sequence.",
+    "html": "<ul class=\"fx-stagger fx-stagger-down\">\n  <li>First item</li>\n  <li>Second item</li>\n  <li>Third item</li>\n</ul>"
+  },
+  "fx-stagger-fade": {
+    "group": "Stagger",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "Stagger child entrances with the fade variant; use fx-stagger on the parent.",
+    "html": "<ul class=\"fx-stagger fx-stagger-fade\">\n  <li>First item</li>\n  <li>Second item</li>\n  <li>Third item</li>\n</ul>",
+    "core": true,
+    "chat": true
+  },
+  "fx-stagger-left": {
+    "group": "Stagger",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "Stagger child entrances with the left variant; use fx-stagger on the parent.",
+    "html": "<ul class=\"fx-stagger fx-stagger-left\">\n  <li>First item</li>\n  <li>Second item</li>\n  <li>Third item</li>\n</ul>",
+    "core": true
+  },
+  "fx-stagger-pop": {
+    "group": "Stagger",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "Stagger child entrances with the pop variant; use fx-stagger on the parent.",
+    "html": "<ul class=\"fx-stagger fx-stagger-pop\">\n  <li>First item</li>\n  <li>Second item</li>\n  <li>Third item</li>\n</ul>",
+    "core": true
+  },
+  "fx-stagger-right": {
+    "group": "Stagger",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "2.x",
+    "description": "Stagger child entrances with the right variant; use fx-stagger on the parent.",
+    "html": "<ul class=\"fx-stagger fx-stagger-right\">\n  <li>First item</li>\n  <li>Second item</li>\n  <li>Third item</li>\n</ul>",
+    "core": true
+  },
+  "fx-stagger-roll-up": {
+    "group": "Stagger",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "3.0",
+    "description": "Children roll upward in sequence; clip overflow where needed.",
+    "html": "<ul class=\"fx-stagger fx-stagger-roll-up\">\n  <li>First item</li>\n  <li>Second item</li>\n  <li>Third item</li>\n</ul>"
+  },
+  "fx-stagger-rotate": {
+    "group": "Stagger",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "3.0",
+    "description": "Children tilt into place in sequence.",
+    "html": "<ul class=\"fx-stagger fx-stagger-rotate\">\n  <li>First item</li>\n  <li>Second item</li>\n  <li>Third item</li>\n</ul>"
+  },
+  "fx-stagger-zoom": {
+    "group": "Stagger",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "children",
+    "since": "3.0",
+    "description": "Children scale in gently in sequence.",
+    "html": "<ul class=\"fx-stagger fx-stagger-zoom\">\n  <li>First item</li>\n  <li>Second item</li>\n  <li>Third item</li>\n</ul>"
+  },
+  "fx-brighten": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "filter",
+    "target": "element",
+    "since": "2.x",
+    "description": "Brighten on hover or focus.",
+    "html": "<button class=\"fx-brighten\">Try this effect</button>"
+  },
+  "fx-btn": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Scale down on press.",
+    "html": "<button class=\"fx-btn\">Try this effect</button>",
+    "core": true,
+    "chat": true
+  },
+  "fx-fill-h-down": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Sweep a background tint up from the bottom.",
+    "html": "<button class=\"fx-fill-h-down\">Try this effect</button>"
+  },
+  "fx-fill-h-left": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Sweep a background tint in from the left.",
+    "html": "<button class=\"fx-fill-h-left\">Try this effect</button>"
+  },
+  "fx-fill-h-right": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Sweep a background tint in from the right.",
+    "html": "<button class=\"fx-fill-h-right\">Try this effect</button>"
+  },
+  "fx-fill-h-up": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Sweep a background tint down from the top.",
+    "html": "<button class=\"fx-fill-h-up\">Try this effect</button>"
+  },
+  "fx-glow-h": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "paint",
+    "target": "element",
+    "since": "2.x",
+    "description": "Add a glow on hover or focus.",
+    "html": "<button class=\"fx-glow-h\">Try this effect</button>"
+  },
+  "fx-grow": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Grow slightly on hover or focus.",
+    "html": "<button class=\"fx-grow\">Try this effect</button>",
+    "core": true
+  },
+  "fx-lift": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "paint",
+    "target": "element",
+    "since": "2.x",
+    "description": "Lift and add a shadow on hover or focus.",
+    "html": "<button class=\"fx-lift\">Try this effect</button>"
+  },
+  "fx-overline": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Reveal a stroke above the label.",
+    "html": "<button class=\"fx-overline\">Try this effect</button>"
+  },
+  "fx-push": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Sink slightly on press.",
+    "html": "<button class=\"fx-push\">Try this effect</button>",
+    "core": true,
+    "chat": true
+  },
+  "fx-rotate-h": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Rotate and scale on hover or focus.",
+    "html": "<button class=\"fx-rotate-h\">Try this effect</button>",
+    "core": true
+  },
+  "fx-shine": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Sweep a highlight across the surface.",
+    "html": "<button class=\"fx-shine\">Try this effect</button>"
+  },
+  "fx-skew-h": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Skew on hover or focus.",
+    "html": "<button class=\"fx-skew-h\">Try this effect</button>",
+    "core": true
+  },
+  "fx-tilt": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Tilt in perspective on hover or focus.",
+    "html": "<button class=\"fx-tilt\">Try this effect</button>"
+  },
+  "fx-underline": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Reveal an underline from the left.",
+    "html": "<button class=\"fx-underline\">Try this effect</button>"
+  },
+  "fx-underline-center": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Reveal an underline outward from its center.",
+    "html": "<button class=\"fx-underline-center\">Try this effect</button>"
+  },
+  "fx-underline-double": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Reveal two coordinated underline strokes.",
+    "html": "<button class=\"fx-underline-double\">Try this effect</button>"
+  },
+  "fx-underline-right": {
+    "group": "Interactions",
+    "kind": "interaction",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "3.0",
+    "description": "Reveal an underline from the right.",
+    "html": "<button class=\"fx-underline-right\">Try this effect</button>"
+  },
+  "fx-collapse-h": {
+    "group": "Size",
+    "kind": "one-shot",
+    "cost": "layout",
+    "target": "element",
+    "since": "2.x",
+    "description": "Collapse the maximum height; this changes layout.",
+    "html": "<div class=\"fx-collapse-h\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-collapse-w": {
+    "group": "Size",
+    "kind": "one-shot",
+    "cost": "layout",
+    "target": "element",
+    "since": "2.x",
+    "description": "Collapse the maximum width; this changes layout.",
+    "html": "<div class=\"fx-collapse-w\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-expand-h": {
+    "group": "Size",
+    "kind": "one-shot",
+    "cost": "layout",
+    "target": "element",
+    "since": "2.x",
+    "description": "Expand the maximum height; this changes layout.",
+    "html": "<div class=\"fx-expand-h\">Motion, made simple.</div>"
+  },
+  "fx-expand-w": {
+    "group": "Size",
+    "kind": "one-shot",
+    "cost": "layout",
+    "target": "element",
+    "since": "2.x",
+    "description": "Expand the maximum width; this changes layout.",
+    "html": "<div class=\"fx-expand-w\">Motion, made simple.</div>"
+  },
+  "fx-grow-x-to": {
+    "group": "Size",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Grow visually on the horizontal axis and hold the configured scale; surrounding layout does not move.",
+    "html": "<div class=\"fx-grow-x-to\" style=\"--fx-x:1.5;width:100px;height:24px;background:currentColor\"></div>"
+  },
+  "fx-grow-y": {
+    "group": "Size",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Grow visually on the vertical axis; surrounding layout does not move.",
+    "html": "<div class=\"fx-grow-y\">Motion, made simple.</div>"
+  },
+  "fx-shrink-x": {
+    "group": "Size",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Shrink visually on the horizontal axis; surrounding layout does not move.",
+    "html": "<div class=\"fx-shrink-x\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-shrink-x-to": {
+    "group": "Size",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Shrink visually on the horizontal axis and hold the configured scale; surrounding layout does not move.",
+    "html": "<div class=\"fx-shrink-x-to\" style=\"--fx-x:.6;width:100px;height:24px;background:currentColor\"></div>"
+  },
+  "fx-shrink-y": {
+    "group": "Size",
+    "kind": "one-shot",
+    "cost": "transform / opacity",
+    "target": "element",
+    "since": "2.x",
+    "description": "Shrink visually on the vertical axis; surrounding layout does not move.",
+    "html": "<div class=\"fx-shrink-y\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-width": {
+    "group": "Size",
+    "kind": "toggle",
+    "cost": "layout",
+    "target": "element",
+    "since": "2.x",
+    "description": "Transition an application-supplied width change.",
+    "html": "<div class=\"fx-width\" style=\"width:100px\">Resize me</div>"
+  },
+  "fx-blur-zoom-in": {
+    "group": "Visual effects",
+    "kind": "one-shot",
+    "cost": "filter",
+    "target": "element",
+    "since": "3.0",
+    "description": "Scale up through a soft focus pull.",
+    "html": "<div class=\"fx-blur-zoom-in\">Motion, made simple.</div>"
+  },
+  "fx-blur-zoom-out": {
+    "group": "Visual effects",
+    "kind": "one-shot",
+    "cost": "filter",
+    "target": "element",
+    "since": "3.0",
+    "description": "Scale away while defocusing.",
+    "html": "<div class=\"fx-blur-zoom-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-iris-in": {
+    "group": "Visual effects",
+    "kind": "one-shot",
+    "cost": "mask",
+    "target": "element",
+    "since": "3.0",
+    "description": "Open a circular mask around a configurable origin.",
+    "html": "<div class=\"fx-iris-in\">Motion, made simple.</div>"
+  },
+  "fx-iris-out": {
+    "group": "Visual effects",
+    "kind": "one-shot",
+    "cost": "mask",
+    "target": "element",
+    "since": "3.0",
+    "description": "Close a circular mask around a configurable origin.",
+    "html": "<div class=\"fx-iris-out\">Motion, made simple.</div>",
+    "exit": true
+  },
+  "fx-wipe-down": {
+    "group": "Visual effects",
+    "kind": "one-shot",
+    "cost": "mask",
+    "target": "element",
+    "since": "3.0",
+    "description": "Unmask from the bottom without fading.",
+    "html": "<div class=\"fx-wipe-down\">Motion, made simple.</div>"
+  },
+  "fx-wipe-left": {
+    "group": "Visual effects",
+    "kind": "one-shot",
+    "cost": "mask",
+    "target": "element",
+    "since": "3.0",
+    "description": "Unmask from the left without fading.",
+    "html": "<div class=\"fx-wipe-left\">Motion, made simple.</div>"
+  },
+  "fx-wipe-right": {
+    "group": "Visual effects",
+    "kind": "one-shot",
+    "cost": "mask",
+    "target": "element",
+    "since": "3.0",
+    "description": "Unmask from the right without fading.",
+    "html": "<div class=\"fx-wipe-right\">Motion, made simple.</div>"
+  },
+  "fx-wipe-up": {
+    "group": "Visual effects",
+    "kind": "one-shot",
+    "cost": "mask",
+    "target": "element",
+    "since": "3.0",
+    "description": "Unmask from the top without fading.",
+    "html": "<div class=\"fx-wipe-up\">Motion, made simple.</div>"
+  }
+}

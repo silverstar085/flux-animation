@@ -49,3 +49,7 @@
   animation-name: none;
   transform: scaleY(0.6);
 }
+.fx-shimmer-text {
+  animation-name: none;
+  -webkit-text-fill-color: currentColor;
+}

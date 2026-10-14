@@ -1,11 +1,11 @@
 .fx-alternate {
-  --fx-direction: alternate;
+  --_c-dir: alternate;
 }
 .fx-alternate-reverse {
-  --fx-direction: alternate-reverse;
+  --_c-dir: alternate-reverse;
 }
 .fx-once {
-  --fx-repeat: 1;
+  --_c-repeat: 1;
 }
 .fx-running {
   --fx-play: running;

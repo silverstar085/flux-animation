@@ -35,7 +35,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--fx-fill, rgba(79, 70, 229, 0.14));
+  background: var(--fx-fill, color-mix(in srgb, var(--fx-accent, #4f46e5) 14%, transparent));
   transform: translateX(-101%);
   animation: fxFill 1.9s var(--fx-ease) infinite;
 }
@@ -190,7 +190,7 @@
 }
 @keyframes fxRipple {
   0% {
-    box-shadow: 0 0 0 0 var(--fx-ring, rgba(79, 70, 229, 0.45));
+    box-shadow: 0 0 0 0 var(--_ring);
   }
   100% {
     box-shadow: 0 0 0 13px transparent;
@@ -202,7 +202,7 @@
     box-shadow: 0 0 0 0 transparent;
   }
   50% {
-    box-shadow: 0 0 15px 1px var(--fx-glow, rgba(79, 70, 229, 0.4));
+    box-shadow: 0 0 15px 1px var(--_glow);
   }
 }
 @keyframes fxDotsWave {

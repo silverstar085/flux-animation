@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta
       name="description"
-      content="Preview the complete Flux Animation CSS catalog. Explore effects, adjust timing, and copy class-based examples."
+      content="Flux Animation: tiny class-based CSS animations for chat interfaces and beyond. Watch every effect, tune its timing, and copy the code."
     />
     <link rel="icon" href="data:," />
-    <title>Flux Animation — motion catalog</title>
+    <title>Flux Animation — CSS motion for chat UIs</title>
     <link rel="stylesheet" href="flux.all.min.css" />
     <link rel="stylesheet" href="demo/showcase.css" />
     <link rel="stylesheet" href="demo/preview.css" />
@@ -18,13 +18,20 @@
   <body>
     <a class="skip-link" href="#catalog">Skip to animation catalog</a>
     <header class="masthead">
-      <a class="brand" href="#">flux<span> / animation</span></a>
-      <div class="edition">
-        <span id="version">v3.0.1</span
+      <a class="brand" href="./">flux<span> / animation</span></a>
+      <nav class="edition" aria-label="Project">
+        <span id="version">v3.1.0</span
         ><a href="https://github.com/silverstar085/flux-animation#readme">Docs</a
         ><a href="https://www.npmjs.com/package/flux-animation">npm</a
-        ><a class="github" href="https://github.com/silverstar085/flux-animation">GitHub ↗</a>
-      </div>
+        ><a class="github" href="https://github.com/silverstar085/flux-animation"
+          ><svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16">
+            <path
+              fill="currentColor"
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+            /></svg
+          >GitHub</a
+        >
+      </nav>
     </header>
     <main>
       <section class="hero" aria-labelledby="hero-title">
@@ -34,23 +41,59 @@
             A little class.<br />A lot of <em>motion.</em>
           </h1>
           <p class="lede">
-            Entrances, subtle cues, and small moments of delight. Add a class
-            and make your interface move.
+            Typing indicators, thinking states, streaming text and small moments
+            of delight. Add a class and your interface moves.
           </p>
-          <a class="browse" href="#catalog"
-            >Explore the animations <span aria-hidden="true">↓</span></a
-          >
+          <div class="hero-actions">
+            <a class="button primary" href="#catalog">Browse the animations</a>
+            <a class="button" href="https://github.com/silverstar085/flux-animation"
+              >Star on GitHub</a
+            >
+          </div>
+          <pre class="install-line"><code>npm install flux-animation</code></pre>
         </div>
-        <div class="hero-art" aria-hidden="true">
-          <div class="orbit-line"></div>
-          <span class="hero-dot fx-breathe"></span
-          ><span class="hero-word fx-spring-up">flux</span
-          ><span class="hero-caption">Motion, made simple.</span>
-        </div>
+        <section class="playground" aria-labelledby="pg-title">
+          <div class="pg-head">
+            <h2 id="pg-title">Chat playground</h2>
+            <button id="pg-replay" class="ghost" type="button">↻ Replay</button>
+          </div>
+          <div class="pg-window" id="pg-log" aria-hidden="true"></div>
+          <div class="pg-controls">
+            <label
+              >Waiting indicator
+              <select id="pg-indicator">
+                <option value="fx-typing">fx-typing</option>
+                <option value="fx-dots">fx-dots</option>
+                <option value="fx-dots-wave">fx-dots-wave</option>
+                <option value="fx-shimmer-text">fx-shimmer-text</option>
+                <option value="fx-ellipsis">fx-ellipsis</option>
+              </select></label
+            >
+            <label
+              >Message entrance
+              <select id="pg-entrance">
+                <option value="fx-msg">fx-msg</option>
+                <option value="fx-up">fx-up</option>
+                <option value="fx-pop">fx-pop</option>
+                <option value="fx-spring-up">fx-spring-up</option>
+                <option value="fx-blur">fx-blur</option>
+              </select></label
+            >
+            <label
+              >Speed
+              <select id="pg-speed">
+                <option value="">Normal</option>
+                <option value="fx-fast">Fast</option>
+                <option value="fx-slow">Slow</option>
+              </select></label
+            >
+          </div>
+          <p class="pg-classes">Classes in use: <code id="pg-classes"></code></p>
+        </section>
       </section>
       <div class="facts" aria-label="Library details">
         <span><b id="default-size">Small</b> default gzip</span
-        ><span><b id="all-size">Expanded</b> full catalog gzip</span
+        ><span><b id="chat-size">Chat</b> chat preset gzip</span
         ><span><b id="class-count">Class-based</b> public classes</span
         ><span><b>0</b> runtime dependencies</span>
       </div>
@@ -60,89 +103,93 @@
             <p class="eyebrow">The motion index</p>
             <h2 id="catalog-title">Find your next move.</h2>
           </div>
-          <div class="scope" role="group" aria-label="Catalog scope">
-            <button id="scope-new" aria-pressed="true">
-              New additions <span id="new-count"></span></button
-            ><button id="scope-all" aria-pressed="false">All effects</button>
-          </div>
+          <p id="results" role="status">Loading the catalog…</p>
         </div>
-        <div class="tools">
+        <div class="toolbar">
           <label class="search"
             ><span class="sr-only">Search animation classes</span
             ><span aria-hidden="true">⌕</span
             ><input
               id="search"
               type="search"
-              placeholder="Search classes or effects…"
+              placeholder="Search: typing, spinner, slide…"
               autocomplete="off"
           /></label>
-          <label
-            >Category<select id="category">
-              <option value="">All categories</option>
-            </select></label
-          >
-          <label
-            >Behavior<select id="behavior">
-              <option value="">All behaviors</option>
-              <option value="one-shot">One-shot</option>
-              <option value="loop">Looping</option>
-              <option value="interaction">Interactive</option>
-              <option value="toggle">Resize</option>
-            </select></label
-          >
-          <label
-            >Rendering<select id="cost">
-              <option value="">All types</option>
-              <option value="transform / opacity">Transform / opacity</option>
-              <option value="paint">Shadow / paint</option>
-              <option value="filter">Filter</option>
-              <option value="mask">Mask</option>
-              <option value="layout">Layout</option>
-            </select></label
-          >
+          <div class="toggles" role="group" aria-label="Preview options">
+            <button id="new-only" type="button" aria-pressed="false">
+              New in <span id="latest"></span>
+            </button>
+            <button id="autoplay" type="button" aria-pressed="true">Autoplay</button>
+            <button id="dark-stage" type="button" aria-pressed="false">Dark stage</button>
+            <button id="large" type="button" aria-pressed="true">Large loaders</button>
+            <button id="pause" type="button" aria-pressed="false">Pause all</button>
+          </div>
         </div>
-        <div class="playback">
-          <label
-            >Duration<select id="duration">
-              <option value="">Effect default</option>
-              <option value=".2s">Fast · 200 ms</option>
-              <option value=".7s">Slow · 700 ms</option>
-              <option value="1.1s">Slower · 1.1 s</option>
-            </select></label
-          ><label
-            >Distance<select id="distance">
-              <option value="14px">14 px</option>
-              <option value="28px">28 px</option>
-              <option value="48px">48 px</option>
-            </select></label
-          ><label
-            >Delay<select id="delay">
-              <option value="0s">None</option>
-              <option value=".3s">300 ms</option>
-              <option value=".7s">700 ms</option>
-            </select></label
-          ><button id="replay-all">↻ Replay visible</button
-          ><button id="pause" aria-pressed="false">Pause</button
-          >
-        </div>
-        <div class="results-line">
-          <p id="results" role="status">Loading the catalog…</p>
-          <p id="motion-note">
-            Hover or focus interactive effects. Replay any preview.
-          </p>
-        </div>
+        <div class="chips" id="categories" role="group" aria-label="Category"></div>
+        <details class="more">
+          <summary>More filters and timing</summary>
+          <div class="more-grid">
+            <label
+              >Behavior<select id="behavior">
+                <option value="">All behaviors</option>
+                <option value="one-shot">One-shot</option>
+                <option value="loop">Looping</option>
+                <option value="interaction">Interactive</option>
+                <option value="toggle">Resize</option>
+              </select></label
+            >
+            <label
+              >Rendering<select id="cost">
+                <option value="">All types</option>
+                <option value="transform / opacity">Transform / opacity</option>
+                <option value="paint">Shadow / paint</option>
+                <option value="filter">Filter</option>
+                <option value="mask">Mask</option>
+                <option value="layout">Layout</option>
+              </select></label
+            >
+            <label
+              >Duration<select id="duration">
+                <option value="">Effect default</option>
+                <option value=".2s">Fast · 200 ms</option>
+                <option value=".7s">Slow · 700 ms</option>
+                <option value="1.1s">Slower · 1.1 s</option>
+              </select></label
+            >
+            <label
+              >Distance<select id="distance">
+                <option value="14px">14 px</option>
+                <option value="28px">28 px</option>
+                <option value="48px">48 px</option>
+              </select></label
+            >
+            <label
+              >Delay<select id="delay">
+                <option value="0s">None</option>
+                <option value=".3s">300 ms</option>
+                <option value=".7s">700 ms</option>
+              </select></label
+            >
+          </div>
+        </details>
+        <p id="motion-note" class="motion-note" hidden>
+          Your system asks for reduced motion, so previews show the reduced
+          version and autoplay starts off.
+        </p>
         <noscript
           ><p class="empty">
             The library works without JavaScript. This interactive catalog uses
             JavaScript for filtering and replay. Browse the
-            <a href="https://github.com/silverstar085/flux-animation/blob/main/docs/ANIMATIONS.md">complete animation reference</a>, or
-            try the class-based example below.
+            <a
+              href="https://github.com/silverstar085/flux-animation/blob/main/docs/ANIMATIONS.md"
+              >complete animation reference</a
+            >, or try the class-based example below.
           </p>
           <div class="fx-spring-up">Hello, motion.</div></noscript
         >
         <div class="demo-grid" id="grid"></div>
         <p class="empty" id="empty" hidden>
-          No matching effects. Try another search or show all effects.
+          No matching effects. Try another search or category.
         </p>
       </section>
       <section class="install" aria-labelledby="install-title">
@@ -150,18 +197,19 @@
           <p class="eyebrow">One import. One class.</p>
           <h2 id="install-title">Keep it light.<br />Make it yours.</h2>
           <p>
-            Use the tiny default, choose a focused pack, or load the complete
-            collection. Every animation is plain CSS.
+            Building a chat UI? Import the chat preset. Want everything? Import
+            all of it. Every animation is plain CSS.
           </p>
-          <a href="https://github.com/silverstar085/flux-animation#readme">Read the setup guide ↗</a>
+          <a href="https://github.com/silverstar085/flux-animation#readme"
+            >Read the setup guide ↗</a
+          >
         </div>
         <div class="code-example">
-          <span>Expanded catalog</span>
-          <pre><code>import 'flux-animation/all';
+          <span>Chat preset</span>
+          <pre><code>import 'flux-animation/chat';
 
-&lt;div class="fx-spring-up"&gt;
-  Hello, motion.
-&lt;/div&gt;</code></pre>
+&lt;span class="fx-typing"&gt;&lt;/span&gt;
+&lt;span class="fx-shimmer-text"&gt;Thinking…&lt;/span&gt;</code></pre>
           <p>
             Or from a CDN:
             <code>https://cdn.jsdelivr.net/npm/flux-animation@3/flux.all.min.css</code>
@@ -170,26 +218,63 @@
       </section>
     </main>
     <footer>
-      <a class="brand" href="#">flux<span> / animation</span></a>
+      <a class="brand" href="./">flux<span> / animation</span></a>
       <p>Built for small, useful moments. MIT licensed.</p>
       <nav class="footer-links" aria-label="Project links">
         <a href="https://github.com/silverstar085/flux-animation">GitHub</a>
-        <a href="https://github.com/silverstar085/flux-animation/issues/new">Request an animation</a>
+        <a href="https://github.com/silverstar085/flux-animation/issues/new"
+          >Missing an animation? Request it</a
+        >
         <a href="https://www.npmjs.com/package/flux-animation">npm</a>
-        <a href="https://github.com/silverstar085/flux-animation/blob/main/CHANGELOG.md">Changelog</a>
-        <a href="https://github.com/silverstar085/flux-animation/blob/main/LICENSE">License</a>
+        <a href="https://github.com/silverstar085/flux-animation/blob/main/CHANGELOG.md"
+          >Changelog</a
+        >
+        <a href="https://github.com/silverstar085/flux-animation/blob/main/LICENSE"
+          >License</a
+        >
       </nav>
     </footer>
-    <dialog id="code-dialog" aria-labelledby="code-title">
+    <dialog id="detail" aria-labelledby="detail-title">
       <div class="dialog-heading">
-        <h2 id="code-title">Animation example</h2>
-        <button id="close-dialog" aria-label="Close example">×</button>
+        <h2 id="detail-title">Animation</h2>
+        <button id="close-detail" type="button" aria-label="Close details">×</button>
       </div>
-      <p id="code-description"></p>
-      <p id="code-requirement" class="code-requirement"></p>
-      <pre><code id="code-content"></code></pre>
-      <p id="code-reduced"></p>
-      <button id="copy-example" class="primary">Copy HTML</button>
+      <p id="detail-description" class="detail-description"></p>
+      <p id="detail-tags" class="detail-tags"></p>
+      <div class="detail-stage stage" id="detail-stage">
+        <div class="specimen" id="detail-specimen"></div>
+      </div>
+      <div class="detail-controls">
+        <label
+          >Duration <output id="dur-out">default</output
+          ><input id="dur" type="range" min="0" max="3000" step="50" value="0"
+        /></label>
+        <label
+          >Delay <output id="delay-out">0 ms</output
+          ><input id="det-delay" type="range" min="0" max="1500" step="50" value="0"
+        /></label>
+        <label
+          >Easing<select id="easing">
+            <option value="">Effect default</option>
+            <option value="fx-linear">Linear</option>
+            <option value="fx-spring">Spring</option>
+          </select></label
+        >
+        <label class="check"><input id="loop" type="checkbox" /> Loop</label>
+        <button id="detail-replay" type="button" class="ghost">↻ Replay</button>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Code format">
+        <button role="tab" id="tab-html" aria-selected="true" data-tab="html">HTML</button
+        ><button role="tab" id="tab-npm" aria-selected="false" data-tab="npm">npm import</button
+        ><button role="tab" id="tab-cdn" aria-selected="false" data-tab="cdn">CDN</button>
+      </div>
+      <pre role="tabpanel" aria-labelledby="tab-html" id="code-panel"><code id="code-content"></code></pre>
+      <p id="code-reduced" class="detail-note"></p>
+      <div class="detail-actions">
+        <button id="copy-code" type="button" class="primary">Copy code</button>
+        <button id="copy-link" type="button" class="ghost">Copy link to this animation</button>
+        <a id="reference-link" href="#">View in reference ↗</a>
+      </div>
     </dialog>
     <div id="toast" class="toast" role="status"></div>
   </body>

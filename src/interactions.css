@@ -83,7 +83,7 @@
     filter: brightness(1.12);
   }
   .fx-glow-h:hover {
-    box-shadow: 0 0 18px 2px var(--fx-glow, rgba(79, 70, 229, 0.45));
+    box-shadow: 0 0 18px 2px var(--_glow);
   }
   .fx-rotate-h:hover {
     transform: rotate(3deg) scale(1.03);
@@ -114,7 +114,7 @@
     filter: brightness(1.12);
   }
   .fx-glow-h:active {
-    box-shadow: 0 0 18px 2px var(--fx-glow, rgba(79, 70, 229, 0.45));
+    box-shadow: 0 0 18px 2px var(--_glow);
   }
   .fx-rotate-h:active {
     transform: rotate(3deg) scale(1.03);

@@ -196,7 +196,7 @@
     box-shadow: 0 0 0 0 transparent;
   }
   50% {
-    box-shadow: 0 0 18px 2px var(--fx-glow, rgba(79, 70, 229, 0.45));
+    box-shadow: 0 0 18px 2px var(--_glow);
   }
 }
 @keyframes fxFloat {
@@ -206,7 +206,7 @@
 }
 @keyframes fxRing {
   0% {
-    box-shadow: 0 0 0 0 var(--fx-ring, rgba(79, 70, 229, 0.5));
+    box-shadow: 0 0 0 0 var(--_ring);
   }
   100% {
     box-shadow: 0 0 0 9px transparent;

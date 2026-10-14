@@ -1,0 +1,206 @@
+/* ─────────────── CHAT LOADERS & STREAMING (3.1) ───────────────
+   Markup-free: each effect is a single element. Sizes are in em, so they
+   follow the surrounding font size. Colors follow currentColor. */
+
+/* Typing bubble: three dim dots with a bright dot hopping across them. */
+.fx-typing {
+  --_d: var(--fx-dot, 0.45em);
+  --_g: calc(var(--_d) * 0.75);
+  position: relative;
+  display: inline-block;
+  box-sizing: content-box;
+  width: calc(var(--_d) * 3 + var(--_g) * 2);
+  height: var(--_d);
+  padding: 0.7em 0.9em;
+  border-radius: 999px;
+  background: var(--fx-bubble, color-mix(in srgb, currentColor 10%, transparent));
+  vertical-align: middle;
+}
+.fx-typing::before,
+.fx-typing::after {
+  content: "";
+  position: absolute;
+  top: 0.7em;
+  left: 0.9em;
+  width: var(--_d);
+  height: var(--_d);
+}
+.fx-typing::before {
+  width: calc(var(--_d) * 3 + var(--_g) * 2);
+  background: radial-gradient(circle closest-side, currentColor 92%, transparent)
+    calc(var(--_g) / -2) 0 / calc(var(--_d) + var(--_g)) 100% repeat-x;
+  opacity: 0.35;
+}
+.fx-typing::after {
+  border-radius: 50%;
+  background: currentColor;
+  animation: fxTyping 1.4s ease-in-out infinite;
+}
+@keyframes fxTyping {
+  0%,
+  33.3% {
+    transform: translate(0, 0);
+  }
+  16.6% {
+    transform: translate(0, -50%);
+  }
+  33.4%,
+  66.6% {
+    transform: translate(calc(var(--_d) + var(--_g)), 0);
+  }
+  50% {
+    transform: translate(calc(var(--_d) + var(--_g)), -50%);
+  }
+  66.7%,
+  100% {
+    transform: translate(calc(var(--_d) * 2 + var(--_g) * 2), 0);
+  }
+  83.3% {
+    transform: translate(calc(var(--_d) * 2 + var(--_g) * 2), -50%);
+  }
+}
+
+/* "Thinking" label: a highlight sweeps through the text itself. */
+.fx-shimmer-text {
+  animation: fxShimmerText 2s linear infinite;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) and
+  (color: color-mix(in srgb, red, red)) {
+  .fx-shimmer-text {
+    --_s: color-mix(in srgb, currentColor 45%, transparent);
+    background: linear-gradient(100deg, var(--_s) 40%, currentColor 50%, var(--_s) 60%)
+      0 0 / 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+@keyframes fxShimmerText {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* Animated ellipsis after a label: "Thinking" → "Thinking..." */
+.fx-ellipsis::after {
+  content: "...";
+  content: "..." / "";
+  display: inline-block;
+  vertical-align: bottom;
+  animation: fxEllipsis 1.6s steps(4, jump-none) infinite;
+}
+@keyframes fxEllipsis {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+/* Pulsing dot at the end of a streaming answer. */
+.fx-caret-dot::after {
+  content: "";
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  margin-left: 0.3em;
+  border-radius: 50%;
+  background: currentColor;
+  animation: fxCaretDot 1s ease-in-out infinite;
+}
+@keyframes fxCaretDot {
+  50% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+}
+
+/* Streamed word or token: fades and comes into focus as it arrives. */
+.fx-stream-word {
+  animation: fxStreamWord 0.4s var(--fx-ease) both;
+}
+@keyframes fxStreamWord {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+  }
+}
+
+/* Skeleton message: three lines of varied width with a travelling highlight. */
+.fx-skeleton-msg {
+  --_l: 0.7em;
+  --_m: linear-gradient(#000 0 0);
+  position: relative;
+  display: block;
+  overflow: hidden;
+  max-width: 22em;
+  height: calc(var(--_l) * 3 + 1.1em);
+  background: var(--fx-skeleton, color-mix(in srgb, currentColor 12%, transparent));
+  mask:
+    var(--_m) 0 0 / 100% var(--_l) no-repeat,
+    var(--_m) 0 50% / 88% var(--_l) no-repeat,
+    var(--_m) 0 100% / 62% var(--_l) no-repeat;
+}
+.fx-skeleton-msg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    var(--fx-highlight, color-mix(in srgb, currentColor 12%, transparent)) 50%,
+    transparent 80%
+  );
+  animation: fxSkeletonWave 1.8s ease-in-out infinite;
+}
+@supports not (color: color-mix(in srgb, red, red)) {
+  .fx-skeleton-msg {
+    background: var(--fx-skeleton, #e2e6ee);
+  }
+}
+
+/* Agent/tool steps: swap fx-step (working) for fx-step-done or fx-step-error. */
+.fx-step,
+.fx-step-done,
+.fx-step-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.fx-step::before,
+.fx-step-done::before,
+.fx-step-error::before {
+  content: "";
+  flex: none;
+  box-sizing: border-box;
+  width: 1em;
+  height: 1em;
+}
+.fx-step::before {
+  border: 0.14em solid color-mix(in srgb, currentColor 25%, transparent);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: fxSpin 0.8s linear infinite;
+}
+.fx-step-done::before,
+.fx-step-error::before {
+  animation: fxStepIn 0.4s var(--fx-spring);
+}
+.fx-step-done::before {
+  background: var(--fx-success, currentColor);
+  clip-path: polygon(14% 52%, 26% 40%, 41% 55%, 74% 22%, 86% 34%, 41% 79%);
+}
+.fx-step-error::before {
+  background: var(--fx-danger, currentColor);
+  clip-path: polygon(22% 12%, 50% 40%, 78% 12%, 88% 22%, 60% 50%, 88% 78%, 78% 88%, 50% 60%, 22% 88%, 12% 78%, 40% 50%, 12% 22%);
+}
+@keyframes fxStepIn {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}

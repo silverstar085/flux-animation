@@ -24,11 +24,9 @@ test("all legacy classes and entry points remain available", () => {
 });
 test("approved compressed size caps and zero runtime dependencies", () => {
   assert.ok(!pkg.dependencies || !Object.keys(pkg.dependencies).length);
-  for (const [name, cap] of Object.entries({
-    default: 4800,
-    core: 2500,
-    all: 7500,
-  }))
+  for (const [name, cap] of Object.entries(
+    JSON.parse(fs.readFileSync("scripts/budgets.json")),
+  ))
     assert.ok(
       gzipSync(fs.readFileSync(sizes[name].file), { level: 9 }).length <= cap,
       `${name} exceeds ${cap}`,
@@ -39,6 +37,7 @@ test("all animation names resolve in every supported base and pack combination",
     ["default"],
     ["core"],
     ["all"],
+    ["chat"],
     ...["motion", "interactions", "loaders", "visual"].flatMap((pack) => [
       ["default", pack],
       ["core", pack],
@@ -67,7 +66,8 @@ test("all animation names resolve in every supported base and pack combination",
   }
 });
 test("catalog has complete examples and accurately counted additions", () => {
-  assert.equal(catalog.effects.filter((e) => e.isNew).length, 64);
+  assert.equal(catalog.effects.filter((e) => e.since === "3.0").length, 64);
+  assert.equal(catalog.effects.filter((e) => e.since === "3.1").length, 9);
   assert.equal(
     new Set(catalog.effects.map((e) => e.class)).size,
     catalog.effects.length,
@@ -78,7 +78,11 @@ test("catalog has complete examples and accurately counted additions", () => {
     assert.ok(effect.reduced);
     assert.ok(effect.pack);
   }
-  assert.equal(sizes.all.classes.length, 201);
+  assert.equal(sizes.all.classes.length, 210);
+  for (const effect of catalog.effects.filter((e) => e.chat))
+    assert.ok(sizes.chat.classes.includes(effect.class), `chat preset is missing ${effect.class}`);
+  for (const effect of catalog.effects.filter((e) => e.core))
+    assert.ok(sizes.core.classes.includes(effect.class), `core is missing ${effect.class}`);
 });
 test("intrinsic sizing stays scoped and no blanket promotion hints are shipped", () => {
   for (const name of ["default", "all"]) {
@@ -103,7 +107,7 @@ test('reduced-motion rules keep the v2 policy plus visible loader poses', () => 
     root.walkAtRules('media', media => {
       if (!media.params.includes('prefers-reduced-motion')) return;
       media.walkDecls(decl => {
-        assert.ok(['animation-duration', 'animation-iteration-count', 'transition', 'animation', 'animation-name', 'transform', 'opacity'].includes(decl.prop), `${artifact.file}: unexpected reduced-motion override ${decl.prop}`);
+        assert.ok(['animation-duration', 'animation-iteration-count', 'transition', 'animation', 'animation-name', 'transform', 'opacity', '-webkit-text-fill-color'].includes(decl.prop), `${artifact.file}: unexpected reduced-motion override ${decl.prop}`);
         if (decl.prop === 'animation-name') assert.equal(decl.value, 'none');
         if (decl.prop === 'animation-duration') assert.equal(decl.value, '.01ms');
         if (decl.prop === 'animation-iteration-count') assert.equal(decl.value, '1');
@@ -116,5 +120,18 @@ test('the fx- namespace selector never matches a class that merely contains fx-'
   for (const artifact of Object.values(sizes)) {
     const css = fs.readFileSync(artifact.file, 'utf8');
     assert.ok(!css.includes('[class*=fx-]') && !css.includes('[class*="fx-"]'), artifact.file);
+  }
+});
+
+test('control classes are registered as non-inheriting in every bundle that ships them', () => {
+  for (const name of ['default', 'core', 'chat', 'all', 'motion']) {
+    const root = postcss.parse(fs.readFileSync(sizes[name].file, 'utf8'));
+    const registered = new Map();
+    root.walkAtRules('property', (rule) => {
+      const inherits = rule.nodes.find((d) => d.prop === 'inherits');
+      registered.set(rule.params, inherits && inherits.value);
+    });
+    for (const v of ['dur', 'delay', 'ease', 'repeat', 'dir'])
+      assert.equal(registered.get(`--_c-${v}`), 'false', `${name}: --_c-${v}`);
   }
 });

@@ -48,7 +48,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.45),
+    var(--fx-highlight, rgba(255, 255, 255, 0.45)),
     transparent
   );
   animation: fxShimmer 1.6s linear infinite;
@@ -107,7 +107,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow: 0 0 0 0 var(--fx-ring, rgba(79, 70, 229, 0.5));
+  box-shadow: 0 0 0 0 var(--_ring);
   animation: fxRipple 1.5s var(--fx-ease) infinite;
 }
 

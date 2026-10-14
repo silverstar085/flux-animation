@@ -1,4 +1,18 @@
-# Migrating from Flux Animation 2.x to 3.0
+# Migrating Flux Animation
+
+- [3.0 → 3.1](#30--31)
+- [2.x → 3.0](#2x--30)
+
+## 3.0 → 3.1
+
+3.1 is backward compatible for markup: every class and import path still works. Four behaviors changed.
+
+1. **Control classes stay on their element.** `fx-slow`, `fx-loop`, `fx-d2`, `fx-spring`, `fx-reverse`, `fx-once` and the other control classes now affect only the element they are on, plus its loader dots and pseudo-elements. They no longer reach other Flux elements nested inside. If you relied on that, set the public variable on the container instead: `style="--fx-dur: .7s"` or `--fx-repeat: infinite`. `fx-paused` still pauses everything inside.
+2. **A control class beats a public variable on the same element.** `<div class="fx-up fx-slow" style="--fx-dur: .6s">` now runs at 700 ms. Use one or the other.
+3. **Accent colors come from `--fx-accent`.** The glow, ring and fill defaults are now derived from `--fx-accent` (default `#4f46e5`, the previous indigo). Existing `--fx-glow`, `--fx-ring` and `--fx-fill` overrides still win. `fx-bloom` and `fx-ripple` now share the standard glow (45%) and ring (50%) strengths, slightly stronger than before (40% and 45%).
+4. **`fx-skeleton-wave` follows the text color.** Its default background is now 12% of `currentColor` instead of a fixed light gray, so it works on dark backgrounds. Set `--fx-skeleton: #e2e6ee` to keep the old color.
+
+## 2.x → 3.0
 
 3.0.0 is a major release. Existing CSS entry points and all 128 original classes remain available. This is a **major release because existing timing, control propagation, and global styling behavior changes**. New effects remain opt-in through the additional packs or the expanded build.
 

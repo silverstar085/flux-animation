@@ -1,5 +1,43 @@
 # Changelog
 
+## 3.1.0 — October 14, 2026
+
+Chat-focused release. Markup and import paths from 3.0 keep working; see [3.0 → 3.1](docs/MIGRATION.md#30--31) for four behavior changes.
+
+### Added
+
+- **Chat preset:** `flux-animation/chat` (3.49 KB gzip, 70 classes). It holds everything a chat UI needs: message entrances, typing indicators, thinking labels, tool steps, streaming text, skeletons, status rotators, basic entrances and controls.
+- **Nine chat effects** (in `loaders`, `chat` and `all`):
+  - `fx-typing`: a complete typing bubble with no child markup.
+  - `fx-shimmer-text`: a highlight that sweeps through "Thinking…" text.
+  - `fx-ellipsis`: dots that count up to three after a label.
+  - `fx-caret-dot`: a pulsing dot at the end of streaming text.
+  - `fx-stream-word`: a fade-and-focus entrance for each streamed word or token.
+  - `fx-skeleton-msg`: a three-line skeleton message.
+  - `fx-step`, `fx-step-done`, `fx-step-error`: tool/agent steps with a spinner that becomes a checkmark or cross.
+- **`--fx-accent`:** one variable for glow, ring and fill colors. Also `--fx-highlight`, `--fx-bubble`, `--fx-success` and `--fx-danger`.
+- **Demo rebuilt:**
+  - A chat playground hero with selectable indicator, entrance and speed.
+  - Autoplay that repeats one-shot effects while they are on screen, plus replay on hover.
+  - Category chips with grouped sections, and a dark-stage toggle.
+  - Larger loader previews.
+  - A details panel with duration, delay, easing and loop controls, and HTML / npm / CDN code tabs.
+  - Deep links (`#fx-typing`) and shareable filter URLs.
+- `src/effects.json`: one source of effect metadata. The build fails if it and the CSS disagree.
+- `CONTRIBUTING.md`, and a README rebuilt around chat recipes and a simpler bundle guide.
+
+### Changed
+
+- **Control classes no longer leak into nested Flux elements.** They are registered with `@property { inherits: false }` and handed only to their own child and pseudo-element targets. `fx-loop` on a bubble no longer loops the fade inside it, and `fx-slow` no longer retimes a typing indicator inside it. Public variables (`--fx-dur`, …) still inherit, and `fx-paused` still pauses everything inside.
+- `fx-skeleton-wave` derives its colors from the text color, so it works on dark backgrounds.
+- Accent-derived colors: `fx-bloom` and `fx-ripple` use the standard glow and ring strengths.
+- `docs/ANIMATIONS.md` is grouped by category with a table of contents and live-preview links, and it states the reduced-motion policy once.
+- Within each demo and reference category, the newest effects come first.
+
+### Size
+
+Gzip level 9: default **4,823 bytes**, core **2,464**, chat **3,490**, all **7,797**. Budgets (`scripts/budgets.json`) are now default 4,900 (was 4,800), core 2,500, chat 3,700 (new) and all 8,000 (was 7,500). The default grows by 120 bytes for control isolation and accent colors; `all` grows by 973 bytes, mostly for the nine new effects.
+
 ## 3.0.1 — October 14, 2026
 
 Bug fixes; no API changes.
