@@ -1,0 +1,51 @@
+/* Reduced-motion resting poses.
+   The build places these inside the prefers-reduced-motion block of each bundle
+   that contains the class. They apply only to loaders whose last keyframe is
+   invisible or nearly invisible, so loading feedback stays on screen. */
+.fx-progress::after {
+  animation-name: none;
+  transform: translateX(75%);
+}
+.fx-trace::after {
+  animation-name: none;
+  transform: translateX(-50%);
+}
+.fx-comet::after {
+  animation-name: none;
+  transform: translateX(89%);
+}
+.fx-scan::after {
+  animation-name: none;
+  transform: translateX(129%);
+}
+.fx-fill::before {
+  animation-name: none;
+  transform: none;
+}
+.fx-ring-pulse::after,
+.fx-sonar::after {
+  animation-name: none;
+  transform: scale(0.85);
+  opacity: 0.5;
+}
+.fx-sonar::before {
+  animation-name: none;
+  transform: scale(0.5);
+  opacity: 0.9;
+}
+.fx-dots i,
+.fx-dots-fade i,
+.fx-dots-flow i,
+.fx-bars-travel > i {
+  animation-name: none;
+  transform: none;
+  opacity: 0.7;
+}
+.fx-dots-spinner i {
+  animation-name: none;
+  opacity: 0.7;
+}
+.fx-bars-wave > i {
+  animation-name: none;
+  transform: scaleY(0.6);
+}

@@ -38,20 +38,24 @@ const isKeyframe = (node) => {
 const classNames = (text) =>
   [...text.matchAll(/\.(fx-[\w-]+)/g)].map((m) => m[1]);
 const split = (selector) => postcss.list.comma(selector);
-const targets = new Set(),
-  loops = new Set();
+const targets = new Set();
+// Whole-class match for the fx- namespace: start of the attribute or after any
+// HTML whitespace separator, so unrelated classes such as "gfx-card" never match.
+const FX = ['^="fx-"', '*=" fx-"', '*="\\9 fx-"', '*="\\a fx-"', '*="\\c fx-"']
+  .map((x) => `[class${x}]`)
+  .join(", ");
+const DOTS = ["wave", "fade", "scale", "flow", "elastic", "spinner"].map(
+  (x) => ".fx-dots-" + x,
+);
 
 function normalize(source) {
   const root = postcss.parse(source);
   root.walkRules((rule) => {
     if (isKeyframe(rule)) return;
     // Scope dot layout to named families, so new dot loaders keep their own structure.
-    const dots = ["wave", "fade", "scale", "flow", "elastic", "spinner"].map(
-      (x) => ".fx-dots-" + x,
-    );
     if (rule.selector.includes('[class^="fx-dots-"')) {
       const suffix = rule.selector.endsWith(" i") ? " i" : "";
-      rule.selector = dots.map((x) => x + suffix).join(", ");
+      rule.selector = DOTS.map((x) => x + suffix).join(", ");
     }
     let animated = false;
     rule.walkDecls("animation", (decl) => {
@@ -90,11 +94,6 @@ function normalize(source) {
         "animation-iteration-count": "--_n",
         "animation-direction": "--_a",
       };
-      if (
-        decl.prop === "animation-iteration-count" &&
-        decl.value === "infinite"
-      )
-        split(rule.selector).forEach((x) => loops.add(x));
       if (overrides[decl.prop]) decl.prop = overrides[decl.prop];
       if (decl.prop === "animation-delay") decl.prop = "--_fx-phase";
       if (decl.prop === "content" && /::(before|after)/.test(rule.selector))
@@ -137,16 +136,13 @@ function commonRules() {
   if (!targets.size) return "";
   // Pseudo-elements cannot be placed inside :where(); group them separately.
   const regular = [
-    '[class*="fx-"]',
+    FX,
     ...[...targets].filter((x) => !x.includes("::") && /[ >]/.test(x)),
   ];
   const pseudo = [...targets].some((x) => x.includes("::"))
-    ? ['[class*="fx-"]::before', '[class*="fx-"]::after']
+    ? [`:where(${FX})::before`, `:where(${FX})::after`]
     : [];
-  const selectors = [
-    ...(regular.length ? [`:where(${regular.join(", ")})`] : []),
-    ...pseudo.map((x) => x.replace(/^(.*?)::/, ":where($1)::")),
-  ].join(",\n");
+  const selectors = [`:where(${regular.join(", ")})`, ...pseudo].join(",\n");
   if (!selectors) return "";
   return `${selectors} {
   --_t: .45s;
@@ -163,11 +159,26 @@ function commonRules() {
   animation-play-state: var(--fx-play, running);
 }\n`;
 }
+// Loaders whose final keyframe is invisible get a static, visible pose instead.
+// Kept outside normalize(): these are plain overrides inside the media query.
+function reducedPoses(root) {
+  const present = new Set(classNames(root.toString()));
+  const poses = postcss.parse(read("reduced"));
+  poses.walkRules((rule) => {
+    const selectors = split(rule.selector).filter((s) =>
+      classNames(s).every((c) => present.has(c)),
+    );
+    if (!selectors.length) rule.remove();
+    else rule.selector = selectors.join(", ");
+  });
+  poses.walkComments((c) => c.remove());
+  return poses.toString().trim();
+}
 function reducedRules(root) {
   const selectors = [
-    '[class*="fx-"]',
-    '[class*="fx-"]::before',
-    '[class*="fx-"]::after',
+    `:where(${FX})`,
+    `:where(${FX})::before`,
+    `:where(${FX})::after`,
     ...[...targets].filter((x) => /[ >]/.test(x)),
   ];
   // Transitions can live on elements with no keyframes, including pseudo-elements.
@@ -183,6 +194,8 @@ function reducedRules(root) {
   // Retain the v2 reduced-motion policy. Use seconds in authoring because
   // clean-css mis-serializes a fractional-millisecond input; output is .01ms.
   let text = `@media (prefers-reduced-motion: reduce) {\n${unique.join(", ")} { animation-duration: 0.00001s !important; animation-iteration-count: 1 !important; transition: none !important }\n`;
+  const poses = reducedPoses(root);
+  if (poses) text += poses + "\n";
   if (root.toString().includes(".fx-cycle-2"))
     text += `.fx-cycle-2 > *, .fx-cycle-3 > *, .fx-cycle-4 > *, .fx-cycle-5 > * { animation: none !important; opacity: 0 }\n.fx-cycle-2 > :first-child, .fx-cycle-3 > :first-child, .fx-cycle-4 > :first-child, .fx-cycle-5 > :first-child { opacity: 1 }\n`;
   return text + "}\n";
@@ -200,23 +213,15 @@ for (const [name, sources] of Object.entries({
   all: [...legacy, ...extra],
 })) {
   targets.clear();
-  loops.clear();
   const isBase = ["default", "core", "all"].includes(name);
   let root = postcss.parse(sources.map(read).join("\n"));
   if (name === "core") root = pruneCore(normalize(root.toString()));
   // Normalize exactly once. Core pruning occurs before collecting its final targets.
   if (name === "core") {
     targets.clear();
-    loops.clear();
     root.walkRules((r) => {
-      if (!isKeyframe(r)) {
-        if (r.nodes.some((d) => d.prop === "animation-name"))
-          split(r.selector).forEach((x) => targets.add(x));
-        if (
-          r.nodes.some((d) => d.prop === "--_n" && d.value.includes("infinite"))
-        )
-          split(r.selector).forEach((x) => loops.add(x));
-      }
+      if (!isKeyframe(r) && r.nodes.some((d) => d.prop === "animation-name"))
+        split(r.selector).forEach((x) => targets.add(x));
     });
   } else root = normalize(root.toString());
   const accessibility = reducedRules(root);

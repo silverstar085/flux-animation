@@ -536,10 +536,19 @@ footer {
   align-items: center;
   gap: 20px;
 }
-footer p,
-footer > a:last-child {
+footer p {
   font-size: 11px;
   color: var(--muted);
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  font-size: 12px;
+}
+.code-example p code {
+  overflow-wrap: anywhere;
+  color: #dfe5d8;
 }
 dialog {
   border: 1px solid var(--line);
@@ -680,9 +689,9 @@ dialog pre {
     font-size: 12px;
   }
   .edition {
-    gap: 0;
+    gap: 14px;
   }
-  .edition a {
+  .edition a:not(.github) {
     display: none;
   }
   .hero {

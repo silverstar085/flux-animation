@@ -53,7 +53,9 @@ test("all animation names resolve in every supported base and pack combination",
     const keys = new Set(),
       references = new Set();
     root.walkAtRules("keyframes", (r) => keys.add(r.params));
-    root.walkDecls("animation-name", (d) => references.add(d.value));
+    root.walkDecls("animation-name", (d) => {
+      if (d.value !== "none") references.add(d.value);
+    });
     for (const name of references)
       assert.ok(keys.has(name), `${names.join("+")}: missing ${name}`);
     root.walkDecls((d) =>
@@ -95,16 +97,24 @@ test("intrinsic sizing stays scoped and no blanket promotion hints are shipped",
   }
 });
 
-test('reduced-motion rules retain the v2 policy without the proposed overrides', () => {
+test('reduced-motion rules keep the v2 policy plus visible loader poses', () => {
   for (const artifact of Object.values(sizes)) {
     const root = postcss.parse(fs.readFileSync(artifact.file, 'utf8'));
     root.walkAtRules('media', media => {
       if (!media.params.includes('prefers-reduced-motion')) return;
       media.walkDecls(decl => {
-        assert.ok(['animation-duration', 'animation-iteration-count', 'transition', 'animation', 'opacity'].includes(decl.prop), `${artifact.file}: unexpected reduced-motion override ${decl.prop}`);
+        assert.ok(['animation-duration', 'animation-iteration-count', 'transition', 'animation', 'animation-name', 'transform', 'opacity'].includes(decl.prop), `${artifact.file}: unexpected reduced-motion override ${decl.prop}`);
+        if (decl.prop === 'animation-name') assert.equal(decl.value, 'none');
         if (decl.prop === 'animation-duration') assert.equal(decl.value, '.01ms');
         if (decl.prop === 'animation-iteration-count') assert.equal(decl.value, '1');
       });
     });
+  }
+});
+
+test('the fx- namespace selector never matches a class that merely contains fx-', () => {
+  for (const artifact of Object.values(sizes)) {
+    const css = fs.readFileSync(artifact.file, 'utf8');
+    assert.ok(!css.includes('[class*=fx-]') && !css.includes('[class*="fx-"]'), artifact.file);
   }
 });

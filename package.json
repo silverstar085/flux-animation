@@ -1,7 +1,7 @@
 {
   "name": "flux-animation",
-  "version": "3.0.0",
-  "description": "Tiny class-based CSS animations \u2014 zero runtime JavaScript, optional motion packs",
+  "version": "3.0.1",
+  "description": "Tiny class-based CSS animations — zero runtime JavaScript, optional motion packs",
   "main": "flux.min.css",
   "style": "flux.min.css",
   "unpkg": "flux.min.css",
@@ -63,7 +63,10 @@
     "type": "git",
     "url": "https://github.com/silverstar085/flux-animation.git"
   },
-  "homepage": "https://silverstar085.github.io/flux-animation/flux-showcase.html",
+  "bugs": {
+    "url": "https://github.com/silverstar085/flux-animation/issues"
+  },
+  "homepage": "https://silverstar085.github.io/flux-animation/",
   "devDependencies": {
     "clean-css": "5.3.3",
     "esbuild": "0.28.2",

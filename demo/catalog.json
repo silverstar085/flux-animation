@@ -1,46 +1,46 @@
 {
-  "version": "3.0.0",
+  "version": "3.0.1",
   "sizes": {
     "default": {
-      "gzip": 4621,
-      "minified": 23428,
-      "brotli": 4041,
+      "gzip": 4706,
+      "minified": 24319,
+      "brotli": 4118,
       "classes": 128
     },
     "core": {
-      "gzip": 2363,
-      "minified": 9866,
-      "brotli": 2051,
+      "gzip": 2399,
+      "minified": 10367,
+      "brotli": 2092,
       "classes": 83
     },
     "motion": {
-      "gzip": 1526,
-      "minified": 6704,
-      "brotli": 1361,
+      "gzip": 1551,
+      "minified": 7008,
+      "brotli": 1386,
       "classes": 49
     },
     "interactions": {
-      "gzip": 676,
-      "minified": 2457,
-      "brotli": 580,
+      "gzip": 703,
+      "minified": 2691,
+      "brotli": 591,
       "classes": 8
     },
     "loaders": {
-      "gzip": 1223,
-      "minified": 4169,
-      "brotli": 1057,
+      "gzip": 1288,
+      "minified": 4894,
+      "brotli": 1116,
       "classes": 8
     },
     "visual": {
-      "gzip": 620,
-      "minified": 1700,
-      "brotli": 535,
+      "gzip": 646,
+      "minified": 2004,
+      "brotli": 570,
       "classes": 8
     },
     "all": {
-      "gzip": 6674,
-      "minified": 36063,
-      "brotli": 5853,
+      "gzip": 6827,
+      "minified": 37189,
+      "brotli": 5971,
       "classes": 201
     }
   },

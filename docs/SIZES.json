@@ -1,10 +1,10 @@
 {
   "default": {
     "file": "flux.min.css",
-    "raw": 33975,
-    "minified": 23428,
-    "gzip": 4621,
-    "brotli": 4041,
+    "raw": 34982,
+    "minified": 24319,
+    "gzip": 4706,
+    "brotli": 4118,
     "classes": [
       "fx-bars",
       "fx-bell",
@@ -219,10 +219,10 @@
   },
   "core": {
     "file": "flux.core.min.css",
-    "raw": 16673,
-    "minified": 9866,
-    "gzip": 2363,
-    "brotli": 2051,
+    "raw": 17215,
+    "minified": 10367,
+    "gzip": 2399,
+    "brotli": 2092,
     "classes": [
       "fx-alternate",
       "fx-alternate-reverse",
@@ -349,10 +349,10 @@
   },
   "motion": {
     "file": "flux.motion.min.css",
-    "raw": 8548,
-    "minified": 6704,
-    "gzip": 1526,
-    "brotli": 1361,
+    "raw": 8868,
+    "minified": 7008,
+    "gzip": 1551,
+    "brotli": 1386,
     "classes": [
       "fx-alternate",
       "fx-alternate-reverse",
@@ -432,10 +432,10 @@
   },
   "interactions": {
     "file": "flux.interactions.min.css",
-    "raw": 3133,
-    "minified": 2457,
-    "gzip": 676,
-    "brotli": 580,
+    "raw": 3379,
+    "minified": 2691,
+    "gzip": 703,
+    "brotli": 591,
     "classes": [
       "fx-fill-h-down",
       "fx-fill-h-left",
@@ -450,10 +450,10 @@
   },
   "loaders": {
     "file": "flux.loaders.min.css",
-    "raw": 5093,
-    "minified": 4169,
-    "gzip": 1223,
-    "brotli": 1057,
+    "raw": 5913,
+    "minified": 4894,
+    "gzip": 1288,
+    "brotli": 1116,
     "classes": [
       "fx-bars-travel",
       "fx-bars-wave",
@@ -476,10 +476,10 @@
   },
   "visual": {
     "file": "flux.visual.min.css",
-    "raw": 2124,
-    "minified": 1700,
-    "gzip": 620,
-    "brotli": 535,
+    "raw": 2444,
+    "minified": 2004,
+    "gzip": 646,
+    "brotli": 570,
     "classes": [
       "fx-blur-zoom-in",
       "fx-blur-zoom-out",
@@ -500,10 +500,10 @@
   },
   "all": {
     "file": "flux.all.min.css",
-    "raw": 50195,
-    "minified": 36063,
-    "gzip": 6674,
-    "brotli": 5853,
+    "raw": 51492,
+    "minified": 37189,
+    "gzip": 6827,
+    "brotli": 5971,
     "classes": [
       "fx-alternate",
       "fx-alternate-reverse",

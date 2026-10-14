@@ -6,13 +6,12 @@
 
 The v2 policy remains: `prefers-reduced-motion: reduce` shortens animations to **.01ms**, limits them to one iteration, and disables transitions. Cycles stop and show their first child using opacity. Coverage extends to new effect targets using that same policy.
 
-The proposed automatic delay removal, forced unpausing/forward playback, special static loader states, inactive-cycle `visibility` changes, and suppression of hover transforms have been removed. Delayed or paused entrances can therefore remain delayed or paused, reversed effects retain their direction, and invisible cycle children are not automatically removed from interaction or the accessibility tree. Applications retain responsibility for those states.
+The proposed automatic delay removal, forced unpausing/forward playback, inactive-cycle `visibility` changes, and suppression of hover transforms have been removed. Delayed or paused entrances can therefore remain delayed or paused, reversed effects retain their direction, and invisible cycle children are not automatically removed from interaction or the accessibility tree. Applications retain responsibility for those states. One exception was added in 3.0.1: loaders whose final frame is invisible (for example `fx-progress`, `fx-sonar`, `fx-dots-flow`) now rest on a static, visible pose, so loading feedback is not lost.
 
 Control propagation changes described below still apply under either motion preference. Retaining the reduced-motion policy does not make every v3 combination identical to v2.
 
 ## 1. Upgrade explicitly
 
-After publication:
 
 ```sh
 npm install flux-animation@3

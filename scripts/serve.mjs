@@ -20,7 +20,7 @@ http
       );
       const file = path.resolve(
         root,
-        "." + (pathname === "/" ? "/flux-showcase.html" : pathname),
+        "." + (pathname === "/" ? "/index.html" : pathname),
       );
       if (!file.startsWith(root + path.sep)) throw new Error("Outside root");
       const data = await fs.readFile(file);
@@ -37,5 +37,5 @@ http
     }
   })
   .listen(port, "127.0.0.1", () =>
-    console.log(`Flux preview: http://127.0.0.1:${port}/flux-showcase.html`),
+    console.log(`Flux preview: http://127.0.0.1:${port}/`),
   );

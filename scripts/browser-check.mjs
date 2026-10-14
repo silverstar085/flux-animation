@@ -10,7 +10,10 @@ const engines = process.env.FLUX_BROWSER
   ? [process.env.FLUX_BROWSER]
   : ["chromium", "firefox", "webkit"];
 for (const engine of engines) {
-  const browser = await { chromium, firefox, webkit }[engine].launch();
+  // FLUX_EXECUTABLE points at a preinstalled browser binary (for example in CI images).
+  const browser = await { chromium, firefox, webkit }[engine].launch(
+    process.env.FLUX_EXECUTABLE ? { executablePath: process.env.FLUX_EXECUTABLE } : {},
+  );
   const page = await browser.newPage({
     viewport: { width: 1280, height: 900 },
     reducedMotion: "no-preference",
@@ -162,6 +165,45 @@ for (const engine of engines) {
     assert.deepEqual(await settings('flux.all.min.css'), baseline);
     assert.equal(baseline.delay,'0.7s');assert.equal(baseline.state,'paused');assert.equal(baseline.direction,'reverse');
   });
+  await check("reduced-motion loaders rest on a visible pose", async () => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    // Cycles show their first child by design; shimmer highlights are decoration over a visible block.
+    const skip = /^fx-(cycle-\d|shimmer|skeleton-wave)$/;
+    const loops = catalog.effects.filter((e) => e.kind === "loop" && !skip.test(e.class));
+    await fixture(
+      undefined,
+      loops.map((e) => `<div data-c="${e.class}" style="padding:8px">${e.html}</div>`).join(""),
+    );
+    const hidden = await page.evaluate(() =>
+      [...document.querySelectorAll("[data-c]")].flatMap((wrap) => {
+        const host = wrap.firstElementChild;
+        const parts = [[host, null], [host, "::before"], [host, "::after"], ...[...host.children].map((c) => [c, null])];
+        return parts.flatMap(([el, pseudo]) => {
+          const s = getComputedStyle(el, pseudo);
+          if (pseudo && s.content === "none") return [];
+          const m = new DOMMatrixReadOnly(s.transform === "none" ? undefined : s.transform);
+          const width = host.getBoundingClientRect().width;
+          const offTrack = pseudo && getComputedStyle(host).overflow === "hidden" && (m.m41 >= width || m.m41 <= -width);
+          return +s.opacity < 0.5 || offTrack ? [`${wrap.dataset.c} ${el === host ? "host" : el.tagName}${pseudo || ""}`] : [];
+        });
+      }),
+    );
+    assert.deepEqual(hidden, []);
+  });
+  await check("fx- namespace matches whole classes only", async () => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await fixture(
+      undefined,
+      '<div id="other" class="gfx-card sfx-btn" style="transition:opacity .3s"></div><div id="own" class="card\tfx-fade" style="transition:opacity .3s"></div>',
+    );
+    const r = await page.evaluate(() =>
+      ["other", "own"].map((id) => {
+        const s = getComputedStyle(document.getElementById(id));
+        return [s.transitionDuration, s.animationFillMode];
+      }),
+    );
+    assert.deepEqual(r, [["0.3s", "none"], ["0s", "both"]]);
+  });
   await check(
     "base plus packs retains animation defaults and shared controls",
     async () => {
@@ -258,7 +300,7 @@ for (const engine of engines) {
       const errors = [];
       page.on("pageerror", (e) => errors.push(e.message));
       await page.goto(
-        process.env.FLUX_URL || "http://127.0.0.1:4173/flux-showcase.html",
+        process.env.FLUX_URL || "http://127.0.0.1:4173/",
       );
       await page.waitForSelector(".effect");
       assert.equal(await page.locator(".effect").count(), 64);
@@ -303,7 +345,7 @@ for (const engine of engines) {
       await page.screenshot({
         path: `output/playwright/demo-${engine}-desktop.png`,
       });
-      await page.goto(new URL('flux-showcase.html', root).href);
+      await page.goto(new URL("index.html", root).href);
       await page.waitForSelector('.effect');
       assert.equal(await page.locator('.effect').count(), 64);
       await page.getByRole('searchbox').fill('dual-ring');

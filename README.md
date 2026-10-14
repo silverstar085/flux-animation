@@ -1,19 +1,29 @@
 # flux-animation
 
+[![npm](https://img.shields.io/npm/v/flux-animation)](https://www.npmjs.com/package/flux-animation) [![gzip size](https://img.shields.io/badge/gzip-4.7%20KB-brightgreen)](docs/SIZES.json) [![license: MIT](https://img.shields.io/npm/l/flux-animation)](LICENSE)
+
 Small, class-based CSS animations. **Zero runtime JavaScript. Zero runtime dependencies.**
 
-Version **3.0.0** adds optional animation packs. Npm publication is a separate release step. The existing 128-class default stays tiny; the expanded build has **201 classes**, including **64 new effect presets/aliases and nine new controls**.
+**[Live demo and catalog →](https://silverstar085.github.io/flux-animation/)** · [Animation reference](docs/ANIMATIONS.md) · [Changelog](CHANGELOG.md)
 
-## Preview the new animations
+## Quick start
 
 ```sh
-npm ci
-npm run preview
+npm install flux-animation
 ```
 
-Open [the local catalog](http://127.0.0.1:4173/flux-showcase.html). It starts on the 64 new additions. Search classes, filter by category/behavior/rendering cost, change timing, replay previews, copy complete HTML examples.
+```js
+import 'flux-animation/all';
+```
 
-You can also open `flux-showcase.html` directly from this checkout. Keep its `demo/` assets beside it. The catalog uses JavaScript for its controls; the distributed animation library is CSS only.
+Or from a CDN:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flux-animation@3/flux.all.min.css">
+<div class="fx-spring-up">Hello, motion.</div>
+```
+
+The default import keeps the original 128 classes; the expanded build has **201 classes**. To run the catalog locally, use `npm ci && npm run preview` and open <http://127.0.0.1:4173/>. You can also open `index.html` directly from a checkout, with its `demo/` folder beside it.
 
 ## Choose your download
 
@@ -21,13 +31,13 @@ Gzip level 9; decimal KB. These are stylesheet transfer sizes, not the size of t
 
 | Import | Minified | Gzip | Included |
 |---|---:|---:|---|
-| `flux-animation` | 23.43 KB | **4.62 KB** | All 128 legacy classes, with fixes |
-| `flux-animation/core` | 9.87 KB | **2.36 KB** | 83 everyday classes and controls |
-| `flux-animation/all` | 36.06 KB | **6.67 KB** | All 201 classes |
-| `flux-animation/motion` | 6.70 KB | 1.53 KB | 40 motion/stagger additions + nine controls |
-| `flux-animation/interactions` | 2.46 KB | 0.68 KB | Eight interaction effects |
-| `flux-animation/loaders` | 4.17 KB | 1.22 KB | Eight loaders/skeletons |
-| `flux-animation/visual` | 1.70 KB | 0.62 KB | Eight mask/filter effects |
+| `flux-animation` | 24.32 KB | **4.71 KB** | All 128 legacy classes, with fixes |
+| `flux-animation/core` | 10.37 KB | **2.40 KB** | 83 everyday classes and controls |
+| `flux-animation/all` | 37.19 KB | **6.83 KB** | All 201 classes |
+| `flux-animation/motion` | 7.01 KB | 1.55 KB | 40 motion/stagger additions + nine controls |
+| `flux-animation/interactions` | 2.69 KB | 0.70 KB | Eight interaction effects |
+| `flux-animation/loaders` | 4.89 KB | 1.29 KB | Eight loaders/skeletons |
+| `flux-animation/visual` | 2.00 KB | 0.65 KB | Eight mask/filter effects |
 
 The four add-on packs require the default **or** core base. Import the base first. The default and core are alternative bases; `all` is a complete, flattened stylesheet. Do not import `all` alongside a base or packs. CSS selectors are not automatically tree-shaken per class.
 
@@ -46,13 +56,7 @@ import 'flux-animation/loaders';
 
 Choose one of those configurations. The example alternatives above are not meant to be imported together.
 
-```html
-<!-- Repository file; available from a CDN after npm publication. -->
-<link rel="stylesheet" href="flux.all.min.css">
-<div class="fx-spring-up">Hello, motion.</div>
-```
-
-After publishing 3.0.0, install it with `npm install flux-animation@3.0.0`. A version-pinned CDN URL will be `https://cdn.jsdelivr.net/npm/flux-animation@3.0.0/flux.all.min.css`. It will not contain these changes until the release is published.
+For a version-pinned CDN URL, include the exact version: `https://cdn.jsdelivr.net/npm/flux-animation@3.0.1/flux.all.min.css`.
 
 Readable exports such as `flux-animation/flux.css` and `flux-animation/flux.all.css` remain available, as do the existing `/min` and `/flux.min.css` paths.
 
@@ -178,7 +182,7 @@ Dot loaders require three plain decorative `<i>` children; new bar loaders requi
 
 ## Reduced motion, interaction, and rendering
 
-The v2 reduced-motion policy is retained: `prefers-reduced-motion: reduce` shortens animations to **.01ms**, limits them to one iteration, and disables transitions. Delays, paused state, direction, hover transforms, and effect endpoints are not reset. Cycles stop and show the first child using opacity, without hiding the other children from interaction. The same policy covers the new effects. The proposed reduced-motion redesign is not included.
+The v2 reduced-motion policy is retained: `prefers-reduced-motion: reduce` shortens animations to **.01ms**, limits them to one iteration, and disables transitions. Delays, paused state, direction, hover transforms, and effect endpoints are not reset. Cycles stop and show the first child using opacity, without hiding the other children from interaction. Since 3.0.1, loaders whose last frame would be invisible (progress, trace, comet, scan, fill, sonar, ring-pulse, and the dot/bar loaders that fade out) rest on a static, visible pose instead, so reduced-motion users still see that something is loading.
 
 **3.0 is a major release.** Global duration controls, propagation into child/pseudo-element animations, inherited variables, and global styling can affect existing integrations. Read the [v2 → v3 migration notes](docs/MIGRATION.md) before upgrading.
 
@@ -186,7 +190,7 @@ An exit class does not remove an element, change `aria-expanded`, or manage focu
 
 Most effects animate transforms and opacity. Shadows may repaint; filters and masks have browser-dependent rendering costs; dimension helpers trigger layout. New ring effects use static borders with transform/opacity motion. Legacy shadows remain for visual compatibility. There are no blanket `will-change` or forced backface-hiding rules. See [web.dev's animation guidance](https://web.dev/articles/animations-guide).
 
-Pseudo-element effects reserve `::before` and/or `::after`. Do not put two effects requiring the same pseudo-element on one node; use wrappers. Decorations ignore pointer events. Physical left/right directions are not automatically reversed in RTL layouts. The existing broad `fx-` initialization is retained in a low-specificity form for compactness; reserve the `fx-` namespace for Flux. Legacy dot selectors still support descendant `<i>` markup; new loaders use direct children.
+Pseudo-element effects reserve `::before` and/or `::after`. Do not put two effects requiring the same pseudo-element on one node; use wrappers. Decorations ignore pointer events. Physical left/right directions are not automatically reversed in RTL layouts. Shared initialization applies to any class that *starts with* `fx-` (since 3.0.1, classes that merely contain it, such as `gfx-card`, are left alone); reserve the `fx-` prefix for Flux. Legacy dot selectors still support descendant `<i>` markup; new loaders use direct children.
 
 ### Replay and exit cleanup
 
@@ -201,20 +205,19 @@ function dismiss(element, exitClass = 'fx-fade-out') {
     element.remove();
     return;
   }
+  // Remove an existing entrance/loop class first in application state.
+  element.classList.add(exitClass);
+  const exitName = getComputedStyle(element).animationName;
   const controller = new AbortController();
   const finish = () => {
     controller.abort();
     element.remove();
   };
-  element.addEventListener('animationend', event => {
+  const onEnd = event => {
     if (event.target === element && event.animationName === exitName) finish();
-  }, { signal: controller.signal });
-  element.addEventListener('animationcancel', event => {
-    if (event.target === element && event.animationName === exitName) finish();
-  }, { signal: controller.signal });
-  // Remove an existing entrance/loop class first in application state.
-  element.classList.add(exitClass);
-  const exitName = getComputedStyle(element).animationName;
+  };
+  element.addEventListener('animationend', onEnd, { signal: controller.signal });
+  element.addEventListener('animationcancel', onEnd, { signal: controller.signal });
   const animations = element.getAnimations().filter(a => a.animationName === exitName);
   if (!animations.length || animations.every(a => a.playState === 'finished')) finish();
 }
@@ -237,9 +240,9 @@ npm pack --dry-run  # inspect exactly what will ship; does not publish
 
 Author effects in `src/`; update metadata in `scripts/catalog.mjs`. The build parses animation declarations, shares control defaults, and generates reduced-motion coverage from actual targets. Do not edit generated `flux*.css`, catalog files, `docs/ANIMATIONS.md`, or `docs/SIZES.json` directly.
 
-Approved gzip gates: **4,800 bytes default**, **2,500 core**, **7,500 expanded**. The default cap was raised from the initial 4,500-byte proposal with approval to retain the control fixes; the proposed reduced-motion redesign was subsequently withdrawn. Development tools, browser binaries, screenshots, and the demo are excluded from the runtime package.
+Gzip budgets: **4,800 bytes default**, **2,500 core**, **7,500 expanded**. `npm run check` fails the build if a bundle exceeds its budget. Development tools, browser binaries, screenshots, and the demo are excluded from the runtime package. To run the browser checks against a preinstalled browser binary, set `FLUX_EXECUTABLE` (with `FLUX_BROWSER=chromium`).
 
-[Release notes](CHANGELOG.md) · [Implementation report](docs/IMPLEMENTATION_REPORT.md) · [Complete animation reference](docs/ANIMATIONS.md)
+[Release notes](CHANGELOG.md) · [Complete animation reference](docs/ANIMATIONS.md) · [Design history](docs/history/) · [Report a bug or request an animation](https://github.com/silverstar085/flux-animation/issues)
 
 ## License
 

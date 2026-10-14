@@ -1,8 +1,30 @@
 # Changelog
 
-## 3.0.0 — major release candidate, September 7, 2026
+## 3.0.1 — October 14, 2026
 
-Adds an optional expanded catalog while preserving the 128-class default entry point and all existing CSS import paths. Npm publication is a separate release step.
+Bug fixes; no API changes.
+
+### Fixed
+
+- **Loaders no longer disappear under reduced motion.** With `prefers-reduced-motion: reduce`, loaders previously froze on their last keyframe, which for many is invisible. `fx-progress`, `fx-trace`, `fx-comet`, `fx-scan`, `fx-fill`, `fx-sonar`, `fx-ring-pulse`, `fx-dots`, `fx-dots-fade`, `fx-dots-flow`, `fx-dots-spinner`, `fx-bars-wave` and `fx-bars-travel` now rest on a static, visible pose. The rest of the v2 policy is unchanged.
+- **The `fx-` namespace matches whole classes only.** Shared rules used `[class*="fx-"]`, which also matched unrelated classes such as `gfx-card`. Under reduced motion, that disabled those elements' own transitions. Rules now match classes that start with `fx-` (including after tabs and newlines).
+- README `dismiss()` example: declares the exit animation name before the listeners that read it.
+
+### Changed
+
+- The demo is now served at the site root (`index.html`); `flux-showcase.html` redirects there. The demo links to GitHub, npm, the changelog and issues.
+- README: install and CDN instructions for the published package, a live-demo link, and badges. Stale "not yet published" notes are removed.
+- Design notes moved to `docs/history/` and are no longer included in the npm package.
+- `package.json`: `homepage` points to the demo root; adds `bugs`.
+- Browser checks: new tests for reduced-motion loader visibility and namespace safety. `FLUX_EXECUTABLE` runs them against a preinstalled browser.
+
+### Size
+
+Gzip level 9: default **4,706 bytes** (+85), core **2,399** (+36), all **6,827** (+153). All within budget.
+
+## 3.0.0 — September 7, 2026
+
+Adds an optional expanded catalog while preserving the 128-class default entry point and all existing CSS import paths.
 
 ### Added
 
